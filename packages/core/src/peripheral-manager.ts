@@ -332,24 +332,18 @@ function createWindowsAdapter(): PlatformAdapter {
 
 function createMacAdapter(): PlatformAdapter {
   return {
-    async captureScreen() {
-      throw new Error('macOS screen capture adapter not implemented yet');
-    },
-    async captureCamera() {
-      throw new Error('macOS camera adapter not implemented yet');
-    },
-    async executeComputerAction(action: any) {
-      switch (action.type) {
-        case 'open_app':
-          await execAsync(`open "${action.app}"`);
-          return;
-        default:
-          throw new Error(`macOS adapter does not yet support action: ${action.type}`);
+    async captureScreen() { const out=`/tmp/smart-pet-screen-${Date.now()}.png`; await execAsync(`screencapture -x "${out}"`); return out; },
+    async captureCamera() { const out=`/tmp/smart-pet-camera-${Date.now()}.jpg`; await execAsync(`ffmpeg -f avfoundation -i "0" -frames:v 1 "${out}" -y 2>/dev/null`); return out; },
+    async executeComputerAction(action:any) {
+      switch(action.type){
+        case 'open_app': await execAsync(`open "${action.app}"`); return;
+        case 'type': await execAsync(`osascript -e 'tell application "System Events" to keystroke "${String(action.text||'').replace(/"/g,'\\"')}"'`); return;
+        case 'click': await execAsync(`cliclick c:${action.x},${action.y} 2>/dev/null || osascript -e 'tell application "System Events" to click at {${action.x},${action.y}}'`); return;
+        case 'key': await execAsync(`osascript -e 'tell application "System Events" to key code ${action.key}'`); return;
+        default: throw new Error(`macOS: unsupported ${action.type}`);
       }
     },
-    async recordAudio() {
-      throw new Error('macOS audio adapter not implemented yet');
-    },
+    async recordAudio(duration:number){ const out=`/tmp/smart-pet-audio-${Date.now()}.wav`; await execAsync(`sox -d "${out}" trim 0 ${Math.floor(duration/1000)} 2>/dev/null || rec "${out}" trim 0 ${Math.floor(duration/1000)} 2>/dev/null`); return out; },
   };
 }
 

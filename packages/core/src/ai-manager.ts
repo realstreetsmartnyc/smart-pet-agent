@@ -64,14 +64,23 @@ export class AIManager {
   }
 
   private async ping(provider: AIProvider): Promise<void> {
-    const url = provider.type === 'ollama'
-      ? `${provider.baseURL}/api/tags`
-      : `${provider.baseURL}/health`;
-    
-    const response = await fetch(url, {
-      headers: provider.apiKey ? { 'Authorization': `Bearer ${provider.apiKey}` } : {},
-    });
-    if (!response.ok) throw new Error(`Ping failed: ${response.status}`);
+    if (provider.type === 'ollama') {
+      const response = await fetch(`${provider.baseURL}/api/tags`, {
+        headers: provider.apiKey ? { 'Authorization': `Bearer ${provider.apiKey}` } : {},
+      });
+      if (!response.ok) throw new Error(`Ping failed: ${response.status}`);
+      return;
+    }
+    // OpenAI-compatible / custom providers (nous, litellm, openai, anthropic,
+    // google, archon) expose no standard /health endpoint. Probing it returns
+    // 404/401 and wrongly marks a working provider unreachable. Skip the init
+    // probe; chat-time surfaces real auth/model errors. Only reject on a true
+    // network failure (host down / DNS miss), which fetch throws.
+    try {
+      await fetch(provider.baseURL, { method: 'HEAD' }).catch(() => {});
+    } catch {
+      throw new Error(`Provider host unreachable: ${provider.baseURL}`);
+    }
   }
 
   async chat(options: ChatOptions): Promise<ChatResponse> {

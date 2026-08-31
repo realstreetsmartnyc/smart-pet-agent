@@ -37,6 +37,13 @@ const DATA_DIR = path.join(os.homedir(), '.smart-pet-agent');
 const MEMORY_DB = path.join(DATA_DIR, 'memory.db');
 
 const defaultProviders = {
+  // LIVE provider — Nous cloud (OpenAI-compatible). Env: NOUS_API_KEY, NOUS_API_BASE.
+  nous: {
+    name: 'nous', type: 'custom', baseURL: process.env.NOUS_API_BASE || 'https://inference-api.nousresearch.com/v1',
+    model: process.env.NOUS_MODEL || 'poolside/laguna-s-2.1:free',
+    apiKey: process.env.NOUS_API_KEY,
+    capabilities: ['chat', 'streaming'],
+  },
   ollama: {
     name: 'ollama', type: 'ollama', baseURL: 'http://localhost:11434',
     model: 'qwen2.5:7b', capabilities: ['chat', 'streaming'],
@@ -65,6 +72,12 @@ const defaultProviders = {
     model: 'qwen2.5:7b', capabilities: ['chat', 'streaming'],
   },
 };
+
+// Set Nous first in the fallback chain so the chat round-trip succeeds out of the box.
+const preferredOrder = ['nous', 'ollama', 'litellm', 'openai', 'anthropic', 'google', 'archon'];
+const reordered: Record<string, any> = {};
+for (const k of preferredOrder) if ((defaultProviders as any)[k]) reordered[k] = (defaultProviders as any)[k];
+Object.assign(defaultProviders, reordered);
 
 async function main() {
   fs.mkdirSync(DATA_DIR, { recursive: true });
