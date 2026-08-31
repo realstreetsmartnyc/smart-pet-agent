@@ -1,0 +1,30 @@
+{
+  "appId": "ai.smartpet.agent",
+  "productName": "Smart-Pet-Agent",
+  "directories": {
+    "output": "build"
+  },
+  "files": [
+    "src/**/*",
+    "dist/**/*",
+    "assets/**/*",
+    "package.json"
+  ],
+  "linux": {
+    "target": ["AppImage", "deb"],
+    "category": "Utility",
+    "icon": "assets/icon.png"
+  },
+  "win": {
+    "target": "nsis",
+    "icon": "assets/icon.ico"
+  },
+  "mac": {
+    "target": "dmg",
+    "icon": "assets/icon.icns"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true
+  }
+}

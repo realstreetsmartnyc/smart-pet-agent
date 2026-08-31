@@ -1,0 +1,12 @@
+{
+  "id": "default-nyc-orb",
+  "name": "NYC Orb — Default",
+  "version": "0.1.0",
+  "author": "Street Smart NYC",
+  "description": "Default Smart Pet Agent companion — smoked-glass orb with taxi/signal halos, 10-state Street Smart NYC embodiment. Fallback CSS renderer when no video pack present.",
+  "license": "MIT",
+  "engine": "canvas",
+  "preview": "assets/preview.svg",
+  "tags": ["nyc", "default", "orb", "companion"],
+  "defaultState": "idle"
+}

@@ -1,0 +1,21 @@
+{
+  "name": "smart-pet-agent",
+  "version": "0.1.0",
+  "description": "Free, open-source, ever-evolving multi-agent AI OS companion",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm --filter @smart-pet/desktop dev",
+    "build": "pnpm --filter @smart-pet/desktop build",
+    "cli": "pnpm --filter @smart-pet/cli start",
+    "tui": "pnpm --filter @smart-pet/tui start"
+  },
+  "devDependencies": {
+    "tsx": "^4.23.13"
+  }
+}

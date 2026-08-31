@@ -1,0 +1,22 @@
+{
+  "states": {
+    "idle":       { "src": "assets/idle.webm",       "loop": true,  "intent": "idle" },
+    "listening":  { "src": "assets/listening.webm",  "loop": true,  "intent": "listening",  "halo": "civic-500", "waitOnExit": true },
+    "thinking":   { "src": "assets/thinking.webm",   "loop": true,  "intent": "thinking",   "halo": "taxi-500" },
+    "acting":     { "src": "assets/acting.webm",     "loop": true,  "intent": "acting",     "halo": "signal-500", "waitOnExit": true },
+    "waiting":    { "src": "assets/waiting.webm",    "loop": true,  "intent": "waiting" },
+    "asking":     { "src": "assets/asking.webm",     "loop": false, "intent": "asking_permission", "halo": "signal-500", "next": "idle" },
+    "celebrating":{ "src": "assets/celebrate.webm",  "loop": false, "intent": "celebrating", "halo": "success-500", "next": "idle" },
+    "warning":    { "src": "assets/warning.webm",    "loop": false, "intent": "warning",    "halo": "alert-500", "next": "idle" },
+    "sleeping":   { "src": "assets/sleeping.webm",   "loop": true,  "intent": "sleeping" },
+    "resuming":   { "src": "assets/resuming.webm",   "loop": false, "intent": "resuming",   "next": "idle" }
+  },
+  "intents": ["idle","listening","thinking","planning","acting","waiting","asking_permission","celebrating","warning","sleeping","resuming"],
+  "hitbox": 0.62,
+  "ignoreMouseWhen": "notHover",
+  "draggable": true,
+  "patrol": { "enabled": false },
+  "sleep": { "timeoutMs": 300000, "enabled": true },
+  "cursorPollMs": 80,
+  "rapidClick": { "count": 3, "windowMs": 500, "action": "toggleChat" }
+}

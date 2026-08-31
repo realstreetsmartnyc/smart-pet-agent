@@ -1,0 +1,25 @@
+{
+  "name": "@smart-pet/core",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    "./agent-loop": "./src/agent-loop.ts",
+    "./ai-manager": "./src/ai-manager.ts",
+    "./memory": "./src/memory.ts",
+    "./action-planner": "./src/action-planner.ts",
+    "./animation-controller": "./src/animation-controller.ts",
+    "./delegation-manager": "./src/delegation-manager.ts",
+    "./peripheral-manager": "./src/peripheral-manager.ts",
+    "./permission-service": "./src/permission-service.ts",
+    "./runtime-events": "./src/runtime-events.ts"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  }
+}
