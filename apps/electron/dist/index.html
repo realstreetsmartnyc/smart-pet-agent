@@ -142,6 +142,55 @@
     .pet-mood.listening .status-halo { opacity:1; border-color: rgba(47,128,237,0.42); box-shadow: 0 0 16px rgba(47,128,237,0.22); }
     .pet-mood.thinking .status-halo { opacity:1; border-color: rgba(244,180,0,0.42); box-shadow: 0 0 16px rgba(244,180,0,0.18); }
     .pet-mood.acting .status-halo { opacity:1; border-color: rgba(255,138,31,0.44); box-shadow: 0 0 18px rgba(255,138,31,0.24); }
+
+    /* ===== Per-state embodiment — canvas/CSS fallback renderer ===== */
+    .pet-body.state-idle { animation: floatBody 5s ease-in-out infinite; }
+    @keyframes floatBody { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+    .pet-body.state-listening::before {
+      content: ''; position: absolute; inset: -16px; border-radius: 999px;
+      border: 2px solid var(--civic-500); opacity: .55;
+      animation: ringPulse 1.4s ease-out infinite;
+    }
+    @keyframes ringPulse { 0% { transform: scale(0.88); opacity: .6; } 100% { transform: scale(1.2); opacity: 0; } }
+
+    .pet-body.state-thinking .pet-mood { animation: spinSlow 6s linear infinite; }
+    @keyframes spinSlow { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+    .pet-body.state-acting .pet-mood { animation: bounceMood 0.5s ease-in-out infinite; }
+    @keyframes bounceMood { 0%,100% { transform: translate(-50%,-50%); } 50% { transform: translate(-50%,calc(-50% - 9px)); } }
+
+    .pet-body.state-waiting .pet-mood { opacity: .78; animation: breathe 6s ease-in-out infinite; }
+
+    .pet-body.state-asking .pet-mood {
+      animation: tiltMood 0.6s ease-in-out infinite;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 10px 24px rgba(0,0,0,0.26),
+                  0 0 0 1px rgba(255,138,31,0.24), 0 0 18px rgba(255,138,31,0.28);
+    }
+    @keyframes tiltMood { 0%,100% { transform: translate(-50%,-50%) rotate(-4deg); } 50% { transform: translate(-50%,-50%) rotate(4deg); } }
+
+    .pet-body.state-celebrating .pet-mood {
+      animation: jumpMood 0.5s ease-in-out infinite;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 10px 24px rgba(0,0,0,0.26),
+                  0 0 0 1px rgba(45,165,106,0.24), 0 0 22px rgba(45,165,106,0.3);
+    }
+    @keyframes jumpMood { 0%,100% { transform: translate(-50%,-50%) scale(1); } 30% { transform: translate(-50%,calc(-50% - 14px)) scale(1.06); } }
+
+    .pet-body.state-warning .pet-mood {
+      animation: shakeMood 0.4s ease-in-out infinite;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 10px 24px rgba(0,0,0,0.26),
+                  0 0 0 1px rgba(214,69,69,0.26), 0 0 16px rgba(214,69,69,0.3);
+    }
+    @keyframes shakeMood { 0%,100% { transform: translate(-50%,-50%); } 25% { transform: translate(calc(-50% - 5px),-50%); } 75% { transform: translate(calc(-50% + 5px),-50%); } }
+
+    .pet-body.state-sleeping .pet-mood { animation: fadeSleep 3s ease-in-out infinite; }
+    @keyframes fadeSleep { 0%,100% { opacity: .6; } 50% { opacity: .42; } }
+
+    .pet-body.state-resuming .pet-mood { animation: fadeInMood 0.6s ease-out; }
+    @keyframes fadeInMood { from { opacity: 0; transform: translate(-50%,-50%) scale(0.9); } to { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
+
+    .pet-body.state-talk .pet-mood { animation: bobTalkMood 0.9s ease-in-out infinite; }
+    @keyframes bobTalkMood { 0%,100% { transform: translate(-50%,-50%); } 50% { transform: translate(-50%,calc(-50% - 2px)); } }
   </style>
 </head>
 <body>
@@ -166,6 +215,7 @@
   <script>
     const electronAPI = window.electronAPI || {};
     const petContainer = document.getElementById('petContainer');
+    const petBody = document.querySelector('.pet-body');
     const petMood = document.getElementById('petMood');
     const thinkingPill = document.getElementById('thinkingPill');
     const waveformCanvas = document.getElementById('waveformCanvas');
@@ -192,23 +242,67 @@
 
     function setAnimState(state) {
       currentAnimState = state;
+      petBody.className = 'pet-body';
       petMood.className = 'pet-mood';
       mouth.classList.remove('talk');
       thinkingPill.style.display = 'none';
       waveformCanvas.style.display = 'none';
+      petBody.classList.add('state-' + state);
       switch (state) {
-        case 'listening': petMood.classList.add('curious','listening'); waveformCanvas.style.display='block'; break;
-        case 'thinking': petMood.classList.add('thinking'); thinkingPill.style.display='flex'; thinkingPill.querySelector('.pet-thinking-text').textContent='Thinking'; break;
+        case 'listening':
+          petMood.classList.add('curious','listening');
+          waveformCanvas.style.display = 'block';
+          break;
+        case 'thinking':
+          petMood.classList.add('thinking');
+          thinkingPill.style.display = 'flex';
+          thinkingPill.querySelector('.pet-thinking-text').textContent = 'Thinking';
+          break;
+        case 'acting':
         case 'task-start':
-        case 'task-loop': petMood.classList.add('excited','acting'); mouth.classList.add('talk'); thinkingPill.style.display='flex'; thinkingPill.querySelector('.pet-thinking-text').textContent='Working'; break;
-        case 'task-leave': petMood.classList.add('happy'); break;
+        case 'task-loop':
+          petMood.classList.add('excited','acting');
+          mouth.classList.add('talk');
+          thinkingPill.style.display = 'flex';
+          thinkingPill.querySelector('.pet-thinking-text').textContent = 'Working';
+          break;
+        case 'waiting':
+          petMood.classList.add('sleepy');
+          break;
+        case 'asking':
+        case 'asking_permission':
+          petMood.classList.add('angry');
+          thinkingPill.style.display = 'flex';
+          thinkingPill.querySelector('.pet-thinking-text').textContent = 'Need permission';
+          break;
+        case 'celebrating':
+          petMood.classList.add('happy');
+          break;
+        case 'warning':
+          petMood.classList.add('angry');
+          break;
+        case 'sleeping':
         case 'sleep-start':
-        case 'sleep-loop': petMood.classList.add('sleepy'); break;
-        case 'sleep-leave': petMood.classList.add('curious'); break;
-        case 'begin': petMood.classList.add('excited'); break;
-        case 'alert': petMood.classList.add('angry'); break;
-        case 'celebrate': petMood.classList.add('happy'); break;
-        default: break;
+        case 'sleep-loop':
+          petMood.classList.add('sleepy');
+          break;
+        case 'resuming':
+        case 'sleep-leave':
+          petMood.classList.add('curious');
+          break;
+        case 'talk':
+          petMood.classList.add('happy');
+          mouth.classList.add('talk');
+          break;
+        case 'begin':
+          petMood.classList.add('excited');
+          break;
+        case 'alert':
+          petMood.classList.add('angry');
+          break;
+        case 'idle':
+        default:
+          break;
       }
       if (electronAPI) electronAPI.animStateChanged(state);
     }
