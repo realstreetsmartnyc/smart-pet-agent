@@ -1,6 +1,6 @@
 {
   "appId": "ai.smartpet.agent",
-  "productName": "Smart-Pet-Agent",
+  "productName": "Smart Pet Agent",
   "directories": {
     "output": "build"
   },
@@ -8,20 +8,41 @@
     "src/**/*",
     "dist/**/*",
     "assets/**/*",
-    "package.json"
+    "package.json",
+    "!**/node_modules/better-sqlite3/build/Release/test_extension.node",
+    "!**/node_modules/better-sqlite3/deps/**",
+    "!**/node_modules/better-sqlite3/src/**",
+    "!**/node_modules/better-sqlite3/build/**/*.o",
+    "!**/node_modules/better-sqlite3/build/**/*.a",
+    "!**/node_modules/better-sqlite3/build/**/*.Makefile"
+  ],
+  "asarUnpack": [
+    "**/node_modules/better-sqlite3/**/*",
+    "**/node_modules/bindings/**/*",
+    "**/node_modules/file-uri-to-path/**/*",
+    "src/agent-runtime.mjs"
   ],
   "linux": {
-    "target": ["AppImage", "deb"],
+    "target": [
+      "AppImage",
+      "deb"
+    ],
     "category": "Utility",
-    "icon": "assets/icon.png"
+    "icon": "assets/icons",
+    "synopsis": "Ever-evolving AI OS companion",
+    "packageCategory": "utils"
   },
   "win": {
     "target": "nsis",
-    "icon": "assets/icon.ico"
+    "icon": "assets/icon.ico",
+    "certificateFile": "${env:WIN_CSC_LINK}",
+    "certificatePassword": "${env:WIN_CSC_KEY_PASSWORD}"
   },
   "mac": {
     "target": "dmg",
-    "icon": "assets/icon.icns"
+    "icon": "assets/icon.icns",
+    "cscLink": "${env:MAC_CSC_LINK}",
+    "cscKeyPassword": "${env:MAC_CSC_KEY_PASSWORD}"
   },
   "nsis": {
     "oneClick": false,

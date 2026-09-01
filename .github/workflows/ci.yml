@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # Fast feedback: typecheck, tests, smoke on every push/PR
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm validate:pet
+      - run: bash scripts/smoke.sh
+      - run: bash scripts/mobile-smoke.sh
+
+  # Desktop publish gate: build + live xvfb session on Ubuntu
+  desktop-publish-ubuntu:
+    runs-on: ubuntu-latest
+    needs: ci
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm --filter ./apps/electron run build:linux
+      - run: bash scripts/e2e-electron.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-unpacked-ubuntu
+          path: apps/electron/build/linux-unpacked/
+          retention-days: 7
+
+  # Desktop publish gate: Windows NSIS build
+  desktop-publish-windows:
+    runs-on: windows-latest
+    needs: ci
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm --filter ./apps/electron run build:win
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nsis-windows
+          path: apps/electron/dist/*.exe
+          retention-days: 7
+
+  # Desktop publish gate: macOS DMG build
+  desktop-publish-macos:
+    runs-on: macos-latest
+    needs: ci
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: pnpm --filter ./apps/electron run build:mac
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dmg-macos
+          path: apps/electron/dist/*.dmg
+          retention-days: 7
+
+  # Mobile: build Android APK via EAS (requires EAS_TOKEN secret)
+  mobile-preview:
+    runs-on: ubuntu-latest
+    needs: ci
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - run: pnpm install
+      - run: npm install -g eas-cli
+      - run: eas login --token ${{ secrets.EAS_TOKEN }}
+      - run: bash scripts/export-mobile-standalone.sh
+        working-directory: scripts
+      - run: |
+          cd /tmp/smart-pet-agent-mobile
+          npm install --legacy-peer-deps --ignore-scripts
+          CI=1 npx expo prebuild --platform android --clean
+          cp -r android ../apps/mobile/android
+        env:
+          CI: true
+      - run: cd apps/mobile/android && ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: android-debug-apk
+          path: apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 7

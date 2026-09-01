@@ -1,21 +1,25 @@
 {
   "name": "smart-pet-agent",
-  "version": "0.1.0",
-  "description": "Smart-Pet-Agent — Ever-evolving AI OS companion",
+  "version": "1.0.0",
+  "description": "Smart Pet Agent — Ever-evolving AI OS companion",
   "main": "src/main.js",
   "type": "commonjs",
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
-    "build": "electron-builder",
-    "build:linux": "electron-builder --linux",
-    "build:win": "electron-builder --win",
-    "build:mac": "electron-builder --mac"
+    "build": "node ../../scripts/build-agent-runtime.mjs && electron-builder",
+    "build:linux": "node ../../scripts/build-agent-runtime.mjs && electron-builder --linux",
+    "build:win": "node ../../scripts/build-agent-runtime.mjs && electron-builder --win",
+    "build:mac": "node ../../scripts/build-agent-runtime.mjs && electron-builder --mac"
   },
   "keywords": ["ai", "agent", "pet", "desktop", "overlay"],
-  "author": "Smart-Pet-Agent Contributors",
+  "homepage": "https://www.streetsmartnyc.cloud",
+  "author": "Smart Pet Agent Contributors <support@streetsmartnyc.cloud>",
   "license": "MIT",
   "dependencies": {
+    "conf": "^10.2.0",
+    "better-sqlite3": "^11.0.0",
+    "dot-prop": "^6.0.1",
     "electron-store": "^8.2.0",
     "node-fetch": "^2.7.0"
   },

@@ -1,6 +1,6 @@
 {
   "name": "smart-pet-agent",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Free, open-source, ever-evolving multi-agent AI OS companion",
   "type": "module",
   "private": true,
@@ -13,9 +13,22 @@
     "dev": "pnpm --filter @smart-pet/desktop dev",
     "build": "pnpm --filter @smart-pet/desktop build",
     "cli": "pnpm --filter @smart-pet/cli start",
-    "tui": "pnpm --filter @smart-pet/tui start"
+    "tui": "pnpm --filter @smart-pet/tui start",
+    "test": "SMART_PET_TEST=1 node --import tsx --test packages/core/src/runtime-events.test.ts packages/core/src/permission-policy.test.ts packages/core/src/voice.test.ts packages/core/src/pet-creator.test.ts",
+    "test:native-sqlite": "node scripts/check-native-sqlite.mjs",
+    "smoke": "bash scripts/smoke.sh",
+    "typecheck": "pnpm --filter @smart-pet/core exec tsc --noEmit -p ../../tsconfig.json && pnpm --filter @smart-pet/cli exec tsc --noEmit -p tsconfig.json && pnpm --filter @smart-pet/tui exec tsc --noEmit -p tsconfig.json",
+    "validate:pet": "node --import tsx -e \"import{validatePetPack}from'./packages/core/src/pet-validator.ts';import fs from'fs';const m=JSON.parse(fs.readFileSync('pets/default-nyc-orb/manifest.json','utf8'));const c=JSON.parse(fs.readFileSync('pets/default-nyc-orb/pet.config.json','utf8'));console.log(validatePetPack(m,c))\""
   },
   "devDependencies": {
+    "esbuild": "^0.28.2",
     "tsx": "^4.23.13"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "electron",
+      "esbuild"
+    ]
   }
 }
