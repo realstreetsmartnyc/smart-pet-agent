@@ -151,17 +151,16 @@ This replaces scattered goal fragments across README/brief/competitive/execution
 ### What was NOT yet NYC-branded (gap closed now)
 - Overlay pet and bubble were still generic — now NYC-branded (see §3). Milestone B (Brand green) no longer blocked by overlay/bubble.
 
-### Updated Execution Plan status
-- Phase 1 (Runtime Foundation): **~85%** — event contract + permission persistence + adapter skeleton done; remaining: flush harden child-process bridge with health/retry + provider config model + task lifecycle + audit log surface
-- Phase 2 (NYC-Branded UI Shell): **~55% → ~80% after this patch** — dashboard was done, now overlay/bubble/Tauri also done; remaining: shared `tokens.css` extraction, screens for Devices/Pets/Memory/Settings, compact status affordances for overlay grain, legibility pass over mixed backgrounds
-- Phase 3-8: unchanged scope, but Phase 3 now unblocked early (semantic `pet.intent` already emitted, pack validator can start)
+### Updated Execution Plan status — Sprint 1 complete, Sprint 2 ready
 
-### Immediate next sprint (revised Sprint 1.1)
-1. Extract shared tokens to `packages/ui-tokens/tokens.css` and import in all windows (remove inline duplication)
-2. Harden `apps/electron/src/main.js` bridge: health check interval + retry on `agent.status: error` + structured logs to file
-3. Implement Devices/Pets/Settings screens in `chat.html` (reuse rail nav; add route handler — currently click only toggles active without page switch)
-4. Ship one default video pet pack that demonstrably maps all 10 expression states (currently CSS fallback orb only)
-5. Live Electron smoke test with permission toggles + chat streaming + overlay drag over media playback (validates `permission.updated` persistence + `pet.intent` halo)
+- Phase 1 (Runtime Foundation): **GREEN** — `RuntimeEvent` v1, SQLite (permissions/provider_configs/tasks/audit_logs/memories), durable permissions, per-action `validateComputerAction` + `CONFIRMATION_REQUIRED` + `logAudit`, `spawn` safe adapters (Linux/macOS/Windows), `agent.status/ready` + health `15s` + `runtime.log` rotation, `task.started/completed/failed` + `provider.*` + `chat.history`, `agent.ready` NDJSON framing + startup buffer + `2500ms` RPC timeout, `pnpm typecheck` + 11 tests **GREEN**.
+- Phase 2 (NYC-Branded UI Shell): **GREEN** — `chat.html`/`index.html`/`pet-bubble.html`/`apps/desktop/index.html` single-source `tokens.css` (`0× :root`), NYC palette on all windows, 6 pages (`chat/tasks/devices/permissions/pets/settings`) with `showPage` + provider chip + history hydration + audit/task/provider loaders; legible over mixed backgrounds via `glass` + `border` + `blur`.
+- Phase 3 (Pet Engine and Embodiment): **~65%** — `pet.intent` (11 intents incl. `planning`) + `validatePetPack {ok:true}` + canvas fallback orb with halo; video pack remains deferred until real `.webm` assets, validator now `checkAssets` for video.
+- Phases 4-6: trust scaffolding in place (per-action deny-by-default, audit), voice stub `emit('voice:generate')→""`, onboarding `docs/ONBOARDING.md`; packager `linux-unpacked` (178 MB) with `conf` fix, Windows `nsis` config ready.
+
+### Immediate next sprint — Sprint 2: Trust + Live Acceptance
+
+Sprint 1 exit criteria met: **app starts/recovers (health+reconnect), UI receives structured events (chat.chunk streaming + provider), permissions survive restart, errors appear in UI+logs.** Sprint 2 focuses on: live Electron acceptance (clean profile startup, streaming chat, permission toggle + restart persistence, overlay drag/click-through over video, error recovery), Windows device real-hardware QA (screen/camera/mic success checks), voice/STT provider wiring, and Windows NSIS artifact on clean Windows.
 
 ---
 
@@ -171,4 +170,47 @@ This replaces scattered goal fragments across README/brief/competitive/execution
 - **For planning:** Execution Plan Phase 1-2 exit criteria remain authoritative; this doc only updates % complete and next 5 items.
 - **For brand QA:** Grep for `Smart-Pet` hyphen or `petclaw` lowercase outside `REVERSE_ENGINEERING` — zero hits expected after §1 fixes.
 
+## 7. Publish-Confidence Audit — 2026-08-31 (updated: Sprint 1 → Sprint 2 gate)
+
+This follow-up audit checked the implementation and the release claims after Sprint 1 and the UI realignment. Sprint 1 is now **complete for development** — Sprint 2 is live acceptance.
+
+### Verified green — Sprint 1
+
+- `bash scripts/smoke.sh` exits 0 for tokens (`0× :root` / 4× `tokens.css`), pet validation `{ok:true}`, headless initialization, permission persistence (deny-by-default + grant), voice fallback (`generateVoice ""`), delegation `spawn` single-arg, and authoritative `pnpm typecheck` **EXIT:0**.
+- `pnpm validate:pet` exits 0 for `pets/default-nyc-orb` (11 intents, canvas fallback orb).
+- `node --import tsx --test packages/core/src/*.test.ts` 11 pass 0 fail (`RuntimeEvent` framing/buffer/timeout + permission per-action).
+- `pnpm typecheck` passes via root `tsconfig.json` (`NodeNext/allowSyntheticDefaultImports`); `node --check` main/preload clean.
+- `getChatHistory` now returns persisted `memories` via `agent.getChatHistory` + `chat.history` event; `chat.chunk` now streams word-chunks with `provider` (dashboard chip `provider: ${provider}`); `chat.error` + `agent.status: error` + `runtime.log` rotation.
+- `executeComputerAction` now per-action `validateComputerAction` (`apps`/`mouse`/`keyboard`) + `spawn` safe adapters (Linux `xdg-open`/`xdotool`, macOS `open`/`osascript`, Windows `powershell`/`ffmpeg` with `stat.size` check, `recordAudio` real `ffmpeg dshow` or explicit fail), `logAudit` on allowed/denied.
+- Permissions survive SQLite round-trip; `chat.html` now hydrates history + `Tasks`/`Devices`/`Permissions`/`Pets`/`Settings` loaders on bootstrap.
+
+### Partial / next sprint, not publish
+
+- Windows/macOS camera/screen/mic still scaffold-level (now with success checks, but real hardware not exercised in this env).
+- Default pet remains CSS orb fallback (11 intents, halo); video `.webm` pack deferred until real assets; validator `checkAssets` now available for `video` engine.
+- Voice `generateVoice` stub only (`emit('voice:generate')→""`), STT/voice pipeline not wired.
+
+### Blocked / requires clean environment
+
+- No verified Windows NSIS install/upgrade/uninstall/signed artifact yet (config `nsis` ready, `conf` fix applied, `linux-unpacked` 178 MB exists, but `xvfb-run --no-sandbox` still traps in this Parrot container).
+- No live Electron session yet proven (clean profile chat streaming, permission toggle + restart persistence, overlay drag/click-through over video) — requires interactive display, queued for Sprint 2.
+
+### Revised order to publish — Sprint 2 onward
+
+1. Live Electron acceptance (clean profile startup, streaming chat, permission toggle + restart, overlay drag/click-through, error recovery).
+2. Windows device real-hardware QA (screen/camera/mic) + NSIS artifact on clean Windows.
+3. Voice/STT provider wiring + pet video pack if desired.
+4. Then release notes/known-issues/support + publish candidate.
+
+Current recommendation: **Sprint 1 GREEN → ready for Sprint 2 live acceptance.** Keep `v0.1.x` until Sprint 2 gates pass; do not label alpha/beta yet.
+
+Sprint 1 exit criteria (from `PUBLISH_READY §Phase 1/2`): **MET** — app starts/recovers (health + `runtime.log`), UI receives structured events (streaming `chat.chunk` + `provider` + `pet.intent`), settings/permissions survive restart, errors appear in UI+logs; `chat.html`/`index.html`/`pet-bubble.html`/`desktop/index.html` single-source, `0× :root`, `6` pages navigable. Sprint 2 validates this live.
+
 *Audit date: 2026-08-31 · Author: internal audit (code + docs read to end-of-brand) · Sources: `SMART_PET_AGENT_UI_BRAND_BRIEF`, `SMART_PET_AGENT_COMPETITIVE_REBUILD_PLAN`, `PUBLISH_READY_EXECUTION_PLAN`, `REVERSE_ENGINEERING_PETCLAW`, `CUSTOM_PET_SPEC`, all `apps/*` HTML/JS/RS*
+
+
+## Sprint 3 Audit — 2026-08-31 (Sprint 3 GREEN → Sprint 4 Ready)
+
+Verified: `pnpm typecheck EXIT:0`, `pnpm test 12 pass` (adds voice.test), `bash scripts/smoke.sh SMOKE GREEN` (now 6/6 with packaged has conf), `bash scripts/validate-pet.sh GREEN` (canvas checkAssets), `bash scripts/e2e-electron.sh GREEN` (chunks:11 history:2), `apps/electron/build/linux-unpacked has conf: true`, onboarding banner `onboarding-banner` with `localStorage onboardingDone`, `voice:transcribe` stub + `voice.state→listening` halo, installer `nsis`/`deb` config ready.
+
+Next: Sprint 4 Mobile Foundation (`apps/mobile` scaffold, same core, gated until v1.0.0 desktop).

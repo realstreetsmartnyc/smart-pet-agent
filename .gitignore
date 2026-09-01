@@ -31,4 +31,5 @@ apps/mobile/.expo/
 apps/mobile/android/.gradle/
 apps/mobile/android/app/build/
 apps/mobile/android/build/
+.kilo/
 coverage/
