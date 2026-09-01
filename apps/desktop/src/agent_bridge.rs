@@ -1,5 +1,6 @@
 // apps/desktop/src/agent_bridge.rs
-// Bridge between Tauri frontend and the agent runtime
+// Bridge between Tauri frontend and the agent runtime — v1 DEFERRED prototype
+// v1 ships Electron only (see docs/RELEASE_CHECKLIST.md). Tauri shell remains a visual prototype until it bridges the same core runtime.
 
 use tauri::{AppHandle, Manager};
 use std::sync::Arc;
@@ -7,19 +8,21 @@ use tokio::sync::Mutex;
 
 static AGENT_RUNNING: tokio::sync::OnceCell<()> = tokio::sync::OnceCell::const_new();
 
-pub async fn start_agent(_app_handle: AppHandle) {
-    // Spawn the agent runtime as a child process or embed directly
-    // For now, we'll communicate with the CLI agent via IPC
+pub async fn start_agent(app_handle: AppHandle) {
     let _ = AGENT_RUNNING.get_or_init(|| async {
         println!("[Smart-Pet-Agent] Agent runtime starting...");
     }).await;
+    let ah = app_handle.clone();
+    tauri::async_runtime::spawn(async move {
+        ah.emit_all("agent-status", serde_json::json!({"status":"ready","provider":"nous"})).ok();
+    });
 }
 
 // Tauri command: send input to agent
 #[tauri::command]
 pub async fn agent_speak(input: String) -> Result<String, String> {
     // Forward to agent runtime
-    Ok(format!("Agent received: {}", input))
+    Err("Tauri runtime deferred for v1 — use Electron shell".to_string())
 }
 
 // Tauri command: get agent state
@@ -53,7 +56,7 @@ pub async fn agent_play_animation(name: String) -> Result<(), String> {
 #[tauri::command]
 pub async fn peripheral_capture_screen() -> Result<String, String> {
     // Use tauri-plugin-fs or shell to capture
-    Ok("/tmp/screenshot.png".to_string())
+    Err("Tauri screen capture deferred for v1".to_string())
 }
 
 // Tauri command: get system info
@@ -61,7 +64,7 @@ pub async fn peripheral_capture_screen() -> Result<String, String> {
 pub async fn system_info() -> Result<serde_json::Value, String> {
     Ok(serde_json::json!({
         "cpu": 0,
-        "ram": 0,
+        "ram": 0, // deferred: real SystemInfo via PeripheralManager on Electron v1
         "network": true,
         "platform": std::env::consts::OS,
     }))

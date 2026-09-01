@@ -62,7 +62,7 @@ jobs:
         if: always()
         with:
           name: nsis-windows
-          path: apps/electron/dist/*.exe
+          path: apps/electron/build/*.exe
           retention-days: 7
 
   # Desktop publish gate: macOS DMG build
@@ -77,12 +77,13 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
       - run: pnpm install
+      - run: iconutil -c icns apps/electron/assets/icon.iconset -o apps/electron/assets/icon.icns
       - run: pnpm --filter ./apps/electron run build:mac
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: dmg-macos
-          path: apps/electron/dist/*.dmg
+          path: apps/electron/build/*.dmg
           retention-days: 7
 
   # Mobile: build Android APK via EAS (requires EAS_TOKEN secret)

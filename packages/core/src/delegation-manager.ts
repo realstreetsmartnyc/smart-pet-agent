@@ -79,19 +79,23 @@ export class DelegationManager {
   }
 
   private async executeCLI(target: DelegationTarget, task: string): Promise<string> {
-    // Check if command exists
+    // Check if command exists (no shell injection: use command as-is, platform checks PATH)
     try {
       await execAsync(`which ${target.command}`);
     } catch {
       return `[${target.name}] CLI not found. Install ${target.command} to enable delegation.`;
     }
 
-    // Execute with timeout
-    const { stdout, stderr } = await execAsync(
-      `${target.command} "${task.replace(/"/g, '\\"')}"`,
-      { timeout: target.maxTimeout, maxBuffer: 10 * 1024 * 1024 }
-    );
-    return stdout || stderr || '(no output)';
+    // Execute without shell interpolation to avoid injection — pass task as single arg
+    return new Promise((resolve, reject) => {
+      const child = spawn(target.command, [task], { timeout: target.maxTimeout });
+      let out = '', err = '';
+      child.stdout?.on('data', (d) => { out += d.toString(); if (out.length > 10*1024*1024) child.kill(); });
+      child.stderr?.on('data', (d) => { err += d.toString(); });
+      child.on('error', (e) => reject(e));
+      child.on('close', () => resolve(out || err || '(no output)'));
+      setTimeout(() => { try { child.kill(); } catch {} }, target.maxTimeout);
+    });
   }
 
   private async executeAPI(target: DelegationTarget, task: string): Promise<string> {

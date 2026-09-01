@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2026-09-01
+## [Unreleased] - Alpha / Technical Preview
 
 ### Added
 - Desktop overlay pet with canvas orb rendering and 11 intents (including planning)
@@ -49,7 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Documentation
 - Trust docs (`docs/TRUST.md`)
-- Release notes (`docs/RELEASE_NOTES_v1.0.0.md`)
 - Onboarding guide (`docs/ONBOARDING.md`)
 - Publish-ready execution plan (`docs/PUBLISH_READY_EXECUTION_PLAN_2026-08-30.md`)
 - Mobile build guide (`MOBILE_BUILD.md`)

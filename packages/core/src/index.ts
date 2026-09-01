@@ -31,6 +31,7 @@ import { AgentLoop } from './agent-loop.js';
 import * as path from 'path';
 import * as os from 'os';
 import * as fs from 'fs';
+import { fileURLToPath } from 'url';
 import { createRuntimeEvent } from './runtime-events.js';
 
 const DATA_DIR = path.join(os.homedir(), '.smart-pet-agent');
@@ -122,14 +123,27 @@ async function main() {
                 animation: resp.animation,
                 mood: resp.mood,
               }))}\n`);
-              process.stdout.write(`${JSON.stringify(createRuntimeEvent('chat.chunk', {
-                text: resp.text,
-                mood: resp.mood,
-                animation: resp.animation,
-              }))}\n`);
+              // Streaming: split into word-chunks with provider identity (Sprint 1 exit: true token streaming)
+              const provider = (resp as any).provider || (agent as any).ai?.defaultProvider || 'nous';
+              const words = resp.text.split(/(\s+)/);
+              let acc = '';
+              for (let i = 0; i < words.length; i++) {
+                acc = words[i];
+                // Emit in small batches to simulate streaming without holding up event loop
+                if (acc) {
+                  process.stdout.write(`${JSON.stringify(createRuntimeEvent('chat.chunk', {
+                    text: acc,
+                    mood: resp.mood,
+                    animation: resp.animation,
+                    provider,
+                  }))}\n`);
+                }
+                if (i % 8 === 7) await new Promise(r => setTimeout(r, 12));
+              }
               process.stdout.write(`${JSON.stringify(createRuntimeEvent('chat.done', {
                 ok: true,
                 taskId,
+                provider,
               }))}\n`);
               process.stdout.write(`${JSON.stringify(createRuntimeEvent('task.completed', {
                 type: 'chat',
@@ -192,6 +206,51 @@ async function main() {
           }).catch((err) => {
             process.stdout.write(`${JSON.stringify(createRuntimeEvent('chat.error', { message: String(err) }))}\n`);
           });
+        } else if (msg.type === 'chat:history' || msg.type === 'get-chat-history') {
+          const limit = Number(msg.limit || 50);
+          agent.getChatHistory(limit).then((history) => {
+            process.stdout.write(`${JSON.stringify(createRuntimeEvent('chat.history' as any, { history, correlationId: msg.correlationId } as any))}\n`);
+          }).catch((err) => {
+            process.stdout.write(`${JSON.stringify(createRuntimeEvent('chat.error', { message: String(err) }))}\n`);
+          });
+        } else if (msg.type === 'pet:create') {
+          (async () => {
+            const providers = await agent.getProviderConfigs().catch(()=>[]);
+            if (!providers || providers.length===0) {
+              process.stdout.write(`${JSON.stringify(createRuntimeEvent('pet.create' as any, { ok:false, error:'validation_failed: no provider', reason:'Connect a provider (including custom LiteLLM https://my-litellm:4000/v1) in Settings before Create Pet', correlationId: msg.correlationId } as any))}\n`);
+              return;
+            }
+            const jobId = `${Date.now()}-${Math.random().toString(36).slice(2,6)}`;
+            const { generatePetWithAI } = await import('./pet-generator.js');
+            const { ensureWorkspace, workspacePath } = await import('./pet-workspace.js');
+            ensureWorkspace(jobId);
+            process.stdout.write(`${JSON.stringify(createRuntimeEvent('pet.create' as any, { ok:true, jobId, status:'generating', correlationId: msg.correlationId } as any))}\n`);
+            try {
+              if (!msg.rightsAcknowledged) throw new Error('rightsAcknowledged required before export');
+              const res = await generatePetWithAI((agent as any).ai, { imagePath: msg.imagePath, description: msg.description, rightsAcknowledged: !!msg.rightsAcknowledged }, jobId);
+              process.stdout.write(`${JSON.stringify(createRuntimeEvent('pet.status' as any, { jobId, status:'preview', preview: res.assets.preview, manifest: res.assets.manifest, correlationId: msg.correlationId } as any))}\n`);
+            } catch (e:any) {
+              process.stdout.write(`${JSON.stringify(createRuntimeEvent('pet.create' as any, { ok:false, error: e.message||String(e), jobId, correlationId: msg.correlationId } as any))}\n`);
+            }
+          })();
+        } else if (msg.type === 'pet:list') {
+          const { PETS_ROOT } = await import('./pet-workspace.js');
+          try { const ids = fs.existsSync(PETS_ROOT) ? fs.readdirSync(PETS_ROOT) : []; process.stdout.write(`${JSON.stringify(createRuntimeEvent('pet.list' as any, { pets: ids, correlationId: msg.correlationId } as any))}\n`); } catch (e:any) { process.stdout.write(`${JSON.stringify(createRuntimeEvent('chat.error', { message: String(e) }))}\n`); }
+        } else if (msg.type === 'pet:install') {
+          (async () => {
+            const jobId = msg.jobId; const { workspacePath, PETS_ROOT } = await import('./pet-workspace.js');
+            const srcDir = workspacePath(jobId,'generated'); const manifest = JSON.parse(fs.readFileSync(path.join(srcDir,'manifest.json'),'utf8'));
+            const destTmp = path.join(PETS_ROOT, manifest.id, manifest.version + '.tmp');
+            const dest = path.join(PETS_ROOT, manifest.id, manifest.version);
+            fs.mkdirSync(destTmp,{recursive:true});
+            for (const f of fs.readdirSync(srcDir)) fs.copyFileSync(path.join(srcDir,f), path.join(destTmp,f));
+            const previewSrc = workspacePath(jobId,'preview','preview.svg'); if (fs.existsSync(previewSrc)) { fs.mkdirSync(path.join(destTmp,'assets'),{recursive:true}); fs.copyFileSync(previewSrc, path.join(destTmp,'assets','preview.svg')); }
+            fs.renameSync(destTmp, dest);
+            const activePath = path.join(PETS_ROOT, manifest.id, 'active.json');
+            const prev = fs.existsSync(activePath) ? JSON.parse(fs.readFileSync(activePath,'utf8')) : null;
+            fs.writeFileSync(activePath, JSON.stringify({active: manifest.version, previous: prev?.active || 'default-nyc-orb', installedAt: Date.now()},null,2));
+            process.stdout.write(`${JSON.stringify(createRuntimeEvent('pet.installed' as any, { ok:true, id: manifest.id, version: manifest.version, correlationId: msg.correlationId } as any))}\n`);
+          })().catch((e:any)=>{ process.stdout.write(`${JSON.stringify(createRuntimeEvent('chat.error', { message: String(e) }))}\n`); });
         }
       } catch (e) {
         // ignore
@@ -217,8 +276,10 @@ async function main() {
   }, 30000);
 }
 
-// Run if this is the entry point (ESM-safe)
-const isMain = import.meta.url === `file://${process.argv[1]}`;
+// Run if this is the entry point (ESM-safe).
+// fileURLToPath handles %20 (install dirs with spaces) and relative argv paths.
+const isMain = process.argv[1] != null
+  && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
 if (isMain) {
   main().catch(err => {
     console.error('Agent error:', err);

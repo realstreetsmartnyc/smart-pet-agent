@@ -6,12 +6,16 @@ export type RuntimeEventName =
   | 'chat.chunk'
   | 'chat.done'
   | 'chat.error'
+  | 'chat.history'
   | 'task.started'
   | 'task.completed'
   | 'task.failed'
+  | 'task.list'
   | 'permission.updated'
   | 'pet.intent'
-  | 'voice.state';
+  | 'voice.state'
+  | 'audit.list'
+  | 'provider.list';
 
 export interface RuntimeEvent<T = Record<string, unknown>> {
   version: 1;

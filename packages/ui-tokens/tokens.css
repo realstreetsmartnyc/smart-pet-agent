@@ -1,0 +1,24 @@
+/* Smart Pet Agent — Street Smart NYC Design Tokens (canonical) */
+:root {
+  --ink-950: #0b0d10;
+  --asphalt-900: #14181d;
+  --asphalt-800: #1b2128;
+  --steel-700: #41505f;
+  --steel-500: #6f8093;
+  --tile-100: #f2efe8;
+  --tile-200: #e3ddd1;
+  --taxi-500: #f4b400;
+  --signal-500: #ff8a1f;
+  --civic-500: #2f80ed;
+  --alert-500: #d64545;
+  --success-500: #2da56a;
+  --glass: rgba(255,255,255,0.06);
+  --glass-strong: rgba(255,255,255,0.11);
+  --border: rgba(255,255,255,0.12);
+  --mono: "SFMono-Regular","JetBrains Mono","Cascadia Code",monospace;
+  --sans: "Segoe UI","Aptos","Helvetica Neue",sans-serif;
+  --radius-lg: 18px;
+  --radius-xl: 22px;
+  --shadow-soft: 0 10px 30px rgba(0,0,0,0.18);
+  --shadow-strong: 0 20px 40px rgba(0,0,0,0.24);
+}

@@ -52,6 +52,7 @@ export class AIManager {
   }
 
   async initialize(): Promise<void> {
+    if (process.env.SMART_PET_TEST === '1') return;
     // Test each provider and remove unreachable ones
     for (const [name, provider] of this.providers) {
       try {
@@ -67,6 +68,7 @@ export class AIManager {
     if (provider.type === 'ollama') {
       const response = await fetch(`${provider.baseURL}/api/tags`, {
         headers: provider.apiKey ? { 'Authorization': `Bearer ${provider.apiKey}` } : {},
+        signal: AbortSignal.timeout(3000),
       });
       if (!response.ok) throw new Error(`Ping failed: ${response.status}`);
       return;
@@ -77,7 +79,7 @@ export class AIManager {
     // probe; chat-time surfaces real auth/model errors. Only reject on a true
     // network failure (host down / DNS miss), which fetch throws.
     try {
-      await fetch(provider.baseURL, { method: 'HEAD' }).catch(() => {});
+      await fetch(provider.baseURL, { method: 'HEAD', signal: AbortSignal.timeout(3000) }).catch(() => {});
     } catch {
       throw new Error(`Provider host unreachable: ${provider.baseURL}`);
     }
@@ -118,10 +120,10 @@ export class AIManager {
   }
 
   private async chatOllama(provider: AIProvider, options: ChatOptions): Promise<ChatResponse> {
-    const messages = options.messages.map(m => ({
+    const messages: ChatMessage[] = options.messages.map(m => ({
       role: m.role,
       content: m.content,
-      images: m.images,
+      ...(m.images ? { images: m.images } : {}),
     }));
 
     if (options.system) {

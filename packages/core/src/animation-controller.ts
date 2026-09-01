@@ -40,7 +40,7 @@ export class AnimationController {
     }
 
     this.currentAnimation = name;
-    this.emit('animation:start', { name, ...anim });
+    this.emit('animation:start', { ...anim, name });
 
     if (anim.duration > 0) {
       await new Promise(resolve => setTimeout(resolve, anim.duration));

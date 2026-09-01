@@ -1,6 +1,6 @@
-#!/usr/bin/env tsx
+#!/usr/bin/env node
 // Smart-Pet-Agent CLI Entry Point
-// apps/cli/src/index.ts
+// apps/cli/src/index.ts - cross-platform (Linux/Mac/Win)
 
 import { AgentLoop, UserInput, AgentResponse } from '@smart-pet/core/agent-loop';
 import { AIManager, AIProvider } from '@smart-pet/core/ai-manager';
@@ -9,8 +9,17 @@ import * as path from 'path';
 import * as os from 'os';
 import * as fs from 'fs';
 
-const DATA_DIR = path.join(os.homedir(), '.smart-pet-agent');
-const MEMORY_DB = path.join(DATA_DIR, 'memory.db');
+function getDataDir(): string {
+  if (process.env.SMART_PET_TEST === '1') return path.join(os.tmpdir(), 'smart-pet-agent-cli');
+  const p = path.join(os.homedir(), '.smart-pet-agent');
+  try { fs.mkdirSync(p, { recursive: true }); return p; } catch { const f = path.join(os.tmpdir(), 'smart-pet-agent-cli'); fs.mkdirSync(f, { recursive: true }); return f; }
+}
+function getMemoryPath(): string {
+  if (process.env.SMART_PET_TEST === '1') return ':memory:';
+  return path.join(getDataDir(), 'memory.db');
+}
+const DATA_DIR = getDataDir();
+const MEMORY_DB = getMemoryPath();
 
 // Default AI providers (user overrides via config)
 const defaultProviders: Record<string, AIProvider> = {
@@ -95,6 +104,7 @@ async function main() {
     prompt: 'You > ',
   });
 
+  rl.on('SIGINT', () => { console.log('\nGoodbye! 👋'); process.exit(0); });
   rl.prompt();
 
   rl.on('line', async (line) => {

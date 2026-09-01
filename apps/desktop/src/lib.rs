@@ -15,7 +15,7 @@ fn main() {
 
     let system_tray = SystemTray::new()
         .with_menu(tray_menu)
-        .with_tooltip("Smart-Pet-Agent");
+        .with_tooltip("Smart Pet Agent");
 
     tauri::Builder::default()
         .system_tray(system_tray)
@@ -48,5 +48,5 @@ fn main() {
             Ok(())
         })
         .run(tauri::generate_context!())
-        .expect("error while running Smart-Pet-Agent");
+        .expect("error while running Smart Pet Agent");
 }

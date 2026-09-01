@@ -166,6 +166,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   auditList: (limit) => ipcRenderer.invoke('audit:list', limit),
   providersList: () => ipcRenderer.invoke('providers:list'),
   providersSave: (key, data) => ipcRenderer.invoke('providers:save', key, data),
+  getLogPath: () => ipcRenderer.invoke('get-log-path'),
+  petCreate: (payload) => ipcRenderer.invoke('pet:create', payload),
+  petList: () => ipcRenderer.invoke('pet:list'),
+  petInstall: (jobId) => ipcRenderer.invoke('pet:install', jobId),
 
   // ---- Channels ----
   channelsList: () => ipcRenderer.invoke('channels:list'),

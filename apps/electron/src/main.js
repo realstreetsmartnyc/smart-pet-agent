@@ -36,17 +36,19 @@ let petState = {
 // ─── Agent Bridge ────────────────────────────────────────────────────────────
 
 function startAgent() {
-  // Spawn the agent-loop as a child process via workspace-root tsx
+  // Development uses the workspace TypeScript runner; packaged builds use the bundled runtime.
   try {
     const { spawn } = require('child_process');
-    const agentEntry = path.join(__dirname, '../../../packages/core/src/index.ts');
+    const packaged = app.isPackaged;
+    const agentEntry = packaged
+      ? path.join(process.resourcesPath, 'app.asar.unpacked', 'src', 'agent-runtime.mjs')
+      : path.join(__dirname, '../../../packages/core/src/index.ts');
     const rootDir = path.join(__dirname, '../../..');
-    const tsxPath = path.join(rootDir, 'node_modules', '.bin', 'tsx');
-
-    agentProcess = spawn(process.execPath, [tsxPath, agentEntry], {
-      cwd: rootDir,
+    const args = packaged ? [agentEntry] : ['--import', 'tsx', agentEntry];
+    agentProcess = spawn(process.execPath, args, {
+      cwd: packaged ? path.dirname(agentEntry) : rootDir,
       stdio: ['pipe', 'pipe', 'pipe'],
-      env: { ...process.env, NODE_ENV: 'development' },
+      env: { ...process.env, NODE_ENV: packaged ? 'production' : 'development', ...(packaged ? { ELECTRON_RUN_AS_NODE: '1' } : {}) },
     });
 
     agentProcess.stdout.on('data', (data) => {
@@ -73,6 +75,10 @@ function startAgent() {
         payload: runtimeStatus,
       });
       broadcastGatewayStatus();
+    });
+    agentProcess.on('error', (err) => {
+      appendLog('error', 'agent process error', { message: err.message });
+      console.error('[Agent] process error:', err);
     });
   } catch (err) {
     console.error('Failed to start agent:', err);
@@ -117,6 +123,7 @@ function handleAgentStdoutLine(line) {
 function routeRuntimeEvent(event) {
   if (event.event === 'agent.ready') {
     agentReady = true;
+    appendLog('info', 'agent ready', { packaged: app.isPackaged });
     runtimeStatus = {
       state: 'ready',
       summary: event.payload?.summary || 'Ready on your desktop',
@@ -177,7 +184,7 @@ function routeRuntimeEvent(event) {
     agentListeners.forEach((fn) => fn(event));
   } else if (event.event === 'task.started' || event.event === 'task.completed' || event.event === 'task.failed' || event.event === 'task.list') {
     agentListeners.forEach((fn) => fn(event));
-  } else if (event.event === 'audit.list' || event.event === 'provider.list' || event.event === 'provider.saved') {
+  } else if (event.event === 'audit.list' || event.event === 'provider.list' || event.event === 'provider.saved' || event.event === 'chat.history') {
     agentListeners.forEach((fn) => fn(event));
   }
 
@@ -355,7 +362,7 @@ function createTray() {
     { label: 'Quit', click: () => app.quit() },
   ]);
 
-  tray.setToolTip('Smart-Pet-Agent');
+  tray.setToolTip('Smart Pet Agent');
   tray.setContextMenu(contextMenu);
   tray.on('click', () => toggleChat());
 }
@@ -429,6 +436,9 @@ function setupIPC() {
   });
 
   ipcMain.handle('get-chat-history', async (event, sessionKey) => {
+    const res = await invokeGenericRpc({ type: 'chat:history', sessionKey, limit: 50 }, 'chat.history');
+    if (res?.history) return res.history;
+    // Fallback: try direct memory if available
     return [];
   });
 
@@ -470,6 +480,18 @@ function setupIPC() {
     return { ok: true };
   });
 
+  ipcMain.handle('voice:transcribe', async (event, arrayBuffer) => {
+    // Sprint 3 stub: echo back empty transcript with voice.state, real Whisper deferred to Sprint 4+ if it lands cleanly
+    appendLog('info', 'voice:transcribe stub', { bytes: arrayBuffer?.byteLength ?? 0 });
+    const evt = { event: 'voice.state', payload: { state: 'idle', transcript: '' } };
+    broadcastRuntimeEvent(evt);
+    return { transcript: '' };
+  });
+
+  ipcMain.handle('get-log-path', async () => {
+    return LOG_FILE;
+  });
+
   // Settings
   ipcMain.handle('get-settings', async () => {
     return store.get('settings', {
@@ -486,6 +508,20 @@ function setupIPC() {
 
   // App
   ipcMain.handle('get-app-version', () => app.getVersion());
+
+  ipcMain.handle('pet:create', async (event, payload) => {
+    const res = await invokeGenericRpc({ type: 'pet:create', description: payload?.description, imagePath: payload?.imagePath, rightsAcknowledged: !!payload?.rightsAcknowledged }, 'pet.create');
+    if (res && res.ok === false && res.error && res.error.includes('no provider')) throw new Error(res.error + ': ' + (res.reason||''));
+    return res;
+  });
+  ipcMain.handle('pet:list', async () => {
+    const res = await invokeGenericRpc({ type: 'pet:list' }, 'pet.list');
+    return res?.pets || [];
+  });
+  ipcMain.handle('pet:install', async (event, jobId) => {
+    const res = await invokeGenericRpc({ type: 'pet:install', jobId }, 'pet.installed');
+    return res;
+  });
 
   // Pet lifecycle
   ipcMain.handle('pet-appear', () => {
@@ -522,6 +558,26 @@ function setupIPC() {
 let isDragging = false;
 let dragOffset = { x: 0, y: 0 };
 
+// ─── Structured log file ───────────────────────────────────────────────────
+
+const LOG_DIR = path.join(require('os').homedir(), '.smart-pet-agent', 'logs');
+const LOG_FILE = path.join(LOG_DIR, 'runtime.log');
+function ensureLogDir() {
+  try { require('fs').mkdirSync(LOG_DIR, { recursive: true }); } catch {}
+}
+function appendLog(level, msg, meta) {
+  ensureLogDir();
+  try {
+    const line = JSON.stringify({ ts: new Date().toISOString(), level, msg, meta, status: runtimeStatus }) + '\n';
+    require('fs').appendFileSync(LOG_FILE, line);
+    // simple rotation: truncate if > 2MB
+    try {
+      const st = require('fs').statSync(LOG_FILE);
+      if (st.size > 2 * 1024 * 1024) require('fs').truncateSync(LOG_FILE, 0);
+    } catch {}
+  } catch {}
+}
+
 // ─── Health / Retry ────────────────────────────────────────────────────────
 
 let healthInterval = null;
@@ -533,14 +589,17 @@ function startHealthChecks() {
       if (restartAttempts < 3) {
         restartAttempts++;
         console.log(`[Health] Agent missing — restart attempt ${restartAttempts}`);
+        appendLog('warn', 'agent restart attempt', { attempt: restartAttempts });
         startAgent();
       } else {
         runtimeStatus = { state: 'error', summary: 'Agent repeatedly failed to start — check logs' };
+        appendLog('error', 'agent restart exhausted', { attempts: restartAttempts, logFile: LOG_FILE });
         broadcastGatewayStatus();
       }
     } else if (!agentReady) {
       // still starting — no-op, rely on agent.status events
     } else {
+      if (restartAttempts !== 0) appendLog('info', 'agent recovered', { attempts: restartAttempts });
       restartAttempts = 0;
     }
   }, 15000);

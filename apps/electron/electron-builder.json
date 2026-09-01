@@ -34,15 +34,11 @@
   },
   "win": {
     "target": "nsis",
-    "icon": "assets/icon.ico",
-    "certificateFile": "${env:WIN_CSC_LINK}",
-    "certificatePassword": "${env:WIN_CSC_KEY_PASSWORD}"
+    "icon": "assets/icon.ico"
   },
   "mac": {
     "target": "dmg",
-    "icon": "assets/icon.icns",
-    "cscLink": "${env:MAC_CSC_LINK}",
-    "cscKeyPassword": "${env:MAC_CSC_KEY_PASSWORD}"
+    "icon": "assets/icon.icns"
   },
   "nsis": {
     "oneClick": false,

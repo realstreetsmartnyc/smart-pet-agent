@@ -49,7 +49,7 @@ export interface AgentResponse {
   audio?: string; // TTS output path
   actions: AgentAction[];
   mood: AgentState['mood'];
-  learned?: string; // what the agent learned
+  learned?: { trait: string; delta: number; insight?: string }; // what the agent learned
 }
 
 export class AgentLoop extends EventEmitter {
@@ -115,7 +115,14 @@ export class AgentLoop extends EventEmitter {
     // Load persistent state
     const saved = await this.memory.getAgentState();
     if (saved) {
-      this.state = { ...this.state, ...saved };
+      this.state = {
+        ...this.state,
+        ...saved,
+        mood: this.isMood(saved.mood) ? saved.mood : this.state.mood,
+        personalityTraits: saved.personalityTraits
+          ? new Map(Object.entries(saved.personalityTraits))
+          : this.state.personalityTraits,
+      };
     }
     this.emit('ready', this.state);
   }
@@ -137,7 +144,13 @@ export class AgentLoop extends EventEmitter {
     await this.learn(input, response);
 
     // 6. SAVE — persist state
-    await this.memory.saveAgentState(this.state);
+    await this.memory.saveAgentState({
+      mood: this.state.mood,
+      energy: this.state.energy,
+      attention: this.state.attention,
+      learningRate: this.state.learningRate,
+      personalityTraits: Object.fromEntries(this.state.personalityTraits),
+    });
 
     this.emit('response', response);
     return response;
@@ -146,18 +159,30 @@ export class AgentLoop extends EventEmitter {
   private async perceive(input: UserInput): Promise<any> {
     const context: any = { ...input.context };
 
-    // Capture screen if computer use is enabled
     if (this.peripherals.isEnabled('screen')) {
-      context.screen = await this.peripherals.captureScreen();
+      try {
+        context.screen = await this.peripherals.captureScreen();
+      } catch (err: any) {
+        console.warn('[Perceive] screen capture failed:', err?.message);
+        context.screenError = err?.message ?? String(err);
+      }
     }
 
-    // Capture camera if enabled
     if (this.peripherals.isEnabled('camera')) {
-      context.camera = await this.peripherals.captureCamera();
+      try {
+        context.camera = await this.peripherals.captureCamera();
+      } catch (err: any) {
+        console.warn('[Perceive] camera capture failed:', err?.message);
+        context.cameraError = err?.message ?? String(err);
+      }
     }
 
-    // Get system info
-    context.system = await this.peripherals.getSystemInfo();
+    try {
+      context.system = await this.peripherals.getSystemInfo();
+    } catch (err: any) {
+      console.warn('[Perceive] getSystemInfo failed:', err?.message);
+      context.system = { platform: process.platform, network: false, error: err?.message };
+    }
 
     return context;
   }
@@ -168,7 +193,7 @@ export class AgentLoop extends EventEmitter {
     
     // Add conversation history (last 20 messages)
     const history = this.conversationHistory.slice(-20).map(m => ({
-      role: m.role,
+      role: m.role === 'agent' ? 'assistant' as const : 'user' as const,
       content: m.content,
     }));
 
@@ -223,11 +248,19 @@ export class AgentLoop extends EventEmitter {
           response.text += `\n[Delegate → ${action.payload.agent}]: ${delegateResult.summary}`;
           break;
 
-        case 'computer_use':
-          // Execute computer action (mouse, keyboard, app control)
-          await this.peripherals.executeComputerAction(action.payload);
-          response.text += `\n[Computer]: ${action.payload.description}`;
+        case 'computer_use': {
+          try {
+            await this.peripherals.executeComputerAction(action.payload);
+            await this.memory.logAudit('computer_action', action.payload.type, 'allowed', JSON.stringify(action.payload).slice(0, 500));
+            response.text += `\n[Computer]: ${action.payload.description ?? action.payload.type}`;
+          } catch (err: any) {
+            const code = err?.code === 'CONFIRMATION_REQUIRED' ? 'confirmation_required' : 'denied';
+            await this.memory.logAudit('computer_action', action.payload?.type ?? 'unknown', code, err?.message?.slice(0, 500) ?? String(err).slice(0, 500));
+            if (err?.code === 'CONFIRMATION_REQUIRED') throw err;
+            response.text += `\n[Computer denied]: ${err?.message}`;
+          }
           break;
+        }
 
         case 'peripheral':
           // Use camera, mic, etc.
@@ -338,10 +371,22 @@ Respond in JSON format:
 }`;
   }
 
+  private isMood(value: string): value is AgentState['mood'] {
+    return ['happy', 'neutral', 'sad', 'angry', 'excited', 'sleepy', 'curious'].includes(value);
+  }
+
   private async generateVoice(text: string): Promise<string> {
-    // TTS via local Piper or cloud — implemented in voice package
-    this.emit('voice:generate', text);
-    return ''; // placeholder
+    // TTS stub: voice package not yet bundled. Emit event for future provider
+    // and return empty path without throwing so chat flow stays green.
+    try {
+      this.emit('voice:generate', text);
+      // Dynamic import avoids hard dep; if @smart-pet/voice exists it will handle
+      // const { VoiceService } = await import('@smart-pet/voice');
+      // return VoiceService.synthesize(text);
+    } catch (err: any) {
+      console.warn('[Voice] generateVoice stub failed:', err?.message);
+    }
+    return '';
   }
 
   private async updatePersonality(insight: any): Promise<void> {
@@ -409,5 +454,14 @@ Respond in JSON format:
   async updateTask(id: string, status: 'pending' | 'running' | 'completed' | 'failed', output?: string) {
     await this.memory.updateTask(id, status, output);
     await this.memory.logAudit(`task.${status}`, null, id, (output || '').slice(0, 300));
+  }
+
+  async getChatHistory(limit = 50) {
+    return this.memory.getChatHistory(limit);
+  }
+
+  // Expose chat history via memory
+  getMemory() {
+    return this.memory;
   }
 }

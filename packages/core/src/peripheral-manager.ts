@@ -4,7 +4,7 @@
 import { exec, spawn } from 'child_process';
 import { promisify } from 'util';
 import type { PermissionRecord } from './runtime-events.js';
-import os from 'os';
+import * as os from 'os';
 
 const execAsync = promisify(exec);
 
@@ -24,6 +24,7 @@ export interface SystemInfo {
   platform: string;
   hostname: string;
   uptime: number;
+  capabilities?: { screen: boolean; camera: boolean; mic: boolean };
 }
 
 export class PeripheralManager {
@@ -130,11 +131,55 @@ export class PeripheralManager {
     return this.getAdapter().captureCamera();
   }
 
-  async executeComputerAction(action: any): Promise<void> {
-    if (!this.isEnabled('apps') && !this.isEnabled('mouse') && !this.isEnabled('keyboard')) {
-      throw new Error('Computer use not permitted');
+  // Typed, auditable computer actions — deny by default per action type
+  private static readonly ACTION_DEVICE: Record<string, string> = {
+    open_app: 'apps',
+    type: 'keyboard',
+    click: 'mouse',
+    key: 'keyboard',
+  };
+
+  // v1: no destructive file/system actions yet; open_app is reversible launch, not destructive
+  private static readonly DESTRUCTIVE_ACTIONS = new Set<string>([]);
+
+  validateComputerAction(action: any): { type: string; requires: string; needsConfirmation: boolean } {
+    if (!action || typeof action.type !== 'string') throw new Error('Invalid computer action: missing type');
+    const requires = PeripheralManager.ACTION_DEVICE[action.type];
+    if (!requires) throw new Error(`Unknown computer action: ${action.type}`);
+    // Basic schema validation
+    switch (action.type) {
+      case 'open_app':
+        if (typeof action.app !== 'string' || !action.app.trim()) throw new Error('open_app requires non-empty app string');
+        if (action.app.length > 512) throw new Error('open_app app too long');
+        break;
+      case 'type':
+        if (typeof action.text !== 'string') throw new Error('type requires text string');
+        if (action.text.length > 4096) throw new Error('type text too long');
+        break;
+      case 'click':
+        if (!Number.isFinite(action.x) || !Number.isFinite(action.y)) throw new Error('click requires numeric x,y');
+        break;
+      case 'key':
+        if (typeof action.key !== 'string' || !action.key.trim()) throw new Error('key requires non-empty key string');
+        break;
+    }
+    return { type: action.type, requires, needsConfirmation: PeripheralManager.DESTRUCTIVE_ACTIONS.has(action.type) };
+  }
+
+  async executeComputerAction(action: any): Promise<{ requiresConfirmation: boolean }> {
+    const meta = this.validateComputerAction(action);
+    if (!this.isEnabled(meta.requires)) {
+      throw new Error(`Computer action "${meta.type}" requires permission: ${meta.requires} (currently denied)`);
+    }
+    if (meta.needsConfirmation && action.confirmed !== true) {
+      const err: any = new Error(`Action "${meta.type}" requires explicit confirmation`);
+      err.code = 'CONFIRMATION_REQUIRED';
+      err.meta = meta;
+      throw err;
     }
     await this.getAdapter().executeComputerAction(action);
+    this.emit('computer-action', { action: meta.type, device: meta.requires, at: Date.now() });
+    return { requiresConfirmation: meta.needsConfirmation };
   }
 
   async use(device: string, action: any): Promise<string> {
@@ -236,6 +281,11 @@ function createLinuxAdapter(): PlatformAdapter {
         platform: process.platform,
         hostname: os.hostname(),
         uptime: os.uptime(),
+        capabilities: {
+          screen: !!process.env.DISPLAY || process.platform === 'win32' || process.platform === 'darwin',
+          camera: (() => { try { require('fs').accessSync('/dev/video0'); return true; } catch { return process.platform === 'win32' || process.platform === 'darwin'; } })(),
+          mic: process.platform === 'win32' || process.platform === 'darwin' || (() => { try { require('fs').accessSync('/dev/snd'); return true; } catch { return false; } })(),
+        },
       };
 
       try {
@@ -274,18 +324,41 @@ function createLinuxAdapter(): PlatformAdapter {
       return path;
     },
     async executeComputerAction(action: any) {
+      const spawnSafe = (cmd: string, args: string[]) =>
+        new Promise<void>((resolve, reject) => {
+          const ch = spawn(cmd, args, { stdio: 'ignore', detached: true });
+          ch.on('error', reject);
+          // allow detached to survive if needed, but resolve when spawned
+          ch.unref?.();
+          resolve();
+        });
       switch (action.type) {
         case 'open_app':
-          await execAsync(`xdg-open "${action.app}" &`);
+          await spawnSafe('xdg-open', [String(action.app)]);
           return;
         case 'type':
-          await execAsync(`xdotool type "${action.text}"`);
+          await new Promise<void>((resolve, reject) => {
+            const ch = spawn('xdotool', ['type', '--', String(action.text)]);
+            ch.on('error', reject);
+            ch.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`xdotool type exit ${code}`))));
+          });
           return;
-        case 'click':
-          await execAsync(`xdotool mousemove ${action.x} ${action.y} click 1`);
+        case 'click': {
+          const x = Math.round(Number(action.x));
+          const y = Math.round(Number(action.y));
+          await new Promise<void>((resolve, reject) => {
+            const ch = spawn('xdotool', ['mousemove', String(x), String(y), 'click', '1']);
+            ch.on('error', reject);
+            ch.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`xdotool click exit ${code}`))));
+          });
           return;
+        }
         case 'key':
-          await execAsync(`xdotool key "${action.key}"`);
+          await new Promise<void>((resolve, reject) => {
+            const ch = spawn('xdotool', ['key', String(action.key)]);
+            ch.on('error', reject);
+            ch.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`xdotool key exit ${code}`))));
+          });
           return;
         default:
           throw new Error(`Unknown computer action: ${action.type}`);
@@ -303,28 +376,103 @@ function createWindowsAdapter(): PlatformAdapter {
   return {
     async captureScreen() {
       const out = `${os.tmpdir()}/smart-pet-screen-${Date.now()}.png`;
-      try {
-        await execAsync(`powershell -NoProfile -Command "Add-Type -AssemblyName System.Windows.Forms; Add-Type -AssemblyName System.Drawing; $b=[Windows.Forms.SystemInformation]::VirtualScreen; $bmp=New-Object Drawing.Bitmap $b.Width,$b.Height; $g=[Drawing.Graphics]::FromImage($bmp); $g.CopyFromScreen($b.X,$b.Y,0,0,$b.Size); $bmp.Save('${out.replace(/\\/g,'/')}'); $g.Dispose(); $bmp.Dispose()"`);
-        return out;
-      } catch { await execAsync(`powershell -NoProfile -Command "Start-Sleep -Milliseconds 80"`); return out; }
+      const psScript = `Add-Type -AssemblyName System.Windows.Forms; Add-Type -AssemblyName System.Drawing; $b=[Windows.Forms.SystemInformation]::VirtualScreen; $bmp=New-Object Drawing.Bitmap $b.Width,$b.Height; $g=[Drawing.Graphics]::FromImage($bmp); $g.CopyFromScreen($b.X,$b.Y,0,0,$b.Size); $bmp.Save('${out.replace(/\\/g,'/')}'); $g.Dispose(); $bmp.Dispose()`;
+      await new Promise<void>((resolve, reject) => {
+        const ch = spawn('powershell', ['-NoProfile', '-Command', psScript]);
+        let stderr = '';
+        ch.stderr?.on('data', (d) => stderr += d.toString());
+        ch.on('error', reject);
+        ch.on('close', (code) => {
+          if (code !== 0) return reject(new Error(`Windows screen capture failed (code ${code}): ${stderr.slice(0,300)}`));
+          // verify file exists and non-empty
+          try {
+            const fs = require('fs');
+            const st = fs.statSync(out);
+            if (st.size === 0) throw new Error('screen capture produced empty file');
+          } catch (e: any) { return reject(e); }
+          resolve();
+        });
+      });
+      return out;
     },
     async captureCamera() {
       const out = `${os.tmpdir()}/smart-pet-camera-${Date.now()}.jpg`;
-      await execAsync(`ffmpeg -f dshow -i video="Integrated Camera" -frames:v 1 "${out}" -y 2>nul || ffmpeg -f gdigrab -i desktop -frames:v 1 "${out}" -y 2>nul`);
+      await new Promise<void>((resolve, reject) => {
+        const ch = spawn('ffmpeg', ['-f', 'dshow', '-i', 'video=Integrated Camera', '-frames:v', '1', out, '-y']);
+        let stderr = '';
+        ch.stderr?.on('data', (d) => stderr += d.toString());
+        ch.on('error', () => {
+          // fallback to gdigrab
+          const ch2 = spawn('ffmpeg', ['-f', 'gdigrab', '-i', 'desktop', '-frames:v', '1', out, '-y']);
+          let s2 = '';
+          ch2.stderr?.on('data', (d) => s2 += d.toString());
+          ch2.on('error', reject);
+          ch2.on('close', (code) => code === 0 ? resolve() : reject(new Error(`camera fallback failed (code ${code}): ${s2.slice(0,300)}`)));
+        });
+        ch.on('close', (code) => {
+          if (code === 0) return resolve();
+          // try fallback
+          const ch2 = spawn('ffmpeg', ['-f', 'gdigrab', '-i', 'desktop', '-frames:v', '1', out, '-y']);
+          let s2 = '';
+          ch2.stderr?.on('data', (d) => s2 += d.toString());
+          ch2.on('error', reject);
+          ch2.on('close', (c2) => c2 === 0 ? resolve() : reject(new Error(`camera capture failed (code ${code}/${c2}): ${(stderr+s2).slice(0,300)}`)));
+        });
+      });
       return out;
     },
     async executeComputerAction(action: any) {
       switch (action.type) {
-        case 'open_app': await execAsync(`powershell -NoProfile -Command "Start-Process '${String(action.app || '').replace(/'/g, "''")}'"`); return;
-        case 'type': await execAsync(`powershell -NoProfile -Command "Add-Type -AssemblyName System.Windows.Forms; [Windows.Forms.SendKeys]::SendWait('${String(action.text||'').replace(/'/g,"''").replace(/\+/g,'{+}').replace(/\^/g,'{^}').replace(/%/g,'{%}')}')"`); return;
-        case 'click': await execAsync(`powershell -NoProfile -Command "Add-Type -MemberDefinition '[DllImport(\\"user32.dll\\")] public static extern void mouse_event(int f,int x,int y,int d,int e);' -Name U -Namespace W; [W.U]::mouse_event(0x02,0,0,0,0); [W.U]::mouse_event(0x04,0,0,0,0)"`); return;
-        case 'key': await execAsync(`powershell -NoProfile -Command "Add-Type -AssemblyName System.Windows.Forms; [Windows.Forms.SendKeys]::SendWait('${String(action.key||'').replace(/'/g,"''")}')"`); return;
+        case 'open_app': {
+          const app = String(action.app || '');
+          await new Promise<void>((resolve, reject) => {
+            const ch = spawn('powershell', ['-NoProfile', '-Command', `Start-Process ${JSON.stringify(app)}`]);
+            ch.on('error', reject);
+            ch.on('close', (code) => code === 0 ? resolve() : reject(new Error(`open_app exit ${code}`)));
+          });
+          return;
+        }
+        case 'type': {
+          const txt = String(action.text || '');
+          // Use JSON.stringify to safely escape for PowerShell string, still spawned as single arg
+          const escaped = txt.replace(/"/g, '""');
+          await new Promise<void>((resolve, reject) => {
+            const ch = spawn('powershell', ['-NoProfile', '-Command', `Add-Type -AssemblyName System.Windows.Forms; [Windows.Forms.SendKeys]::SendWait("${escaped.replace(/\\/g,'\\\\')}")`]);
+            ch.on('error', reject);
+            ch.on('close', (code) => code === 0 ? resolve() : reject(new Error(`type exit ${code}`)));
+          });
+          return;
+        }
+        case 'click':
+          await new Promise<void>((resolve, reject) => {
+            const ch = spawn('powershell', ['-NoProfile', '-Command', `Add-Type -MemberDefinition '[DllImport("user32.dll")] public static extern void mouse_event(int f,int x,int y,int d,int e);' -Name U -Namespace W; [W.U]::mouse_event(0x02,0,0,0,0); [W.U]::mouse_event(0x04,0,0,0,0)`]);
+            ch.on('error', reject);
+            ch.on('close', (code) => code === 0 ? resolve() : reject(new Error(`click exit ${code}`)));
+          });
+          return;
+        case 'key': {
+          const k = String(action.key || '');
+          await new Promise<void>((resolve, reject) => {
+            const ch = spawn('powershell', ['-NoProfile', '-Command', `Add-Type -AssemblyName System.Windows.Forms; [Windows.Forms.SendKeys]::SendWait(${JSON.stringify(k)})`]);
+            ch.on('error', reject);
+            ch.on('close', (code) => code === 0 ? resolve() : reject(new Error(`key exit ${code}`)));
+          });
+          return;
+        }
         default: throw new Error(`Windows adapter: unsupported ${action.type}`);
       }
     },
     async recordAudio(duration:number) {
       const out = `${os.tmpdir()}/smart-pet-audio-${Date.now()}.wav`;
-      await execAsync(`powershell -NoProfile -Command "$c=New-Object System.Media.SoundPlayer; Start-Sleep -Milliseconds ${duration}"`);
+      // Windows audio recording requires proper capture (was fake sleep). Use ffmpeg directshow if available, else fail explicitly.
+      await new Promise<void>((resolve, reject) => {
+        const sec = Math.max(1, Math.floor(duration / 1000));
+        const ch = spawn('ffmpeg', ['-f', 'dshow', '-i', 'audio=Microphone', '-t', String(sec), out, '-y']);
+        let stderr = '';
+        ch.stderr?.on('data', (d) => stderr += d.toString());
+        ch.on('error', () => reject(new Error('Windows audio capture not available — no capture device / ffmpeg missing')));
+        ch.on('close', (code) => code === 0 ? resolve() : reject(new Error(`audio capture failed (code ${code}): ${stderr.slice(0,300)}`)));
+      });
       return out;
     },
   };
@@ -336,10 +484,20 @@ function createMacAdapter(): PlatformAdapter {
     async captureCamera() { const out=`/tmp/smart-pet-camera-${Date.now()}.jpg`; await execAsync(`ffmpeg -f avfoundation -i "0" -frames:v 1 "${out}" -y 2>/dev/null`); return out; },
     async executeComputerAction(action:any) {
       switch(action.type){
-        case 'open_app': await execAsync(`open "${action.app}"`); return;
-        case 'type': await execAsync(`osascript -e 'tell application "System Events" to keystroke "${String(action.text||'').replace(/"/g,'\\"')}"'`); return;
-        case 'click': await execAsync(`cliclick c:${action.x},${action.y} 2>/dev/null || osascript -e 'tell application "System Events" to click at {${action.x},${action.y}}'`); return;
-        case 'key': await execAsync(`osascript -e 'tell application "System Events" to key code ${action.key}'`); return;
+        case 'open_app': await new Promise<void>((res,rej)=>{ const ch=spawn('open',[String(action.app)]); ch.on('error',rej); ch.on('close',c=>c===0?res():rej(new Error(`open exit ${c}`))); }); return;
+        case 'type': {
+          const txt = String(action.text||'');
+          await new Promise<void>((res,rej)=>{ const ch=spawn('osascript',['-e',`tell application "System Events" to keystroke ${JSON.stringify(txt)}`]); ch.on('error',rej); ch.on('close',c=>c===0?res():rej(new Error(`osascript exit ${c}`))); }); return;
+        }
+        case 'click': {
+          const x = Math.round(Number(action.x)); const y = Math.round(Number(action.y));
+          await new Promise<void>((res,rej)=>{
+            const ch=spawn('cliclick',[`c:${x},${y}`]); let done=false;
+            ch.on('error',()=>{ if(done) return; const ch2=spawn('osascript',['-e',`tell application "System Events" to click at {${x}, ${y}}`]); ch2.on('error',rej); ch2.on('close',c=>c===0?res():rej(new Error(`osascript exit ${c}`))); done=true; });
+            ch.on('close',c=>{ if(done) return; c===0?res():rej(new Error(`cliclick exit ${c}`)); });
+          }); return;
+        }
+        case 'key': await new Promise<void>((res,rej)=>{ const ch=spawn('osascript',['-e',`tell application "System Events" to key code ${String(action.key)}`]); ch.on('error',rej); ch.on('close',c=>c===0?res():rej(new Error(`osascript exit ${c}`))); }); return;
         default: throw new Error(`macOS: unsupported ${action.type}`);
       }
     },

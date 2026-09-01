@@ -3,11 +3,18 @@
   "version": "0.1.0",
   "type": "module",
   "bin": {
-    "smart-pet": "./src/index.ts"
+    "smart-pet": "./dist/index.js"
   },
   "scripts": {
-    "start": "tsx src/index.ts"
+    "build": "tsc -p tsconfig.json",
+    "start": "node --import tsx src/index.ts",
+    "dev": "node --import tsx src/index.ts",
+    "prepublishOnly": "pnpm build"
   },
+  "engines": {
+    "node": ">=20"
+  },
+  "os": ["linux", "darwin", "win32"],
   "dependencies": {
     "@smart-pet/core": "workspace:*"
   },
