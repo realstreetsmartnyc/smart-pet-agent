@@ -19,7 +19,7 @@ var __export = (target, all) => {
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 
-// ../../packages/core/src/pet-validator.ts
+// packages/core/src/pet-validator.ts
 function validatePetPack(manifest, config, opts) {
   const errors = [];
   const warnings = [];
@@ -38,18 +38,18 @@ function validatePetPack(manifest, config, opts) {
       for (const [k, s] of Object.entries(config.states)) {
         if (s.src) {
           try {
-            const { existsSync: existsSync3 } = __require("fs");
-            const { join: join3 } = __require("path");
-            if (!existsSync3(join3(opts.baseDir, s.src))) warnings.push(`missing asset for state ${k}: ${s.src}`);
+            const { existsSync: existsSync4 } = __require("fs");
+            const { join: join4 } = __require("path");
+            if (!existsSync4(join4(opts.baseDir, s.src))) warnings.push(`missing asset for state ${k}: ${s.src}`);
           } catch {
           }
         }
       }
       if (manifest.preview) {
         try {
-          const { existsSync: existsSync3 } = __require("fs");
-          const { join: join3 } = __require("path");
-          if (!existsSync3(join3(opts.baseDir, manifest.preview))) warnings.push(`missing preview: ${manifest.preview}`);
+          const { existsSync: existsSync4 } = __require("fs");
+          const { join: join4 } = __require("path");
+          if (!existsSync4(join4(opts.baseDir, manifest.preview))) warnings.push(`missing preview: ${manifest.preview}`);
         } catch {
         }
       }
@@ -61,49 +61,14 @@ function validatePetPack(manifest, config, opts) {
 }
 var REQUIRED_INTENTS, VALID_ENGINES;
 var init_pet_validator = __esm({
-  "../../packages/core/src/pet-validator.ts"() {
+  "packages/core/src/pet-validator.ts"() {
     "use strict";
     REQUIRED_INTENTS = ["idle", "listening", "thinking", "planning", "acting", "waiting", "asking_permission", "celebrating", "warning", "sleeping", "resuming"];
     VALID_ENGINES = ["video", "canvas", "lottie", "spine", "three"];
   }
 });
 
-// ../../packages/core/src/pet-source.ts
-function normalizeSourceType(hasImage, hasDescription) {
-  if (hasImage && hasDescription) return "image_and_description";
-  if (hasImage) return "image";
-  return "description";
-}
-function validatePetSource(source) {
-  const errors = [];
-  const warnings = [];
-  if (!source.identity?.id || !/^[a-z0-9-]+$/.test(source.identity.id)) errors.push("identity.id must be kebab-case");
-  if (!source.identity?.name) errors.push("identity.name required");
-  if (!source.input?.rightsAcknowledged) errors.push("rightsAcknowledged required before export");
-  if (source.input?.sourceReference?.includes("..") || source.input?.sourceReference?.includes("/.")) errors.push("sourceReference path traversal");
-  return { ok: errors.length === 0, errors, warnings };
-}
-var DEFAULT_STATES;
-var init_pet_source = __esm({
-  "../../packages/core/src/pet-source.ts"() {
-    "use strict";
-    DEFAULT_STATES = [
-      { name: "idle", intent: "idle" },
-      { name: "listening", intent: "listening", halo: "civic-500" },
-      { name: "thinking", intent: "thinking", halo: "taxi-500" },
-      { name: "planning", intent: "planning", halo: "taxi-500" },
-      { name: "acting", intent: "acting", halo: "signal-500" },
-      { name: "waiting", intent: "waiting" },
-      { name: "asking", intent: "asking_permission", halo: "signal-500" },
-      { name: "celebrating", intent: "celebrating", halo: "success-500" },
-      { name: "warning", intent: "warning", halo: "alert-500" },
-      { name: "sleeping", intent: "sleeping" },
-      { name: "resuming", intent: "resuming", halo: "civic-500" }
-    ];
-  }
-});
-
-// ../../packages/core/src/pet-workspace.ts
+// packages/core/src/pet-workspace.ts
 var pet_workspace_exports = {};
 __export(pet_workspace_exports, {
   ALLOWED_MIME: () => ALLOWED_MIME,
@@ -139,11 +104,11 @@ function workspacePath(jobId, ...parts) {
   return path.join(getWorkspaceRoot(), jobId, ...parts);
 }
 function assertNoTraversal(p) {
-  if (p.includes("..") || p.includes("/.") || p.startsWith("/")) throw new Error("path traversal");
+  if (p.split(/[\\/]+/).includes("..")) throw new Error("path traversal: .. segment");
 }
 var WORKSPACE_ROOT, PETS_ROOT, MAX_IMAGE_BYTES, MAX_WORKSPACE_BYTES, ALLOWED_MIME;
 var init_pet_workspace = __esm({
-  "../../packages/core/src/pet-workspace.ts"() {
+  "packages/core/src/pet-workspace.ts"() {
     "use strict";
     WORKSPACE_ROOT = getWorkspaceRoot();
     PETS_ROOT = getPetsRoot();
@@ -153,7 +118,42 @@ var init_pet_workspace = __esm({
   }
 });
 
-// ../../packages/core/src/pet-generator.ts
+// packages/core/src/pet-source.ts
+function normalizeSourceType(hasImage, hasDescription) {
+  if (hasImage && hasDescription) return "image_and_description";
+  if (hasImage) return "image";
+  return "description";
+}
+function validatePetSource(source) {
+  const errors = [];
+  const warnings = [];
+  if (!source.identity?.id || !/^[a-z0-9-]+$/.test(source.identity.id)) errors.push("identity.id must be kebab-case");
+  if (!source.identity?.name) errors.push("identity.name required");
+  if (!source.input?.rightsAcknowledged) errors.push("rightsAcknowledged required before export");
+  if (source.input?.sourceReference?.includes("..") || source.input?.sourceReference?.includes("/.")) errors.push("sourceReference path traversal");
+  return { ok: errors.length === 0, errors, warnings };
+}
+var DEFAULT_STATES;
+var init_pet_source = __esm({
+  "packages/core/src/pet-source.ts"() {
+    "use strict";
+    DEFAULT_STATES = [
+      { name: "idle", intent: "idle" },
+      { name: "listening", intent: "listening", halo: "civic-500" },
+      { name: "thinking", intent: "thinking", halo: "taxi-500" },
+      { name: "planning", intent: "planning", halo: "taxi-500" },
+      { name: "acting", intent: "acting", halo: "signal-500" },
+      { name: "waiting", intent: "waiting" },
+      { name: "asking", intent: "asking_permission", halo: "signal-500" },
+      { name: "celebrating", intent: "celebrating", halo: "success-500" },
+      { name: "warning", intent: "warning", halo: "alert-500" },
+      { name: "sleeping", intent: "sleeping" },
+      { name: "resuming", intent: "resuming", halo: "civic-500" }
+    ];
+  }
+});
+
+// packages/core/src/pet-generator.ts
 var pet_generator_exports = {};
 __export(pet_generator_exports, {
   PET_TOOLS: () => PET_TOOLS,
@@ -162,8 +162,8 @@ __export(pet_generator_exports, {
   listPetProviders: () => listPetProviders,
   localPlaceholderProvider: () => localPlaceholderProvider
 });
-import * as fs3 from "fs";
-import * as crypto from "crypto";
+import * as fs4 from "fs";
+import * as crypto2 from "crypto";
 function getPetProvider(id) {
   return providers[id] || localPlaceholderProvider;
 }
@@ -183,12 +183,12 @@ async function generatePetWithAI(ai, input, jobId) {
   const prov = getPetProvider("local-placeholder");
   const source = await prov.generateSource(input, jobId);
   const assets = await prov.generateAssets(source, jobId);
-  fs3.writeFileSync(workspacePath(jobId, "validation.json"), JSON.stringify({ errors: source.validation.errors, warnings: source.validation.warnings }, null, 2));
+  fs4.writeFileSync(workspacePath(jobId, "validation.json"), JSON.stringify({ errors: source.validation.errors, warnings: source.validation.warnings }, null, 2));
   return { source, assets };
 }
 var PET_TOOLS, localPlaceholderProvider, providers;
 var init_pet_generator = __esm({
-  "../../packages/core/src/pet-generator.ts"() {
+  "packages/core/src/pet-generator.ts"() {
     "use strict";
     init_pet_source();
     init_pet_validator();
@@ -218,7 +218,7 @@ var init_pet_generator = __esm({
           targetFormats: ["electron-canvas", "web-preview"],
           generatedAssets: { source: [], preview: [], desktop: [], mobile: [], icons: [] },
           validation: { errors: [], warnings: [] },
-          provenance: { providerId: "local-placeholder", requestId: jobId, createdAt: Date.now(), sourceImageHash: hasImage ? crypto.createHash("sha256").update(input.imagePath).digest("hex").slice(0, 16) : void 0 }
+          provenance: { providerId: "local-placeholder", requestId: jobId, createdAt: Date.now(), sourceImageHash: hasImage ? crypto2.createHash("sha256").update(input.imagePath).digest("hex").slice(0, 16) : void 0 }
         };
         const check = validatePetSource(source);
         source.validation.errors = check.errors;
@@ -229,11 +229,11 @@ var init_pet_generator = __esm({
         const dir = ensureWorkspace(jobId);
         const previewSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256"><rect width="256" height="256" rx="48" fill="#0b0d10"/><circle cx="128" cy="128" r="64" fill="#f4b400" opacity="0.9"/><text x="128" y="140" text-anchor="middle" fill="#0b0d10" font-size="14">${source.identity.name.slice(0, 12)}</text></svg>`;
         const previewPath = workspacePath(jobId, "preview", "preview.svg");
-        fs3.writeFileSync(previewPath, previewSvg);
+        fs4.writeFileSync(previewPath, previewSvg);
         const manifest = { id: source.identity.id, name: source.identity.name, version: source.identity.version, engine: "canvas", preview: "preview.svg", tags: ["custom"], defaultState: "idle" };
         const config = { states: Object.fromEntries(source.behavior.states.map((s) => [s.name, { intent: s.intent, halo: s.halo, loop: true }])), hitbox: 0.62 };
-        fs3.writeFileSync(workspacePath(jobId, "generated", "manifest.json"), JSON.stringify(manifest, null, 2));
-        fs3.writeFileSync(workspacePath(jobId, "generated", "pet.config.json"), JSON.stringify(config, null, 2));
+        fs4.writeFileSync(workspacePath(jobId, "generated", "manifest.json"), JSON.stringify(manifest, null, 2));
+        fs4.writeFileSync(workspacePath(jobId, "generated", "pet.config.json"), JSON.stringify(config, null, 2));
         const v = validatePetPack(manifest, config);
         source.validation.errors.push(...v.errors);
         source.validation.warnings.push(...v.warnings);
@@ -244,10 +244,10 @@ var init_pet_generator = __esm({
   }
 });
 
-// ../../packages/core/src/agent-loop.ts
+// packages/core/src/agent-loop.ts
 import { EventEmitter } from "events";
 
-// ../../packages/core/src/ai-manager.ts
+// packages/core/src/ai-manager.ts
 var AIManager = class {
   providers = /* @__PURE__ */ new Map();
   defaultProvider = "ollama";
@@ -403,7 +403,7 @@ var AIManager = class {
   }
 };
 
-// ../../packages/core/src/memory.ts
+// packages/core/src/memory.ts
 import Database from "better-sqlite3";
 import * as fs from "fs";
 var MemoryStore = class {
@@ -417,22 +417,22 @@ var MemoryStore = class {
   auditStore = [];
   agentState = null;
   fallbackReason = null;
-  constructor(path3) {
-    this.path = path3;
-    if (process.env.SMART_PET_TEST === "1" || path3.startsWith(":memory:") || path3.includes("/tmp/voice-") || path3.includes("/tmp/smoke-")) {
+  constructor(path4) {
+    this.path = path4;
+    if (process.env.SMART_PET_TEST === "1" || path4.startsWith(":memory:") || path4.includes("/tmp/voice-") || path4.includes("/tmp/smoke-")) {
       this.useMem = true;
       this.fallbackReason = "test memory path";
       return;
     }
     const candidates = ["/tmp/better-sqlite3-build/build/Release/better_sqlite3.node", "/tmp/better-sqlite3-rebuild/build/Release/better_sqlite3.node"];
     try {
-      this.db = new Database(path3);
+      this.db = new Database(path4);
     } catch (e) {
       const errors = [`default binding: ${e?.message ?? String(e)}`];
       for (const p of candidates) {
         if (fs.existsSync(p)) {
           try {
-            this.db = new Database(path3, { nativeBinding: p });
+            this.db = new Database(path4, { nativeBinding: p });
             return;
           } catch (candidateError) {
             errors.push(`${p}: ${candidateError?.message ?? String(candidateError)}`);
@@ -615,7 +615,7 @@ var MemoryStore = class {
   }
 };
 
-// ../../packages/core/src/action-planner.ts
+// packages/core/src/action-planner.ts
 var ActionPlanner = class {
   parse(reasoning, state, context) {
     const actions = [];
@@ -700,7 +700,7 @@ var ActionPlanner = class {
   }
 };
 
-// ../../packages/core/src/animation-controller.ts
+// packages/core/src/animation-controller.ts
 var AnimationController = class {
   currentAnimation = "idle";
   queue = [];
@@ -750,7 +750,7 @@ var AnimationController = class {
   }
 };
 
-// ../../packages/core/src/delegation-manager.ts
+// packages/core/src/delegation-manager.ts
 import { spawn, exec } from "child_process";
 import { promisify } from "util";
 var execAsync = promisify(exec);
@@ -856,7 +856,7 @@ var DelegationManager = class {
   }
 };
 
-// ../../packages/core/src/peripheral-manager.ts
+// packages/core/src/peripheral-manager.ts
 import { exec as exec2, spawn as spawn2 } from "child_process";
 import { promisify as promisify2 } from "util";
 import * as os from "os";
@@ -1111,14 +1111,14 @@ function createLinuxAdapter() {
       return info;
     },
     async captureScreen() {
-      const path3 = `/tmp/smart-pet-screen-${Date.now()}.png`;
-      await execAsync2(`import -window root ${path3} 2>/dev/null || grim ${path3} 2>/dev/null`);
-      return path3;
+      const path4 = `/tmp/smart-pet-screen-${Date.now()}.png`;
+      await execAsync2(`import -window root ${path4} 2>/dev/null || grim ${path4} 2>/dev/null`);
+      return path4;
     },
     async captureCamera() {
-      const path3 = `/tmp/smart-pet-camera-${Date.now()}.jpg`;
-      await execAsync2(`ffmpeg -f video4linux2 -i /dev/video0 -frames:v 1 ${path3} -y 2>/dev/null`);
-      return path3;
+      const path4 = `/tmp/smart-pet-camera-${Date.now()}.jpg`;
+      await execAsync2(`ffmpeg -f video4linux2 -i /dev/video0 -frames:v 1 ${path4} -y 2>/dev/null`);
+      return path4;
     },
     async executeComputerAction(action) {
       const spawnSafe = (cmd, args) => new Promise((resolve2, reject) => {
@@ -1160,9 +1160,9 @@ function createLinuxAdapter() {
       }
     },
     async recordAudio(duration) {
-      const path3 = `/tmp/smart-pet-audio-${Date.now()}.wav`;
-      await execAsync2(`arecord -d ${Math.floor(duration / 1e3)} -f cd ${path3} 2>/dev/null`);
-      return path3;
+      const path4 = `/tmp/smart-pet-audio-${Date.now()}.wav`;
+      await execAsync2(`arecord -d ${Math.floor(duration / 1e3)} -f cd ${path4} 2>/dev/null`);
+      return path4;
     }
   };
 }
@@ -1179,8 +1179,8 @@ function createWindowsAdapter() {
         ch.on("close", (code) => {
           if (code !== 0) return reject(new Error(`Windows screen capture failed (code ${code}): ${stderr.slice(0, 300)}`));
           try {
-            const fs5 = __require("fs");
-            const st = fs5.statSync(out);
+            const fs6 = __require("fs");
+            const st = fs6.statSync(out);
             if (st.size === 0) throw new Error("screen capture produced empty file");
           } catch (e) {
             return reject(e);
@@ -1354,7 +1354,7 @@ function createStubAdapter() {
   };
 }
 
-// ../../packages/core/src/permission-service.ts
+// packages/core/src/permission-service.ts
 var PermissionService = class {
   constructor(memory) {
     this.memory = memory;
@@ -1392,7 +1392,7 @@ var PermissionService = class {
   }
 };
 
-// ../../packages/core/src/agent-loop.ts
+// packages/core/src/agent-loop.ts
 var AgentLoop = class extends EventEmitter {
   ai;
   memory;
@@ -1724,7 +1724,7 @@ Respond in JSON format:
   }
 };
 
-// ../../packages/core/src/runtime-events.ts
+// packages/core/src/runtime-events.ts
 function createRuntimeEvent(event, payload) {
   return {
     version: 1,
@@ -1734,14 +1734,271 @@ function createRuntimeEvent(event, payload) {
   };
 }
 
-// ../../packages/core/src/index.ts
+// packages/core/src/index.ts
 init_pet_validator();
+
+// packages/core/src/pet-creator.ts
+init_pet_workspace();
+init_pet_validator();
+import * as fs3 from "fs";
 import * as path2 from "path";
+import * as crypto from "crypto";
+function detectMimeByMagic(head) {
+  if (head.length >= 8 && head[0] === 137 && head[1] === 80 && head[2] === 78 && head[3] === 71) return "image/png";
+  if (head.length >= 3 && head[0] === 255 && head[1] === 216 && head[2] === 255) return "image/jpeg";
+  if (head.length >= 12 && head.toString("ascii", 0, 4) === "RIFF" && head.toString("ascii", 8, 12) === "WEBP") return "image/webp";
+  return null;
+}
+function safeIngestImage(srcPath, jobId) {
+  const errors = [];
+  const id = jobId || `ingest-${Date.now()}-${crypto.randomBytes(3).toString("hex")}`;
+  try {
+    assertNoTraversal(srcPath);
+  } catch (e) {
+    errors.push(`unsafe source path: ${e.message}`);
+    return { ok: false, jobId: id, errors };
+  }
+  if (!fs3.existsSync(srcPath)) {
+    errors.push("source not found");
+    return { ok: false, jobId: id, errors };
+  }
+  const stat = fs3.statSync(srcPath);
+  if (!stat.isFile()) {
+    errors.push("source is not a regular file");
+    return { ok: false, jobId: id, errors };
+  }
+  if (stat.size > MAX_IMAGE_BYTES) {
+    errors.push(`source exceeds MAX_IMAGE_BYTES (${stat.size} > ${MAX_IMAGE_BYTES})`);
+    return { ok: false, jobId: id, errors };
+  }
+  const fd = fs3.openSync(srcPath, "r");
+  const head = Buffer.alloc(Math.min(16, stat.size));
+  try {
+    fs3.readSync(fd, head, 0, head.length, 0);
+  } finally {
+    fs3.closeSync(fd);
+  }
+  const mime = detectMimeByMagic(head);
+  if (!mime) {
+    errors.push(`unrecognized image format (magic bytes did not match PNG/JPEG/WebP)`);
+    return { ok: false, jobId: id, errors };
+  }
+  if (!ALLOWED_MIME.has(mime)) {
+    errors.push(`mime not allowed: ${mime}`);
+    return { ok: false, jobId: id, errors };
+  }
+  ensureWorkspace(id);
+  const ext = mime === "image/png" ? ".png" : mime === "image/jpeg" ? ".jpg" : ".webp";
+  const dest = workspacePath(id, "input", `source${ext}`);
+  fs3.copyFileSync(srcPath, dest);
+  const stored = fs3.statSync(dest);
+  return { ok: true, jobId: id, storedPath: dest, bytes: stored.size, mime, errors };
+}
+function activatePetPack(jobId, options) {
+  const errors = [];
+  const srcDir = workspacePath(jobId, "generated");
+  const manifestPath = path2.join(srcDir, "manifest.json");
+  const configPath = path2.join(srcDir, "pet.config.json");
+  if (!fs3.existsSync(manifestPath) || !fs3.existsSync(configPath)) {
+    errors.push("generated/manifest.json or pet.config.json missing \u2014 did you run the generator?");
+    return { ok: false, id: "", version: "", previousVersion: null, installedAt: 0, errors };
+  }
+  const manifest = JSON.parse(fs3.readFileSync(manifestPath, "utf8"));
+  const config = JSON.parse(fs3.readFileSync(configPath, "utf8"));
+  const v = validatePetPack(manifest, config);
+  if (!v.ok) {
+    errors.push(...v.errors);
+    return { ok: false, id: manifest.id || "", version: manifest.version || "", previousVersion: null, installedAt: 0, errors };
+  }
+  const id = manifest.id;
+  const version = manifest.version;
+  const idRoot = path2.join(PETS_ROOT, id);
+  fs3.mkdirSync(idRoot, { recursive: true });
+  const activePath = path2.join(idRoot, "active.json");
+  let previousVersion = null;
+  if (fs3.existsSync(activePath)) {
+    try {
+      previousVersion = JSON.parse(fs3.readFileSync(activePath, "utf8")).active || null;
+    } catch {
+    }
+  }
+  const tmpDest = path2.join(idRoot, `${version}.tmp`);
+  const finalDest = path2.join(idRoot, version);
+  if (fs3.existsSync(finalDest) && !options?.allowReinstall) {
+    errors.push(`version ${version} already installed for ${id}; pass { allowReinstall: true } to overwrite`);
+    return { ok: false, id, version, previousVersion, installedAt: 0, errors };
+  }
+  fs3.rmSync(tmpDest, { recursive: true, force: true });
+  fs3.mkdirSync(tmpDest, { recursive: true });
+  for (const f of fs3.readdirSync(srcDir)) {
+    fs3.copyFileSync(path2.join(srcDir, f), path2.join(tmpDest, f));
+  }
+  const previewSrc = workspacePath(jobId, "preview", "preview.svg");
+  if (fs3.existsSync(previewSrc)) {
+    fs3.mkdirSync(path2.join(tmpDest, "assets"), { recursive: true });
+    fs3.copyFileSync(previewSrc, path2.join(tmpDest, "assets", "preview.svg"));
+  }
+  const inputDir = workspacePath(jobId, "input");
+  if (fs3.existsSync(inputDir)) {
+    for (const f of fs3.readdirSync(inputDir)) {
+      fs3.mkdirSync(path2.join(tmpDest, "input"), { recursive: true });
+      fs3.copyFileSync(path2.join(inputDir, f), path2.join(tmpDest, "input", f));
+    }
+  }
+  fs3.rmSync(finalDest, { recursive: true, force: true });
+  fs3.renameSync(tmpDest, finalDest);
+  fs3.writeFileSync(activePath, JSON.stringify({ active: version, previous: previousVersion, installedAt: Date.now() }, null, 2));
+  return { ok: true, id, version, previousVersion, installedAt: Date.now(), errors };
+}
+function listInstalledPets() {
+  if (!fs3.existsSync(PETS_ROOT)) return [];
+  const out = [];
+  for (const id of fs3.readdirSync(PETS_ROOT)) {
+    const idRoot = path2.join(PETS_ROOT, id);
+    if (!fs3.statSync(idRoot).isDirectory()) continue;
+    const versions = fs3.readdirSync(idRoot).filter((v) => v !== "active.json" && !v.endsWith(".tmp"));
+    const activePath = path2.join(idRoot, "active.json");
+    let active = versions[0] || "default";
+    let previous = null;
+    let installedAt = 0;
+    if (fs3.existsSync(activePath)) {
+      try {
+        const a = JSON.parse(fs3.readFileSync(activePath, "utf8"));
+        if (a.active) active = a.active;
+        if (a.previous) previous = a.previous;
+        if (a.installedAt) installedAt = a.installedAt;
+      } catch {
+      }
+    }
+    out.push({ id, active, previous, installedAt, versions });
+  }
+  return out;
+}
+function getInstalledPet(id) {
+  return listInstalledPets().find((p) => p.id === id) || null;
+}
+function deactivatePetPack(id) {
+  const errors = [];
+  const idRoot = path2.join(PETS_ROOT, id);
+  if (!fs3.existsSync(idRoot)) {
+    errors.push(`pet not installed: ${id}`);
+    return { ok: false, id, restoredTo: null, removedVersion: null, errors };
+  }
+  const activePath = path2.join(idRoot, "active.json");
+  let active = null;
+  let previous = null;
+  if (fs3.existsSync(activePath)) {
+    try {
+      const a = JSON.parse(fs3.readFileSync(activePath, "utf8"));
+      active = a.active;
+      previous = a.previous;
+    } catch {
+    }
+  }
+  if (!active) {
+    errors.push("no active version recorded");
+    return { ok: false, id, restoredTo: null, removedVersion: null, errors };
+  }
+  const activeDir = path2.join(idRoot, active);
+  if (fs3.existsSync(activeDir)) fs3.rmSync(activeDir, { recursive: true, force: true });
+  if (previous && fs3.existsSync(path2.join(idRoot, previous))) {
+    fs3.writeFileSync(activePath, JSON.stringify({ active: previous, previous: null, restoredAt: Date.now() }, null, 2));
+    return { ok: true, id, restoredTo: previous, removedVersion: active, errors };
+  }
+  if (fs3.existsSync(activePath)) fs3.unlinkSync(activePath);
+  const remaining = fs3.readdirSync(idRoot).filter((v) => v !== "active.json" && !v.endsWith(".tmp"));
+  if (remaining.length === 0) fs3.rmSync(idRoot, { recursive: true, force: true });
+  return { ok: true, id, restoredTo: null, removedVersion: active, errors };
+}
+function exportPetPack(jobId, options) {
+  const srcDir = workspacePath(jobId, "generated");
+  const manifestPath = path2.join(srcDir, "manifest.json");
+  const configPath = path2.join(srcDir, "pet.config.json");
+  if (!fs3.existsSync(manifestPath) || !fs3.existsSync(configPath)) {
+    throw new Error("generated/manifest.json or pet.config.json missing");
+  }
+  const manifest = JSON.parse(fs3.readFileSync(manifestPath, "utf8"));
+  const config = JSON.parse(fs3.readFileSync(configPath, "utf8"));
+  const assets = {};
+  const preview = workspacePath(jobId, "preview", "preview.svg");
+  if (fs3.existsSync(preview)) assets["preview.svg"] = fs3.readFileSync(preview).toString("base64");
+  const inputDir = workspacePath(jobId, "input");
+  if (fs3.existsSync(inputDir)) {
+    for (const f of fs3.readdirSync(inputDir)) {
+      assets[`input/${f}`] = fs3.readFileSync(path2.join(inputDir, f)).toString("base64");
+    }
+  }
+  const env = {
+    format: "smartpet",
+    version: 1,
+    exportedAt: Date.now(),
+    sourcePetId: options?.sourcePetId,
+    sourceVersion: options?.sourceVersion,
+    manifest,
+    config,
+    assets
+  };
+  return JSON.stringify(env, null, 2);
+}
+function writeExportToFile(jobId, destPath, options) {
+  const json = exportPetPack(jobId, options);
+  fs3.writeFileSync(destPath, json);
+  return destPath;
+}
+function importPetPack(srcPath, jobId) {
+  const errors = [];
+  if (!fs3.existsSync(srcPath)) {
+    errors.push("source not found");
+    return { ok: false, jobId: "", manifest: {}, config: {}, errors };
+  }
+  let env;
+  try {
+    env = JSON.parse(fs3.readFileSync(srcPath, "utf8"));
+  } catch (e) {
+    errors.push(`invalid .smartpet (not JSON): ${e.message}`);
+    return { ok: false, jobId: "", manifest: {}, config: {}, errors };
+  }
+  if (env.format !== "smartpet") {
+    errors.push(`unrecognized format: ${env.format}`);
+    return { ok: false, jobId: "", manifest: env.manifest || {}, config: env.config || {}, errors };
+  }
+  if (env.version !== 1) {
+    errors.push(`unsupported version: ${env.version}`);
+    return { ok: false, jobId: "", manifest: env.manifest, config: env.config, errors };
+  }
+  const v = validatePetPack(env.manifest, env.config);
+  if (!v.ok) {
+    errors.push(...v.errors);
+    return { ok: false, jobId: "", manifest: env.manifest, config: env.config, errors };
+  }
+  const id = jobId || `import-${Date.now()}-${crypto.randomBytes(3).toString("hex")}`;
+  ensureWorkspace(id);
+  const genDir = path2.join(workspacePath(id), "generated");
+  const prevDir = path2.join(workspacePath(id), "preview");
+  fs3.mkdirSync(genDir, { recursive: true });
+  fs3.mkdirSync(prevDir, { recursive: true });
+  fs3.writeFileSync(path2.join(genDir, "manifest.json"), JSON.stringify(env.manifest, null, 2));
+  fs3.writeFileSync(path2.join(genDir, "pet.config.json"), JSON.stringify(env.config, null, 2));
+  for (const [rel, b64] of Object.entries(env.assets || {})) {
+    const bytes = Buffer.from(b64, "base64");
+    if (rel === "preview.svg") {
+      fs3.writeFileSync(path2.join(prevDir, "preview.svg"), bytes);
+    } else if (rel.startsWith("input/")) {
+      const inDir = path2.join(workspacePath(id), "input");
+      fs3.mkdirSync(inDir, { recursive: true });
+      fs3.writeFileSync(path2.join(inDir, rel.slice("input/".length)), bytes);
+    }
+  }
+  return { ok: true, jobId: id, manifest: env.manifest, config: env.config, errors };
+}
+
+// packages/core/src/index.ts
+import * as path3 from "path";
 import * as os3 from "os";
-import * as fs4 from "fs";
+import * as fs5 from "fs";
 import { fileURLToPath } from "url";
-var DATA_DIR = path2.join(os3.homedir(), ".smart-pet-agent");
-var MEMORY_DB = path2.join(DATA_DIR, "memory.db");
+var DATA_DIR = path3.join(os3.homedir(), ".smart-pet-agent");
+var MEMORY_DB = path3.join(DATA_DIR, "memory.db");
 var defaultProviders = {
   // LIVE provider — Nous cloud (OpenAI-compatible). Env: NOUS_API_KEY, NOUS_API_BASE.
   nous: {
@@ -1803,7 +2060,7 @@ var reordered = {};
 for (const k of preferredOrder) if (defaultProviders[k]) reordered[k] = defaultProviders[k];
 Object.assign(defaultProviders, reordered);
 async function main() {
-  fs4.mkdirSync(DATA_DIR, { recursive: true });
+  fs5.mkdirSync(DATA_DIR, { recursive: true });
   const agent = new AgentLoop({
     aiProviders: defaultProviders,
     memoryPath: MEMORY_DB
@@ -1975,7 +2232,7 @@ async function main() {
         } else if (msg.type === "pet:list") {
           const { PETS_ROOT: PETS_ROOT2 } = await Promise.resolve().then(() => (init_pet_workspace(), pet_workspace_exports));
           try {
-            const ids = fs4.existsSync(PETS_ROOT2) ? fs4.readdirSync(PETS_ROOT2) : [];
+            const ids = fs5.existsSync(PETS_ROOT2) ? fs5.readdirSync(PETS_ROOT2) : [];
             process.stdout.write(`${JSON.stringify(createRuntimeEvent("pet.list", { pets: ids, correlationId: msg.correlationId }))}
 `);
           } catch (e) {
@@ -1987,20 +2244,20 @@ async function main() {
             const jobId = msg.jobId;
             const { workspacePath: workspacePath2, PETS_ROOT: PETS_ROOT2 } = await Promise.resolve().then(() => (init_pet_workspace(), pet_workspace_exports));
             const srcDir = workspacePath2(jobId, "generated");
-            const manifest = JSON.parse(fs4.readFileSync(path2.join(srcDir, "manifest.json"), "utf8"));
-            const destTmp = path2.join(PETS_ROOT2, manifest.id, manifest.version + ".tmp");
-            const dest = path2.join(PETS_ROOT2, manifest.id, manifest.version);
-            fs4.mkdirSync(destTmp, { recursive: true });
-            for (const f of fs4.readdirSync(srcDir)) fs4.copyFileSync(path2.join(srcDir, f), path2.join(destTmp, f));
+            const manifest = JSON.parse(fs5.readFileSync(path3.join(srcDir, "manifest.json"), "utf8"));
+            const destTmp = path3.join(PETS_ROOT2, manifest.id, manifest.version + ".tmp");
+            const dest = path3.join(PETS_ROOT2, manifest.id, manifest.version);
+            fs5.mkdirSync(destTmp, { recursive: true });
+            for (const f of fs5.readdirSync(srcDir)) fs5.copyFileSync(path3.join(srcDir, f), path3.join(destTmp, f));
             const previewSrc = workspacePath2(jobId, "preview", "preview.svg");
-            if (fs4.existsSync(previewSrc)) {
-              fs4.mkdirSync(path2.join(destTmp, "assets"), { recursive: true });
-              fs4.copyFileSync(previewSrc, path2.join(destTmp, "assets", "preview.svg"));
+            if (fs5.existsSync(previewSrc)) {
+              fs5.mkdirSync(path3.join(destTmp, "assets"), { recursive: true });
+              fs5.copyFileSync(previewSrc, path3.join(destTmp, "assets", "preview.svg"));
             }
-            fs4.renameSync(destTmp, dest);
-            const activePath = path2.join(PETS_ROOT2, manifest.id, "active.json");
-            const prev = fs4.existsSync(activePath) ? JSON.parse(fs4.readFileSync(activePath, "utf8")) : null;
-            fs4.writeFileSync(activePath, JSON.stringify({ active: manifest.version, previous: prev?.active || "default-nyc-orb", installedAt: Date.now() }, null, 2));
+            fs5.renameSync(destTmp, dest);
+            const activePath = path3.join(PETS_ROOT2, manifest.id, "active.json");
+            const prev = fs5.existsSync(activePath) ? JSON.parse(fs5.readFileSync(activePath, "utf8")) : null;
+            fs5.writeFileSync(activePath, JSON.stringify({ active: manifest.version, previous: prev?.active || "default-nyc-orb", installedAt: Date.now() }, null, 2));
             process.stdout.write(`${JSON.stringify(createRuntimeEvent("pet.installed", { ok: true, id: manifest.id, version: manifest.version, correlationId: msg.correlationId }))}
 `);
           })().catch((e) => {
@@ -2031,7 +2288,7 @@ async function main() {
     }
   }, 3e4);
 }
-var isMain = process.argv[1] != null && fileURLToPath(import.meta.url) === path2.resolve(process.argv[1]);
+var isMain = process.argv[1] != null && fileURLToPath(import.meta.url) === path3.resolve(process.argv[1]);
 if (isMain) {
   main().catch((err) => {
     console.error("Agent error:", err);
@@ -2047,6 +2304,15 @@ export {
   MemoryStore,
   PeripheralManager,
   PermissionService,
+  activatePetPack,
   createRuntimeEvent,
-  validatePetPack
+  deactivatePetPack,
+  detectMimeByMagic,
+  exportPetPack,
+  getInstalledPet,
+  importPetPack,
+  listInstalledPets,
+  safeIngestImage,
+  validatePetPack,
+  writeExportToFile
 };

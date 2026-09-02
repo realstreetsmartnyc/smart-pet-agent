@@ -1,5 +1,7 @@
 # Smart Pet Agent — Goals Audit & UI Realignment (2026-08-31)
 
+> Current-truth notice, 2026-09-01: this audit remains useful for product goals and UI identity, but its `GREEN` labels are historical development evidence. Use `docs/MASTER_PHASE_SPRINT_EXECUTION_PLAN_2026-09-01.md` and `docs/PUBLISH_STATUS_CURRENT.md` for current execution and release status.
+
 > Audit of every goal, NYC aesthetic compliance, drag audit, and plan realignment after Sprint 1.
 
 This replaces scattered goal fragments across README/brief/competitive/execution plan with one canonical inventory, then shows what is now NYC-compliant and what moved to next sprint.

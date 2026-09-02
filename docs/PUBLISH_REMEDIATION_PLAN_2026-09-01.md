@@ -357,3 +357,25 @@
   13. No `v1.0.0` tag created (cordon honored) → **PASS**
 - **Result:** the repo is in a **fully consistent, CI-ready state**. When the next external unblock lands (EAS account, push to main, Apple creds, etc.), every on-host check that the CI will run is already proven green.
 - **No commit/tag performed** (still held by `spa-no-tag-no-complete` + outer goal's external blockers).
+
+
+### Turn 14 additions (open-source readiness + monetization scaffolding)
+- **New active goal created:** `c8549cfb-d505-4d06-b061-ce28ce3448e5` — "Make Smart Pet Agent ready to publish publicly on GitHub (open-source, MIT) with a clear monetization path." Replaces the prior inner goal `75d80fd3-...` which is already `complete`.
+- **Open-source readiness (Part 1) — mostly done on-host:**
+  - `LICENSE` verified as a proper MIT license (1,085 bytes, copyright 2026 Smart-Pet-Agent Contributors, standard MIT text) — no change needed.
+  - Created `CONTRIBUTING.md` (2,121 B) — contribution flow, the no-baked-credentials rule, the full local gate (typecheck + test + smoke), Conventional Commits, PR checklist, and the `.smartpet` backward-compat rule.
+  - Created `SECURITY.md` (1,356 B) — supported versions, private reporting email (`security@streetsmartnyc.cloud`), 3-business-day ack / 90-day fix-or-disclose SLA, explicit scope (code execution, path traversal in Pet Creator, data exfil, bundled creds) vs non-scope (user-configured hostile endpoint).
+  - Created `.github/CODEOWNERS` (789 B) — v1.0.0 ownership: sole maintainer `@realstreetsmartnyc`, extra review on native build/signing surfaces and the `.smartpet` contract.
+  - Created `.github/PULL_REQUEST_TEMPLATE.md` (820 B) — summary, test plan, no-baked-credentials check, docs checklist.
+  - Created `.github/ISSUE_TEMPLATE/{bug_report,feature_request,security_report}.md` (736 + 636 + 406 B) — structured reports; security_report redirects to SECURITY.md.
+- **Monetization scaffolding (Part 2) — done on-host:**
+  - Created `.github/FUNDING.yml` (269 B) — GitHub Sponsors (`realstreetsmartnyc`), Open Collective (`smart-pet-agent`), Ko-fi (`smartpetagent`), direct donation link. Additive only; no feature paywalled.
+  - Created `docs/Monetization.md` (1,671 B) — the honest funding model: donations (active at v1.0.0), premium pet packs (post-v1.0.0), managed cross-device sync (post-v1.0.0), premium support (anytime). Explicitly excludes dual-license, ads, affiliate fees, and telemetry.
+- **No-baked-credentials re-verification (Part 1.9) — clean:**
+  - Zero hardcoded API keys / tokens (`sk-*`, `AIza*`, `AKIA*`, `ghp_*`, `xox*-`, `Bearer <token>`) in `apps/` + `packages/` + `scripts/`.
+  - Zero Firebase references in `apps/mobile/{app.json,package.json,android/app/build.gradle,android/build.gradle}`.
+  - Zero `.env` files in the repo.
+- **Committed + pushed:** commit `d4e546e` on `chore/v1.0.0-alpha-1-staging` (9 files, +277 insertions). Pushed to origin (`ef9c754..d4e546e`). The staging branch is now **2 commits ahead of `master`** (`ef9c754` = v1.0.0-alpha.1 staging, `d4e546e` = OS-readiness + monetization).
+- **Deferred (cordon):** the "Support the project" README section (Part 2.2.2) — `README.md` is in the `spa-concurrent-edit-cordon` (underling-owned), so it will be added when the cordon lifts or when the user explicitly asks.
+- **Still held:** merge PR #1, the `v1.0.0-alpha.1` / `v1.0.0` tags, the GitHub release, and flipping the repo public — all require the user's explicit approval per `spa-no-tag-no-complete`.
+- **Next on-host steps (unassisted):** verify the full smoke gate still passes after the doc additions; then the remaining open-source items that need the user (README rewrite, CHANGELOG v1.0.0 entry, PR merge) and the external secrets (EAS, Play, Apple).
