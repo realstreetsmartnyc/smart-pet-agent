@@ -21,6 +21,7 @@ cp "$MOBILE_DIR/app.json" "$STANDALONE_DIR/app.json"
 cp "$MOBILE_DIR/eas.json" "$STANDALONE_DIR/eas.json"
 cp "$MOBILE_DIR/babel.config.js" "$STANDALONE_DIR/babel.config.js"
 cp -r "$MOBILE_DIR/assets" "$STANDALONE_DIR/assets"
+cp -r "$MOBILE_DIR/plugins" "$STANDALONE_DIR/plugins"
 
 # Create package.json for standalone (no workspace:*)
 cat > "$STANDALONE_DIR/package.json" << 'PKG'
@@ -40,16 +41,20 @@ cat > "$STANDALONE_DIR/package.json" << 'PKG'
   },
   "dependencies": {
     "@smart-pet/core": "file:../../packages/core",
-    "expo": "~51.0.0",
-    "expo-sqlite": "~14.0.0",
-    "expo-camera": "~14.0.0",
+    "expo": "~51.0.39",
+    "expo-av": "~14.0.7",
+    "expo-sqlite": "~14.0.6",
+    "expo-camera": "~15.0.16",
+    "expo-media-library": "~16.0.5",
     "expo-notifications": "~0.28.0",
     "expo-haptics": "~13.0.0",
     "expo-local-authentication": "~14.0.0",
     "expo-status-bar": "~1.12.0",
-    "expo-splash-screen": "~0.27.0",
-    "react-native-safe-area-context": "4.10.0",
-    "react-native-screens": "3.31.0"
+    "expo-splash-screen": "~0.27.7",
+    "react": "18.2.0",
+    "react-native": "0.74.5",
+    "react-native-safe-area-context": "4.10.5",
+    "react-native-screens": "3.31.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -104,7 +109,7 @@ echo "Location: $STANDALONE_DIR"
 echo ""
 echo "Next steps:"
 echo "  cd $STANDALONE_DIR"
-echo "  pnpm install --ignore-scripts"
+echo "  npm install --legacy-peer-deps --ignore-scripts"
 echo "  CI=1 npx expo prebuild --platform android --clean"
 echo "  # If prebuild fails with expo-sqlite module error, use apps/mobile/android directly:"
 echo "  # cp -r $REPO_ROOT/apps/mobile/android $STANDALONE_DIR/android"

@@ -1,51 +1,66 @@
-# Known Issues — Smart Pet Agent v1.0.0
+# Known Issues — Smart Pet Agent Private Alpha
 
-This file tracks known limitations, workarounds, and planned fixes for the current release.
+This file tracks known limitations, workarounds, and planned fixes for the current private-alpha / technical-preview state. It is not a public release note.
 
-## Desktop (v1.0.0)
+## Desktop
+
+### Public installers are not release-ready
+
+- Packaged Electron still needs a production `better-sqlite3` rebuild for Electron `33.4.11` ABI `130`.
+- Production packaged SQLite permission persistence has not passed the final runtime gate.
+- Real packaged chat IPC, permission IPC, overlay behavior, restart persistence, logs, and pet activation still need clean artifact verification.
+- Linux AppImage/deb, Windows NSIS, and macOS DMG must be built and exercised on clean target environments before public release.
+
+Workaround: use development or controlled alpha builds only.
 
 ### Voice is a scaffold
-- `generateVoice` and `transcribeAudio` emit events but return empty strings.
-- Real Piper/Whisper integration is planned for v1.1.0.
-- **Workaround:** Use text chat. Voice state halos (`listening`, `thinking`) are visible in the pet overlay.
 
-### Pet video packs not shipped
-- The default pet (`default-nyc-orb`) uses a CSS canvas orb. No `.webm` video pack is included.
-- `validatePetPack` warns on missing `.webm` for `engine: video` packs but passes for `engine: canvas`.
-- **Workaround:** None needed — canvas orb is the shipped v1 experience.
+- `generateVoice` and `transcribeAudio` are not complete production TTS/STT integrations.
+- Voice state UI wiring may be present, but real provider/device behavior remains future work.
 
-### Linux deb packaging in containers
-- `electron-builder --linux deb` may fail in Docker/container environments due to `fpm`/`bwrap` sandbox restrictions.
-- **Workaround:** Build on a clean `ubuntu-latest` VM or use the `AppImage` target.
+Workaround: use text chat while voice providers are wired and verified.
 
-### xvfb trap in Parrot OS
-- Running `xvfb-run --no-sandbox` inside Parrot OS containers may trap the Electron process.
-- **Workaround:** Test on GitHub Actions `ubuntu-latest` or a clean VM.
+### Custom pet creator is partial
 
-### Windows screen capture requires ffmpeg
-- `captureScreen` on Windows uses a PowerShell bitmap capture path. If it fails, it falls back to `ffmpeg gdigrab`.
-- **Workaround:** Install ffmpeg and ensure it is on `PATH`.
+- Description/image-to-pet generation is planned and partially scaffolded.
+- Safe image ingestion, MIME/signature validation, lifecycle IPC, atomic install, activation, export/import, and rollback still need completion.
 
-## Mobile (v1.1.0-mobile-beta)
+Workaround: use the default `default-nyc-orb` pet pack until custom pet gates pass.
 
-### EAS build in pnpm monorepo
-- `eas build` may fail with `expo config --json` exit 1 due to Expo SDK 51 + pnpm workspace resolution.
-- **Workaround:** Use the standalone export script: `bash scripts/export-mobile-standalone.sh`, then build in `/tmp/smart-pet-agent-mobile`.
+### Tauri desktop shell is not the release target
 
-### expo-sqlite prebuild compatibility
-- `expo-sqlite` v14 has a known issue where `expo prebuild` cannot resolve `SQLiteDatabase` in some monorepo setups.
-- **Workaround:** The standalone export script installs `expo-sqlite` v13, which resolves correctly.
+- `apps/desktop` exists as a Tauri/Rust visual or bridge prototype.
+- The release candidate path is currently Electron-first.
 
-### Mobile AgentLoop not wired
-- The mobile app does not yet run the core `AgentLoop` on-device. Chat is simulated.
-- **Planned:** Sprint 7 will wire the agent runtime or define a local-network bridge.
+Workaround: use Electron for desktop release work.
 
-### Play Store signing
-- The generated `android/app/build.gradle` signs release builds with the debug keystore.
-- **Workaround:** Configure `eas.json` production signing with a real release keystore before uploading to Play Console.
+## Mobile
+
+### Android/iOS are not store-ready
+
+- `apps/mobile` is a scaffold/beta-track target.
+- Device permission tests, real mobile runtime wiring, EAS project registration, Play Internal, and TestFlight evidence remain open.
+
+Workaround: treat mobile as post-desktop work.
+
+### Store credentials are external blockers
+
+- Android release signing and Google Play Console setup are required before Play distribution.
+- Apple Developer Program access is required before TestFlight/App Store distribution.
+
+Workaround: defer store claims until accounts, signing, builds, and device tests are verified.
+
+## Documentation
+
+### Historical sprint reports may overstate readiness
+
+- Older Sprint 4/5 notes and release-note drafts are historical development evidence only.
+- The controlling current plans are `docs/MASTER_PHASE_SPRINT_EXECUTION_PLAN_2026-09-01.md` and `docs/PUBLISH_PLAN_ALL_PLATFORMS_2026-09-01.md`.
+
+Workaround: use current controlling plans for release decisions.
 
 ## Reporting Issues
 
-- Open a GitHub issue with steps to reproduce, OS, and app version.
-- Attach `~/.smart-pet-agent/logs/runtime.log` on desktop.
-- On mobile, use `adb logcat | grep smart-pet-agent` or Expo dashboard logs.
+- Include OS, app surface, command or installer used, and steps to reproduce.
+- Desktop logs, when available, should come from the Smart Pet Agent runtime log path shown by the app or packaged test output.
+- Do not include secrets, API keys, camera images, microphone recordings, or private files in public reports.
