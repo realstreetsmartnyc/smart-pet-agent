@@ -30,5 +30,6 @@
       "electron",
       "esbuild"
     ]
-  }
+  },
+  "packageManager": "pnpm@9.4.0"
 }
