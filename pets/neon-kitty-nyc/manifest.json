@@ -1,0 +1,23 @@
+{
+  "id": "neon-kitty-nyc",
+  "name": "Neon Kitty \u2014 Alley Glow",
+  "version": "1.0.0",
+  "author": "Street Smart NYC \u00d7 Roblox-Assets/Neon Kitty",
+  "description": "Neon alley cat \u2014 cyber-street glow, late-night bodega runs, 3.9MB animated. Pounces, lounges, and watches with NYC neon complacency. From Roblox-Assets/ugc-factory.",
+  "license": "MIT",
+  "engine": "three",
+  "preview": "assets/preview.png",
+  "model": "assets/model.glb",
+  "tags": [
+    "nyc",
+    "kitty",
+    "neon",
+    "alley",
+    "cyber",
+    "3d",
+    "animated"
+  ],
+  "defaultState": "idle",
+  "source": "Desktop/Roblox-Assets/Neon Kitty + ugc-factory renders",
+  "fallback": "canvas"
+}
