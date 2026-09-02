@@ -1,0 +1,112 @@
+{
+  "states": {
+    "idle": {
+      "loop": true,
+      "intent": "idle",
+      "animation": "dragon_idle",
+      "halo": "asphalt-400",
+      "description": "Perched, breathing slowly, amber eyes scanning"
+    },
+    "listening": {
+      "loop": true,
+      "intent": "listening",
+      "animation": "dragon_attentive",
+      "halo": "civic-500",
+      "waitOnExit": true,
+      "description": "Head tilted, ears pricked \u2014 civic blue listening halo"
+    },
+    "thinking": {
+      "loop": true,
+      "intent": "thinking",
+      "animation": "dragon_think",
+      "halo": "taxi-500",
+      "description": "Smoke curls, eyes narrow \u2014 taxi gold thinking halo"
+    },
+    "acting": {
+      "loop": false,
+      "intent": "acting",
+      "animation": "dragon_swoop",
+      "halo": "signal-amber",
+      "description": "Dives toward task, wings tucked"
+    },
+    "waiting": {
+      "loop": true,
+      "intent": "waiting",
+      "animation": "dragon_hover",
+      "halo": "steel-400",
+      "description": "Hovering, surveying the street"
+    },
+    "asking": {
+      "loop": false,
+      "intent": "asking",
+      "animation": "dragon_nod",
+      "halo": "civic-500",
+      "description": "Nods toward user, awaiting answer"
+    },
+    "celebrating": {
+      "loop": false,
+      "intent": "celebrating",
+      "animation": "dragon_roar",
+      "halo": "taxi-500",
+      "description": "Wings spread, triumphant roar"
+    },
+    "warning": {
+      "loop": true,
+      "intent": "warning",
+      "animation": "dragon_alert",
+      "halo": "warning-red",
+      "description": "Scales flare, warning red halo"
+    },
+    "sleeping": {
+      "loop": true,
+      "intent": "sleeping",
+      "animation": "dragon_sleep",
+      "halo": "asphalt-800",
+      "description": "Curled on rooftop, breathing slow"
+    },
+    "resuming": {
+      "loop": false,
+      "intent": "resuming",
+      "animation": "dragon_wake",
+      "halo": "asphalt-400",
+      "description": "Stretches, shakes off night"
+    },
+    "planning": {
+      "loop": true,
+      "intent": "planning",
+      "animation": "dragon_scan",
+      "halo": "taxi-500",
+      "description": "Circling overhead, mapping the plan"
+    }
+  },
+  "render": {
+    "engine": "three",
+    "model": "assets/dragon.glb",
+    "scale": 0.8,
+    "position": [
+      0,
+      -0.3,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "environment": "nyc-rooftop-night",
+    "lighting": {
+      "ambient": "#1a1d23",
+      "directional": "#f4b400",
+      "rim": "#3b82f6"
+    }
+  },
+  "nycAdaptation": {
+    "palette": {
+      "scales": "asphalt charcoal + brushed steel",
+      "eyes": "taxi gold / signal amber",
+      "underglow": "civic blue",
+      "halos": "NYC transit map logic"
+    },
+    "vibe": "Street guardian \u2014 capable, composed, not cute. Late-night neon, borough grit, glass and steel."
+  }
+}

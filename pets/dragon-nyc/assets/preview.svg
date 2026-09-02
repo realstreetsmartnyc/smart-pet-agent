@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g" cx="35%" cy="30%" r="75%">
+      <stop offset="0%" stop-color="#2a3441" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="#14181d" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0a0d10" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="halo" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+  <!-- NYC rooftop night -->
+  <rect width="120" height="120" fill="#0a0d10" rx="16"/>
+  <!-- Dragon silhouette - perched guardian -->
+  <path d="M30 75 Q35 45 50 35 Q60 28 72 35 Q85 45 88 65 Q90 75 85 82 Q75 88 60 88 Q45 88 32 82 Z" fill="url(#g)" stroke="#f59e0b" stroke-opacity="0.2" stroke-width="1.2"/>
+  <!-- Wing arch -->
+  <path d="M35 55 Q20 35 35 25 Q45 30 50 38" fill="none" stroke="#334155" stroke-width="1.5" stroke-opacity="0.6"/>
+  <path d="M85 55 Q100 35 88 25 Q78 30 72 38" fill="none" stroke="#334155" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Amber eyes -->
+  <circle cx="48" cy="50" r="3.5" fill="#fbbf24" opacity="0.95"/>
+  <circle cx="48" cy="50" r="1.5" fill="#0a0d10" opacity="0.9"/>
+  <circle cx="72" cy="50" r="3.5" fill="#fbbf24" opacity="0.95"/>
+  <circle cx="72" cy="50" r="1.5" fill="#0a0d10" opacity="0.9"/>
+  <!-- Taxi halo -->
+  <ellipse cx="60" cy="85" rx="28" ry="5" fill="none" stroke="url(#halo)" stroke-width="1.5" opacity="0.7"/>
+  <!-- Signal dots -->
+  <circle cx="42" cy="92" r="2" fill="#f59e0b" opacity="0.9"/>
+  <circle cx="60" cy="92" r="2" fill="#3b82f6" opacity="0.7"/>
+  <circle cx="78" cy="92" r="2" fill="#64748b" opacity="0.5"/>
+</svg>
