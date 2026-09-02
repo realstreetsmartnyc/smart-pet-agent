@@ -126,7 +126,9 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: npm install -g eas-cli
-      - run: eas login --token ${{ secrets.EAS_TOKEN }}
+      - run: eas login
+        env:
+          EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}
       - run: bash scripts/verify-eas-identity.sh
       - run: bash scripts/export-mobile-standalone.sh
       - run: |
@@ -161,7 +163,9 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: npm install -g eas-cli
-      - run: eas login --token ${{ secrets.EAS_TOKEN }}
+      - run: eas login
+        env:
+          EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}
       - run: bash scripts/verify-eas-identity.sh
       - run: |
           test -n "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}"
