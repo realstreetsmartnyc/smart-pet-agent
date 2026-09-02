@@ -41,7 +41,13 @@ jobs:
       - run: pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: pnpm --dir apps/electron exec electron-builder install-app-deps
       - run: pnpm --filter ./apps/electron run build:linux
-      - run: pnpm rebuild better-sqlite3
+      - run: |
+          mkdir -p /tmp/better-sqlite3-build/build/Release
+          cd /tmp/better-sqlite3-build
+          npm init -y >/dev/null 2>&1
+          npm install better-sqlite3@11.10.0 >/dev/null 2>&1
+          cp node_modules/better-sqlite3/build/Release/better_sqlite3.node build/Release/better_sqlite3.node
+          node -e "const D=require('/tmp/better-sqlite3-build/build/Release/better_sqlite3.node'); console.log('node-ABI better-sqlite3 fallback ready')" 
       - run: bash scripts/e2e-electron.sh
       - run: test -n "$(find apps/electron/build -maxdepth 1 -name '*.AppImage' -print -quit)"
       - run: test -n "$(find apps/electron/build -maxdepth 1 -name '*.deb' -print -quit)"
