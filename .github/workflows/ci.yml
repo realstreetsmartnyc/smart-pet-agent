@@ -41,6 +41,7 @@ jobs:
       - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: pnpm --dir apps/electron exec electron-builder install-app-deps
       - run: pnpm --filter ./apps/electron run build:linux
+      - run: pnpm rebuild better-sqlite3
       - run: bash scripts/e2e-electron.sh
       - run: test -n "$(find apps/electron/build -maxdepth 1 -name '*.AppImage' -print -quit)"
       - run: test -n "$(find apps/electron/build -maxdepth 1 -name '*.deb' -print -quit)"
