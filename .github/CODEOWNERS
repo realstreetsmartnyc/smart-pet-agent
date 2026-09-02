@@ -1,0 +1,19 @@
+# Smart Pet Agent — code ownership
+# Every pull request that touches these paths requires review from the listed owner(s).
+# For v1.0.0 the sole maintainer is the project owner; add co-maintainers here as they join.
+
+*                       @realstreetsmartnyc
+
+# Sensitive native build + signing surfaces
+/apps/mobile/android/    @realstreetsmartnyc
+/apps/mobile/ios/        @realstreetsmartnyc
+/apps/electron/electron-builder.json  @realstreetsmartnyc
+/.github/workflows/      @realstreetsmartnyc
+
+# Pet Creator MVP and validator (the .smartpet contract)
+/packages/core/src/pet-creator*   @realstreetsmartnyc
+/packages/core/src/pet-validator* @realstreetsmartnyc
+/packages/core/src/pet-workspace* @realstreetsmartnyc
+
+# Docs are lower-risk
+/docs/                   @realstreetsmartnyc

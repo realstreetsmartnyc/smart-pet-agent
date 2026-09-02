@@ -54,21 +54,6 @@
       "useNextNotificationsApi": true
     },
     "plugins": [
-      "./plugins/withFirebaseInit",
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "googleServicesFile": "./android/app/google-services.json"
-          }
-        }
-      ],
-      [
-        "expo-firebase-core",
-        {
-          "googleServicesFile": "./ios/GoogleService-Info.plist"
-        }
-      ],
       [
         "expo-camera",
         {

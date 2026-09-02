@@ -1,20 +1,25 @@
 {
   "name": "@smart-pet/cli",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "bin": {
-    "smart-pet": "./dist/index.js"
+    "smart-pet": "./dist/index.cjs"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --format=cjs --outfile=dist/index.cjs",
     "start": "node --import tsx src/index.ts",
     "dev": "node --import tsx src/index.ts",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "engines": {
     "node": ">=20"
   },
-  "os": ["linux", "darwin", "win32"],
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
   "dependencies": {
     "@smart-pet/core": "workspace:*"
   },

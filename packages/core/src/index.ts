@@ -24,6 +24,19 @@ export { PermissionService } from './permission-service.js';
 export { createRuntimeEvent } from './runtime-events.js';
 export type { RuntimeEvent, RuntimeEventName, PermissionRecord } from './runtime-events.js';
 export { validatePetPack } from './pet-validator.js';
+// Custom Pet Creator MVP — activation, lifecycle, export/import, rollback
+export {
+  safeIngestImage,
+  activatePetPack,
+  deactivatePetPack,
+  listInstalledPets,
+  getInstalledPet,
+  exportPetPack,
+  writeExportToFile,
+  importPetPack,
+  detectMimeByMagic,
+} from './pet-creator.js';
+export type { IngestResult, ActivateResult, RollbackResult, InstalledPet, SmartPetEnvelope, ImportResult } from './pet-creator.js';
 
 // When run as: node index.ts or npx tsx index.ts
 // This is the standalone agent runner — reads commands from stdin as JSON lines

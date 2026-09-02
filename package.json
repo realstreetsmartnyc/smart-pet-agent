@@ -14,7 +14,7 @@
     "build": "pnpm --filter @smart-pet/desktop build",
     "cli": "pnpm --filter @smart-pet/cli start",
     "tui": "pnpm --filter @smart-pet/tui start",
-    "test": "SMART_PET_TEST=1 node --import tsx --test packages/core/src/runtime-events.test.ts packages/core/src/permission-policy.test.ts packages/core/src/voice.test.ts packages/core/src/pet-creator.test.ts",
+    "test": "SMART_PET_TEST=1 node --import tsx --test packages/core/src/runtime-events.test.ts packages/core/src/permission-policy.test.ts packages/core/src/voice.test.ts packages/core/src/pet-creator.test.ts packages/core/src/pet-creator-mvp.test.ts",
     "test:native-sqlite": "node scripts/check-native-sqlite.mjs",
     "smoke": "bash scripts/smoke.sh",
     "typecheck": "pnpm --filter @smart-pet/core exec tsc --noEmit -p ../../tsconfig.json && pnpm --filter @smart-pet/cli exec tsc --noEmit -p tsconfig.json && pnpm --filter @smart-pet/tui exec tsc --noEmit -p tsconfig.json",

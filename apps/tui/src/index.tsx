@@ -19,7 +19,7 @@ function getMemoryPath(): string {
 
 const App = () => {
   const { exit } = useApp();
-  const [lines, setLines] = useState<string[]>(['🐾 Smart-Pet-Agent TUI v0.1.0 — type, press Enter, Ctrl+C to exit']);
+  const [lines, setLines] = useState<string[]>(['🐾 Smart-Pet-Agent TUI v1.0.0 — type, press Enter, Ctrl+C to exit']);
   const [input, setInput] = useState('');
   const [agent, setAgent] = useState<AgentLoop | null>(null);
   const [ready, setReady] = useState(false);

@@ -25,5 +25,8 @@ export function workspacePath(jobId: string, ...parts: string[]) {
   return path.join(getWorkspaceRoot(), jobId, ...parts);
 }
 export function assertNoTraversal(p: string) {
-  if (p.includes('..') || p.includes('/.') || p.startsWith('/')) throw new Error('path traversal');
+  // Reject '..' path segments (the only real traversal threat). Absolute paths and
+  // benign '/./' sequences are allowed because the caller may supply an absolute
+  // source (e.g. /tmp/...png from a file picker) and we build all destinations.
+  if (p.split(/[\\/]+/).includes('..')) throw new Error('path traversal: .. segment');
 }
