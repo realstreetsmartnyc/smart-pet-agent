@@ -1,20 +1,25 @@
 {
   "name": "@smart-pet/tui",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "bin": {
     "smart-pet-tui": "./dist/index.js"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "esbuild src/index.tsx --bundle --platform=node --target=node20 --format=esm --outfile=dist/index.js --banner:js=\"import { createRequire as __cR } from 'module'; const require = __cR(import.meta.url);\"",
     "start": "node --import tsx src/index.tsx",
     "dev": "node --import tsx src/index.tsx",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "engines": {
     "node": ">=20"
   },
-  "os": ["linux", "darwin", "win32"],
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
   "dependencies": {
     "@smart-pet/core": "workspace:*",
     "ink": "^5.0.0",

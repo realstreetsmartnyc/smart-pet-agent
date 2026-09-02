@@ -58,7 +58,7 @@ async function main() {
 
   console.log(`
   ╔══════════════════════════════════════════╗
-  ║   🐾 Smart-Pet-Agent v0.1.0             ║
+  ║   🐾 Smart-Pet-Agent v1.0.0             ║
   ║   Your ever-evolving AI companion       ║
   ╚══════════════════════════════════════════╝
   `);
