@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
+      - run: pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm test:native-sqlite
@@ -38,7 +38,7 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
       - run: sudo apt-get update && sudo apt-get install -y xvfb
-      - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
+      - run: pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: pnpm --dir apps/electron exec electron-builder install-app-deps
       - run: pnpm --filter ./apps/electron run build:linux
       - run: pnpm rebuild better-sqlite3
@@ -71,7 +71,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
+      - run: pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: pnpm --dir apps/electron exec electron-builder install-app-deps
       - run: pnpm --filter ./apps/electron run build:win
       - shell: pwsh
@@ -94,7 +94,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
+      - run: pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: pnpm --dir apps/electron exec electron-builder install-app-deps
       - run: iconutil -c icns apps/electron/assets/icon.iconset -o apps/electron/assets/icon.icns
       - run: pnpm --filter ./apps/electron run build:mac
@@ -118,7 +118,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
+      - run: pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: npm install -g eas-cli
       - run: eas login --token ${{ secrets.EAS_TOKEN }}
       - run: bash scripts/verify-eas-identity.sh
@@ -126,7 +126,7 @@ jobs:
       - run: |
           cd /tmp/smart-pet-agent-mobile
           npm install --legacy-peer-deps --ignore-scripts
-          CI=1 npx expo prebuild --platform android --clean
+          npx expo prebuild --platform android --clean
           cp -r android "$GITHUB_WORKSPACE/apps/mobile/android"
         env:
           CI: true
@@ -153,7 +153,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
+      - run: pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: npm install -g eas-cli
       - run: eas login --token ${{ secrets.EAS_TOKEN }}
       - run: bash scripts/verify-eas-identity.sh
