@@ -2,9 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
+  workflow_dispatch:
 
 jobs:
   # Fast feedback: typecheck, tests, smoke on every push/PR
@@ -17,9 +18,10 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: pnpm install
+      - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: pnpm typecheck
       - run: pnpm test
+      - run: pnpm test:native-sqlite
       - run: pnpm validate:pet
       - run: bash scripts/smoke.sh
       - run: bash scripts/mobile-smoke.sh
@@ -35,14 +37,26 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: pnpm install
+      - run: sudo apt-get update && sudo apt-get install -y xvfb
+      - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
+      - run: pnpm --dir apps/electron exec electron-builder install-app-deps
       - run: pnpm --filter ./apps/electron run build:linux
       - run: bash scripts/e2e-electron.sh
+      - run: test -n "$(find apps/electron/build -maxdepth 1 -name '*.AppImage' -print -quit)"
+      - run: test -n "$(find apps/electron/build -maxdepth 1 -name '*.deb' -print -quit)"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: linux-unpacked-ubuntu
           path: apps/electron/build/linux-unpacked/
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: linux-installers
+          path: |
+            apps/electron/build/*.AppImage
+            apps/electron/build/*.deb
           retention-days: 7
 
   # Desktop publish gate: Windows NSIS build
@@ -56,8 +70,11 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: pnpm install
+      - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
+      - run: pnpm --dir apps/electron exec electron-builder install-app-deps
       - run: pnpm --filter ./apps/electron run build:win
+      - shell: pwsh
+        run: ./scripts/verify-windows-nsis.ps1
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -76,9 +93,11 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: pnpm install
+      - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
+      - run: pnpm --dir apps/electron exec electron-builder install-app-deps
       - run: iconutil -c icns apps/electron/assets/icon.iconset -o apps/electron/assets/icon.icns
       - run: pnpm --filter ./apps/electron run build:mac
+      - run: bash scripts/verify-macos-dmg.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -86,11 +105,11 @@ jobs:
           path: apps/electron/build/*.dmg
           retention-days: 7
 
-  # Mobile: build Android APK via EAS (requires EAS_TOKEN secret)
+  # Mobile: build Android APK locally from the Expo Android prebuild
   mobile-preview:
     runs-on: ubuntu-latest
     needs: ci
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -98,22 +117,49 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-      - run: pnpm install
+      - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: npm install -g eas-cli
       - run: eas login --token ${{ secrets.EAS_TOKEN }}
+      - run: bash scripts/verify-eas-identity.sh
       - run: bash scripts/export-mobile-standalone.sh
-        working-directory: scripts
       - run: |
           cd /tmp/smart-pet-agent-mobile
           npm install --legacy-peer-deps --ignore-scripts
           CI=1 npx expo prebuild --platform android --clean
-          cp -r android ../apps/mobile/android
+          cp -r android "$GITHUB_WORKSPACE/apps/mobile/android"
         env:
           CI: true
+      - run: sudo apt-get update && sudo apt-get install -y openjdk-17-jdk
       - run: cd apps/mobile/android && ./gradlew assembleDebug
+      - run: bash scripts/verify-android-apk.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: android-debug-apk
           path: apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 7
+
+  # Mobile publish gate: signed Android App Bundle + Play Internal Track.
+  # This intentionally runs only when explicitly dispatched with store secrets configured.
+  mobile-android-play-internal:
+    runs-on: ubuntu-latest
+    needs: ci
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - run: CI=1 pnpm install --frozen-lockfile --config.confirmModulesPurge=false
+      - run: npm install -g eas-cli
+      - run: eas login --token ${{ secrets.EAS_TOKEN }}
+      - run: bash scripts/verify-eas-identity.sh
+      - run: |
+          test -n "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}"
+          printf '%s' '${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}' > apps/mobile/service-account-key.json
+      - run: eas build --platform android --profile production --non-interactive --wait
+        working-directory: apps/mobile
+      - run: eas submit --platform android --profile production --non-interactive
+        working-directory: apps/mobile
