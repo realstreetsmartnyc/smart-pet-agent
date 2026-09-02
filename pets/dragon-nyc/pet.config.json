@@ -77,6 +77,13 @@
       "animation": "dragon_scan",
       "halo": "taxi-500",
       "description": "Circling overhead, mapping the plan"
+    },
+    "asking_permission": {
+      "loop": false,
+      "intent": "asking_permission",
+      "animation": "dragon_nod",
+      "halo": "civic-500",
+      "description": "Seeking permission \u2014 dragon peers, halo civic-500"
     }
   },
   "render": {

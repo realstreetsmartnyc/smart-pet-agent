@@ -24,5 +24,7 @@
   ],
   "defaultState": "idle",
   "source": "avatar-os/dragonos/assets/dragon/optimized",
-  "adaptedFrom": "DragonOS \u2014 avatar-os/dragonos"
+  "adaptedFrom": "DragonOS \u2014 avatar-os/dragonos",
+  "fallback": "canvas",
+  "fallbackPreview": "assets/preview.svg"
 }

@@ -12,15 +12,22 @@
     "build:win": "node ../../scripts/build-agent-runtime.mjs && electron-builder --win",
     "build:mac": "node ../../scripts/build-agent-runtime.mjs && electron-builder --mac"
   },
-  "keywords": ["ai", "agent", "pet", "desktop", "overlay"],
+  "keywords": [
+    "ai",
+    "agent",
+    "pet",
+    "desktop",
+    "overlay"
+  ],
   "homepage": "https://www.streetsmartnyc.cloud",
   "author": "Smart Pet Agent Contributors <support@streetsmartnyc.cloud>",
   "license": "MIT",
   "dependencies": {
-    "conf": "^10.2.0",
     "better-sqlite3": "^11.0.0",
+    "conf": "^10.2.0",
     "electron-store": "^8.2.0",
-    "node-fetch": "^2.7.0"
+    "node-fetch": "^2.7.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "electron": "^33.0.0",
