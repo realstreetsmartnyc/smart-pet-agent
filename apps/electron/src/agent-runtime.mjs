@@ -19,7 +19,7 @@ var __export = (target, all) => {
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 
-// packages/core/src/pet-validator.ts
+// ../../packages/core/src/pet-validator.ts
 function validatePetPack(manifest, config, opts) {
   const errors = [];
   const warnings = [];
@@ -61,14 +61,14 @@ function validatePetPack(manifest, config, opts) {
 }
 var REQUIRED_INTENTS, VALID_ENGINES;
 var init_pet_validator = __esm({
-  "packages/core/src/pet-validator.ts"() {
+  "../../packages/core/src/pet-validator.ts"() {
     "use strict";
     REQUIRED_INTENTS = ["idle", "listening", "thinking", "planning", "acting", "waiting", "asking_permission", "celebrating", "warning", "sleeping", "resuming"];
     VALID_ENGINES = ["video", "canvas", "lottie", "spine", "three"];
   }
 });
 
-// packages/core/src/pet-workspace.ts
+// ../../packages/core/src/pet-workspace.ts
 var pet_workspace_exports = {};
 __export(pet_workspace_exports, {
   ALLOWED_MIME: () => ALLOWED_MIME,
@@ -108,7 +108,7 @@ function assertNoTraversal(p) {
 }
 var WORKSPACE_ROOT, PETS_ROOT, MAX_IMAGE_BYTES, MAX_WORKSPACE_BYTES, ALLOWED_MIME;
 var init_pet_workspace = __esm({
-  "packages/core/src/pet-workspace.ts"() {
+  "../../packages/core/src/pet-workspace.ts"() {
     "use strict";
     WORKSPACE_ROOT = getWorkspaceRoot();
     PETS_ROOT = getPetsRoot();
@@ -118,7 +118,7 @@ var init_pet_workspace = __esm({
   }
 });
 
-// packages/core/src/pet-source.ts
+// ../../packages/core/src/pet-source.ts
 function normalizeSourceType(hasImage, hasDescription) {
   if (hasImage && hasDescription) return "image_and_description";
   if (hasImage) return "image";
@@ -135,7 +135,7 @@ function validatePetSource(source) {
 }
 var DEFAULT_STATES;
 var init_pet_source = __esm({
-  "packages/core/src/pet-source.ts"() {
+  "../../packages/core/src/pet-source.ts"() {
     "use strict";
     DEFAULT_STATES = [
       { name: "idle", intent: "idle" },
@@ -153,7 +153,7 @@ var init_pet_source = __esm({
   }
 });
 
-// packages/core/src/pet-generator.ts
+// ../../packages/core/src/pet-generator.ts
 var pet_generator_exports = {};
 __export(pet_generator_exports, {
   PET_TOOLS: () => PET_TOOLS,
@@ -188,7 +188,7 @@ async function generatePetWithAI(ai, input, jobId) {
 }
 var PET_TOOLS, localPlaceholderProvider, providers;
 var init_pet_generator = __esm({
-  "packages/core/src/pet-generator.ts"() {
+  "../../packages/core/src/pet-generator.ts"() {
     "use strict";
     init_pet_source();
     init_pet_validator();
@@ -244,10 +244,10 @@ var init_pet_generator = __esm({
   }
 });
 
-// packages/core/src/agent-loop.ts
+// ../../packages/core/src/agent-loop.ts
 import { EventEmitter } from "events";
 
-// packages/core/src/ai-manager.ts
+// ../../packages/core/src/ai-manager.ts
 var AIManager = class {
   providers = /* @__PURE__ */ new Map();
   defaultProvider = "ollama";
@@ -403,7 +403,7 @@ var AIManager = class {
   }
 };
 
-// packages/core/src/memory.ts
+// ../../packages/core/src/memory.ts
 import Database from "better-sqlite3";
 import * as fs from "fs";
 var MemoryStore = class {
@@ -615,7 +615,7 @@ var MemoryStore = class {
   }
 };
 
-// packages/core/src/action-planner.ts
+// ../../packages/core/src/action-planner.ts
 var ActionPlanner = class {
   parse(reasoning, state, context) {
     const actions = [];
@@ -700,7 +700,7 @@ var ActionPlanner = class {
   }
 };
 
-// packages/core/src/animation-controller.ts
+// ../../packages/core/src/animation-controller.ts
 var AnimationController = class {
   currentAnimation = "idle";
   queue = [];
@@ -750,7 +750,7 @@ var AnimationController = class {
   }
 };
 
-// packages/core/src/delegation-manager.ts
+// ../../packages/core/src/delegation-manager.ts
 import { spawn, exec } from "child_process";
 import { promisify } from "util";
 var execAsync = promisify(exec);
@@ -856,7 +856,7 @@ var DelegationManager = class {
   }
 };
 
-// packages/core/src/peripheral-manager.ts
+// ../../packages/core/src/peripheral-manager.ts
 import { exec as exec2, spawn as spawn2 } from "child_process";
 import { promisify as promisify2 } from "util";
 import * as os from "os";
@@ -1354,7 +1354,7 @@ function createStubAdapter() {
   };
 }
 
-// packages/core/src/permission-service.ts
+// ../../packages/core/src/permission-service.ts
 var PermissionService = class {
   constructor(memory) {
     this.memory = memory;
@@ -1392,7 +1392,7 @@ var PermissionService = class {
   }
 };
 
-// packages/core/src/agent-loop.ts
+// ../../packages/core/src/agent-loop.ts
 var AgentLoop = class extends EventEmitter {
   ai;
   memory;
@@ -1724,7 +1724,7 @@ Respond in JSON format:
   }
 };
 
-// packages/core/src/runtime-events.ts
+// ../../packages/core/src/runtime-events.ts
 function createRuntimeEvent(event, payload) {
   return {
     version: 1,
@@ -1734,10 +1734,10 @@ function createRuntimeEvent(event, payload) {
   };
 }
 
-// packages/core/src/index.ts
+// ../../packages/core/src/index.ts
 init_pet_validator();
 
-// packages/core/src/pet-creator.ts
+// ../../packages/core/src/pet-creator.ts
 init_pet_workspace();
 init_pet_validator();
 import * as fs3 from "fs";
@@ -1992,7 +1992,7 @@ function importPetPack(srcPath, jobId) {
   return { ok: true, jobId: id, manifest: env.manifest, config: env.config, errors };
 }
 
-// packages/core/src/index.ts
+// ../../packages/core/src/index.ts
 import * as path3 from "path";
 import * as os3 from "os";
 import * as fs5 from "fs";

@@ -1,7 +1,7 @@
 import {
 	Matrix4,
 	Vector3
-} from 'three';
+} from '../../three.module.js';
 
 const _pixelToLocal = new Matrix4();
 const _mvp = new Matrix4();

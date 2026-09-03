@@ -3,7 +3,7 @@ import {
 	Group,
 	Loader,
 	LoadingManager
-} from 'three';
+} from '../../three.module.js';
 import { ColladaLoader } from '../loaders/ColladaLoader.js';
 import { unzipSync } from '../libs/fflate.module.js';
 

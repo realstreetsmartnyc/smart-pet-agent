@@ -5,7 +5,7 @@ import {
 	ShaderMaterial,
 	SphereGeometry,
 	Vector3
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * Visualizes an {@link LightProbeGrid} by rendering a sphere at each

@@ -1,4 +1,4 @@
-import { Timer, Vector3, Quaternion, Matrix4 } from 'three';
+import { Timer, Vector3, Quaternion, Matrix4 } from '../../three.module.js';
 
 const RAPIER_PATH = 'https://cdn.skypack.dev/@dimforge/rapier3d-compat@0.17.3';
 

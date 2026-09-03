@@ -1,6 +1,6 @@
-import { FileLoader, error } from 'three';
+import { FileLoader, error } from '../../../../three.module.js';
 
-import * as THREE from 'three';
+import * as THREE from '../../../../three.module.js';
 import * as TSL from 'three/tsl';
 
 const _library = {

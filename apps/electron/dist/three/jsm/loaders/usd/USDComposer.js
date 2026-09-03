@@ -36,7 +36,7 @@ import {
 	Vector2,
 	Vector3,
 	VectorKeyframeTrack
-} from 'three';
+} from '../../../three.module.js';
 
 // Pre-compiled regex patterns for performance
 const VARIANT_PATH_REGEX = /^(.+?)\/\{(\w+)=(\w+)\}\/(.+)$/;

@@ -6,7 +6,7 @@ import {
 	InstancedMesh,
 	Object3D,
 	Vector3
-} from 'three';
+} from '../../three.module.js';
 
 import { MeshStandardNodeMaterial } from 'three/webgpu';
 import { attribute, color, float, Fn, If, mix, mx_noise_float, normalView, positionLocal, positionView, positionWorld, smoothstep, step, uniform } from 'three/tsl';

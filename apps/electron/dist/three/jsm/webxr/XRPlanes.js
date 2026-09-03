@@ -4,7 +4,7 @@ import {
 	Mesh,
 	MeshBasicMaterial,
 	Object3D
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * A utility class for the WebXR Plane Detection Module. If planes

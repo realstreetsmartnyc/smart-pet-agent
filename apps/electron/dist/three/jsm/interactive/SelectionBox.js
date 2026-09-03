@@ -3,7 +3,7 @@ import {
 	Vector3,
 	Matrix4,
 	Quaternion,
-} from 'three';
+} from '../../three.module.js';
 
 const _frustum = new Frustum();
 const _center = new Vector3();

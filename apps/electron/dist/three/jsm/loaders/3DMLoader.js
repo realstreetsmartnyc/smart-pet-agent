@@ -25,7 +25,7 @@ import {
 	SpriteMaterial,
 	TextureLoader,
 	EquirectangularReflectionMapping
-} from 'three';
+} from '../../three.module.js';
 
 import { EXRLoader } from '../loaders/EXRLoader.js';
 

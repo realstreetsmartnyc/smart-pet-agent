@@ -3,7 +3,7 @@ import {
 	Float32BufferAttribute,
 	Group,
 	Mesh
-} from 'three';
+} from '../../three.module.js';
 
 import { MeshStandardNodeMaterial } from 'three/webgpu';
 import { cameraPosition, color, float, Fn, If, mix, mx_noise_float, normalView, normalWorld, positionView, positionWorld, saturation, smoothstep, uniform } from 'three/tsl';

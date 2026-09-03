@@ -7,7 +7,7 @@ import {
 	Object3D,
 	SRGBColorSpace,
 	Vector3
-} from 'three';
+} from '../../three.module.js';
 
 import {
 	Projector,

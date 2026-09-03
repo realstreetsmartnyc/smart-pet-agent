@@ -1,7 +1,7 @@
 import {
 	StereoCamera,
 	Vector2
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * A class that creates an stereo effect.

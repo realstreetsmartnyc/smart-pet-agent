@@ -3,7 +3,7 @@ import {
 	ShaderMaterial,
 	UniformsLib,
 	UniformsUtils,
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * A special line material for meshes loaded via {@link LDrawLoader}.

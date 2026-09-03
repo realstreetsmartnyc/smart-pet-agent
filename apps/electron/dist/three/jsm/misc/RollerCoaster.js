@@ -6,7 +6,7 @@ import {
 	Raycaster,
 	SRGBColorSpace,
 	Vector3
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * A procedural roller coaster geometry.

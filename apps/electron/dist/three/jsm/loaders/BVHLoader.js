@@ -8,7 +8,7 @@ import {
 	Skeleton,
 	Vector3,
 	VectorKeyframeTrack
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * A loader for the BVH format.

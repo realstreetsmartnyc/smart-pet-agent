@@ -17,7 +17,7 @@ import {
 	Sphere,
 	Vector2,
 	Vector3
-} from 'three';
+} from '../../../three.module.js';
 
 import { MeshStandardNodeMaterial } from 'three/webgpu';
 import { attribute, cameraPosition, color, cross, dot, float, floor, Fn, fract, fwidth, hash as ihash, mix, mod, modelWorldMatrixInverse, mx_fractal_noise_float, mx_noise_float, normalLocal, normalView, normalWorldGeometry, positionLocal, positionView, positionWorld, select, smoothstep, step, uint, uv, varying, vec2, vec3, vec4 } from 'three/tsl';

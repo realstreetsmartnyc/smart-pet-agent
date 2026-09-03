@@ -8,7 +8,7 @@ import {
 	ShaderMaterial,
 	Vector3,
 	WebGLRenderTarget
-} from 'three';
+} from '../../three.module.js';
 import { FullScreenQuad } from '../postprocessing/Pass.js';
 import { frameCorners } from '../utils/CameraUtils.js';
 

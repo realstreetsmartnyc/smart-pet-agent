@@ -1,4 +1,4 @@
-import { BufferAttribute } from 'three';
+import { BufferAttribute } from '../../three.module.js';
 
 /**
  * A plugin for `3d-tiles-renderer` that computes creased vertex normals for the

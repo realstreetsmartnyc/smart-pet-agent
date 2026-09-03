@@ -10,7 +10,7 @@ import {
 	DataUtils,
 	WebGLCoordinateSystem,
 	FloatType
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * Utility class for creating instances of {@link LightProbe}.

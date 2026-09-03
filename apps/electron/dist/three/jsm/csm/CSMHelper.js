@@ -10,7 +10,7 @@ import {
 	MeshBasicMaterial,
 	BufferAttribute,
 	DoubleSide
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * A helper for visualizing the cascades of a CSM instance.

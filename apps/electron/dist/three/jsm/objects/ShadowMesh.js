@@ -4,7 +4,7 @@ import {
 	MeshBasicMaterial,
 	EqualStencilFunc,
 	IncrementStencilOp
-} from 'three';
+} from '../../three.module.js';
 
 const _shadowMatrix = new Matrix4();
 

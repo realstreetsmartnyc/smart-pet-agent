@@ -5,7 +5,7 @@ import {
 	Vector2,
 	Vector3,
 	Vector4
-} from 'three';
+} from '../../three.module.js';
 import * as BufferGeometryUtils from '../utils/BufferGeometryUtils.js';
 
 const _cb = new Vector3(), _ab = new Vector3();

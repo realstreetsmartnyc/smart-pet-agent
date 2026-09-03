@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from '../../three.module.js';
 import * as TSL from 'three/tsl';
 
 // some helpers below are ported from Blender and converted to TSL

@@ -3,7 +3,7 @@ import {
 	DoubleSide,
 	Color,
 	PropertyBinding,
-} from 'three';
+} from '../../three.module.js';
 
 import {
 	strToU8,

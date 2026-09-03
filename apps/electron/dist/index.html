@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smart Pet Agent</title>
   <link rel="stylesheet" href="./tokens.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./three/three.module.js",
+        "three/addons/": "./three/jsm/"
+      }
+    }
+  </script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { width: 100vw; height: 100vh; overflow: hidden; background: transparent; }
@@ -128,6 +136,39 @@
     .pet-mood.listening .status-halo { opacity:1; border-color: rgba(47,128,237,0.42); box-shadow: 0 0 16px rgba(47,128,237,0.22); }
     .pet-mood.thinking .status-halo { opacity:1; border-color: rgba(244,180,0,0.42); box-shadow: 0 0 16px rgba(244,180,0,0.18); }
     .pet-mood.acting .status-halo { opacity:1; border-color: rgba(255,138,31,0.44); box-shadow: 0 0 18px rgba(255,138,31,0.24); }
+  
+    /* G2 Three.js layer */
+    #threeCanvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      display: none; z-index: 1;
+      pointer-events: none;
+    }
+    #threeCanvas.visible { display: block; }
+    #petLoadingPill {
+      position: absolute; top: 10%; left: 50%;
+      transform: translateX(-50%); z-index: 3;
+      background: linear-gradient(180deg, rgba(20,24,29,0.96), rgba(11,13,16,0.94));
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 999px; padding: 5px 12px;
+      font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+      color: var(--tile-100); display: none; align-items: center; gap: 6px;
+      white-space: nowrap; backdrop-filter: blur(12px);
+    }
+    #petLoadingPill.show { display: flex; }
+    #petLoadingPill::before {
+      content:""; width: 6px; height: 6px; border-radius:999px; background: var(--taxi-500);
+      box-shadow: 0 0 8px rgba(244,180,0,0.6); animation: petLoadingPulse 1.1s ease-in-out infinite;
+    }
+    @keyframes petLoadingPulse { 0%,100%{opacity:.9} 50%{opacity:.45} }
+    .pet-body.pet-appear { animation: petAppear 0.45s cubic-bezier(0.16,1,0.3,1); }
+    @keyframes petAppear {
+      0% { transform: scale(0.86); opacity: 0.7; }
+      60% { transform: scale(1.04); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    #petMood.hidden { opacity: 0; pointer-events: none; transform: translate(-50%,-50%) scale(0.92); transition: opacity 220ms ease, transform 220ms ease; }
+
   </style>
 </head>
 <body>
@@ -141,6 +182,8 @@
           <div class="mouth"></div>
         </div>
       </div>
+      <canvas id="threeCanvas"></canvas>
+      <div id="petLoadingPill">Loading</div>
       <canvas id="waveformCanvas" class="pet-waveform" style="display:none;"></canvas>
       <div id="thinkingPill" class="pet-thinking" style="display:none;">
         <span class="pet-thinking-text">Thinking</span>
@@ -199,6 +242,25 @@
       if (electronAPI) electronAPI.animStateChanged(state);
     }
 
+    // Renderer-side hitbox pass-through: mirrors main.js B=0.62 polling so clicks outside pet body fall through immediately.
+    function updateIgnoreMouse(e) {
+      try {
+        if (!electronAPI || !electronAPI.setIgnoreMouse) return;
+        const rect = petContainer.getBoundingClientRect();
+        const cx = e ? e.clientX : -1;
+        const cy = e ? e.clientY : -1;
+        const hitW = rect.width * 0.62;
+        const hitH = rect.height * 0.62;
+        const hx = rect.left + (rect.width - hitW)/2;
+        const hy = rect.top + (rect.height - hitH)/2;
+        const inside = e ? (cx >= hx && cx <= hx+hitW && cy >= hy && cy <= hy+hitH) : false;
+        electronAPI.setIgnoreMouse(!inside);
+      } catch {}
+    }
+    window.addEventListener('mousemove', updateIgnoreMouse);
+    petContainer.addEventListener('mouseenter', updateIgnoreMouse);
+    petContainer.addEventListener('mouseleave', () => { try{ electronAPI.setIgnoreMouse(true); }catch{} });
+
     const B = 0.62;
     petContainer.addEventListener('mousedown', (e) => {
       if (e.button !== 0) return;
@@ -237,5 +299,345 @@
     setAnimState('static');
     if (electronAPI) electronAPI.petAppear();
   </script>
+
+    
+  <script type="module">
+    import * as THREE from './three/three.module.js';
+    import { GLTFLoader } from './three/jsm/loaders/GLTFLoader.js';
+
+    const petContainerEl = document.getElementById('petContainer');
+    const petMoodEl = document.getElementById('petMood');
+    const threeCanvas = document.getElementById('threeCanvas');
+    const loadingPill = document.getElementById('petLoadingPill');
+
+    // G2 pet catalog — progressive loading strategy
+    const PET_CATALOG = {
+      'default-nyc-orb': { engine: 'canvas', eager: false, fallback: true },
+      'dragon-nyc':      { engine: 'three', model: './pets/dragon-nyc/assets/dragon.glb', scale: 0.8, eager: true, label: 'Dragon' },
+      'neon-kitty-nyc':  { engine: 'three', model: './pets/neon-kitty-nyc/assets/model.glb', scale: 0.75, eager: true, label: 'Neon Kitty' },
+      'penguin-nyc':     { engine: 'three', model: './pets/penguin-nyc/assets/model.glb', scale: 0.65, eager: false, lazy: true, label: 'Penguin (lazy)' },
+    };
+    const EAGER_PETS = ['dragon-nyc','neon-kitty-nyc'];
+    const LAZY_PET = 'penguin-nyc';
+
+    let scene, camera, renderer, loader, mixer, clock, rafId;
+    let currentPetId = null;
+    let currentModel = null;
+    const cache = new Map(); // packId -> glTF
+
+    function initThree() {
+      if (renderer) return;
+      scene = new THREE.Scene();
+      const w = threeCanvas.clientWidth || 220;
+      const h = threeCanvas.clientHeight || 220;
+      camera = new THREE.PerspectiveCamera(36, w / h, 0.1, 100);
+      camera.position.set(0, 0.2, 2.2);
+      camera.lookAt(0, 0, 0);
+      renderer = new THREE.WebGLRenderer({ canvas: threeCanvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio || 1);
+      renderer.setSize(w, h, false);
+      renderer.setClearColor(0x000000, 0);
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      // lights
+      const ambient = new THREE.AmbientLight(0xffffff, 0.85);
+      const dir = new THREE.DirectionalLight(0xfff6d8, 1.1);
+      dir.position.set(1.2, 1.6, 1.0);
+      const rim = new THREE.DirectionalLight(0x3b82f6, 0.55);
+      rim.position.set(-1.0, 0.8, -1.2);
+      scene.add(ambient, dir, rim);
+      loader = new GLTFLoader();
+      clock = new THREE.Clock();
+      animate();
+      window.addEventListener('resize', () => {
+        if (!renderer || !camera) return;
+        const nw = threeCanvas.clientWidth || 220;
+        const nh = threeCanvas.clientHeight || 220;
+        camera.aspect = nw / nh;
+        camera.updateProjectionMatrix();
+        renderer.setSize(nw, nh, false);
+      });
+    }
+
+    function animate() {
+      rafId = requestAnimationFrame(animate);
+      const delta = clock ? clock.getDelta() : 0.016;
+      if (mixer) mixer.update(delta);
+      // gentle idle rotation when no mixer
+      if (currentModel && !mixer) {
+        currentModel.rotation.y += 0.002;
+      }
+      if (renderer && scene && camera) renderer.render(scene, camera);
+    }
+
+    function showLoading(text) {
+      loadingPill.textContent = text || 'Loading';
+      loadingPill.classList.add('show');
+    }
+    function hideLoading() { loadingPill.classList.remove('show'); }
+
+    function showOrbFallback() {
+      threeCanvas.classList.remove('visible');
+      petMoodEl.classList.remove('hidden');
+      hideLoading();
+      // stop mixer for fallback
+      if (mixer) { mixer.stopAllAction(); mixer = null; }
+      if (currentModel) {
+        scene.remove(currentModel);
+        currentModel = null;
+      }
+    }
+    function showThreeCanvas() {
+      threeCanvas.classList.add('visible');
+      petMoodEl.classList.add('hidden');
+      hideLoading();
+    }
+
+    function applyPetConfig(packId) {
+      const cat = PET_CATALOG[packId];
+      if (!cat) return;
+      // adjust camera/light slightly per pet vibe could be added here
+    }
+
+    async function loadPetModel(packId, opts = {}) {
+      const isLazy = PET_CATALOG[packId]?.lazy;
+      const cat = PET_CATALOG[packId];
+      if (!cat) { console.warn('[pet-three] unknown pet', packId); return; }
+      if (cat.engine === 'canvas') {
+        showOrbFallback();
+        triggerPetAppear();
+        return;
+      }
+      // if already cached and not lazy reload, just show
+      if (cache.has(packId) && !opts.forceReload) {
+        const cached = cache.get(packId);
+        // reuse cached: need to clone? For now re-add same scene? We'll keep cached scene clone
+        if (currentModel) scene.remove(currentModel);
+        // clone cached scene
+        currentModel = cached.scene.clone(true);
+        // try to replay animations: need mixer rebuild from cached animations
+        scene.add(currentModel);
+        const s = cat.scale || 0.75;
+        currentModel.scale.set(s,s,s);
+        currentModel.position.set(0, -0.3, 0);
+        if (cached.animations && cached.animations.length) {
+          mixer = new THREE.AnimationMixer(currentModel);
+          const clip = cached.animations[0];
+          mixer.clipAction(clip).play();
+        }
+        showThreeCanvas();
+        triggerPetAppear();
+        return;
+      }
+      // need progressive strategy: dragon/neon eager fast, penguin lazy
+      initThree();
+      if (isLazy) showLoading('Loading Penguin 19MB…');
+      else showLoading('Loading ' + (cat.label || packId) + '…');
+
+      // hide orb only after model starts loading? We hide now but show loading pill
+      // lazy-load delay for penguin to avoid blocking main paint
+      if (isLazy && !opts.immediate) {
+        await new Promise(r => setTimeout(r, 320));
+      }
+
+      const modelUrl = cat.model;
+      // Try via file:// fallback through electronAPI.resolvePet if available and modelUrl fetch fails
+      function doLoad(url) {
+        return new Promise((resolve, reject) => {
+          loader.load(url, resolve, (e) => {
+            // progress: could show %
+            if (e && e.lengthComputable) {
+              const pct = Math.round((e.loaded / e.total) * 100);
+              showLoading((cat.label || packId) + ' ' + pct + '%');
+            }
+          }, reject);
+        });
+      }
+
+      try {
+        let gltf = null;
+        let lastErr = null;
+        // Try relative dist/pets path first
+        try { gltf = await doLoad(modelUrl); } catch (e) { lastErr = e; console.warn('[pet-three] relative load failed', modelUrl, e.message || e); }
+        // Fallback: try electronAPI.resolvePet to get file:// URL
+        if (!gltf && window.electronAPI && window.electronAPI.resolvePet) {
+          try {
+            const res = await window.electronAPI.resolvePet(packId);
+            if (res && res.ok && res.modelUrl) {
+              console.log('[pet-three] trying resolvePet url', res.modelUrl);
+              gltf = await doLoad(res.modelUrl);
+            }
+          } catch (e) { console.warn('[pet-three] resolvePet load failed', e); }
+        }
+        if (!gltf) throw lastErr || new Error('model load failed: ' + packId);
+
+        cache.set(packId, gltf);
+        if (currentModel) scene.remove(currentModel);
+        currentModel = gltf.scene;
+        scene.add(currentModel);
+        const s = cat.scale || 0.75;
+        currentModel.scale.set(s, s, s);
+        currentModel.position.set(0, -0.3, 0);
+        // center model
+        try {
+          const box = new THREE.Box3().setFromObject(currentModel);
+          const center = box.getCenter(new THREE.Vector3());
+          currentModel.position.x -= center.x;
+          currentModel.position.y -= center.y * 0.5;
+        } catch {}
+
+        // animations
+        if (gltf.animations && gltf.animations.length) {
+          mixer = new THREE.AnimationMixer(currentModel);
+          const clip = gltf.animations[0];
+          const action = mixer.clipAction(clip);
+          action.play();
+          // pick animation by currentAnimState if available? handled via setAnimState later
+        } else {
+          mixer = null;
+        }
+        applyPetConfig(packId);
+        currentPetId = packId;
+        showThreeCanvas();
+        triggerPetAppear();
+        // also trigger anim-state celebrate was already called by switchPet
+      } catch (err) {
+        console.error('[pet-three] failed to load', packId, err);
+        hideLoading();
+        showOrbFallback();
+        // keep orb visible with error halo? Could add warning class
+        if (typeof setAnimState === 'function') { try { setAnimState('alert'); } catch {} }
+      }
+    }
+
+    function triggerPetAppear() {
+      const body = document.querySelector('.pet-body');
+      if (!body) return;
+      body.classList.remove('pet-appear');
+      void body.offsetWidth; // reflow
+      body.classList.add('pet-appear');
+      setTimeout(() => body.classList.remove('pet-appear'), 700);
+      // also dispatch anim-state + pet-appear via bridge if available
+      if (window.electronAPI) {
+        try { window.electronAPI.animStateChanged('celebrate'); } catch {}
+        try { window.electronAPI.petAppear(); } catch {}
+      }
+    }
+
+    async function switchPet(packId) {
+      if (!packId || !PET_CATALOG[packId]) { console.warn('[pet-three] switch unknown', packId); return; }
+      // G2.4: pet switch triggers anim-state + pet-appear
+      if (typeof setAnimState === 'function') setAnimState('celebrate');
+      // triggerPetAppear will be called after load, but also do immediate appear for responsiveness
+      // progressive: eager vs lazy
+      const cat = PET_CATALOG[packId];
+      if (cat.lazy) {
+        // lazy: keep orb visible until model ready? show loading pill but keep orb? spec says progressive: dragon/neon fast, penguin lazy-load
+        // So for penguin, we keep orb visible + loading indicator, then swap to Three when ready
+        // Our loadPetModel for lazy already does delay + shows loading while orb hidden — adjust to keep orb until loaded
+        // For lazy, we don't hide orb immediately — loadPetModel will hide after success
+        await loadPetModel(packId);
+      } else {
+        await loadPetModel(packId);
+      }
+      currentPetId = packId;
+    }
+
+    // expose for debugging / e2e
+    window.__smartPetThree = { switchPet, loadPetModel, PET_CATALOG, showOrbFallback, showThreeCanvas, cache, initThree, triggerPetAppear };
+    window.switchPet = switchPet;
+
+    // progressive eager preloading after initial paint
+    function preloadEager() {
+      EAGER_PETS.forEach(id => {
+        if (id === currentPetId) return;
+        // low priority preload, don't display yet, just cache
+        const cat = PET_CATALOG[id];
+        if (!cat || cache.has(id)) return;
+        const url = cat.model;
+        // initThree needed before load
+        initThree();
+        loader.load(url, (gltf) => {
+          cache.set(id, gltf);
+          console.log('[pet-three] eager preloaded', id);
+        }, undefined, (err) => {
+          console.warn('[pet-three] eager preload failed', id, err);
+          // try via resolvePet fallback silently
+        });
+      });
+    }
+
+    // Hook electronAPI channels for switch
+    (function bindPetSwitchChannels() {
+      const api = window.electronAPI || {};
+      if (api.onPetSwitch) {
+        api.onPetSwitch((packId) => {
+          console.log('[pet-three] onPetSwitch', packId);
+          switchPet(packId);
+        });
+      }
+      if (api.onRuntimeEvent) {
+        api.onRuntimeEvent((e) => {
+          if (e && e.event === 'pet.intent' && e.payload && e.payload.activePet) {
+            console.log('[pet-three] runtime pet.intent activePet', e.payload.activePet);
+            switchPet(e.payload.activePet);
+          }
+          // also allow anim-state mapping to Three animation playback speed etc
+          if (e && e.event === 'pet.intent' && e.payload && e.payload.animation) {
+            const anim = e.payload.animation;
+            // if model has multiple clips we could switch; for now adjust mixer timeScale
+            if (mixer) {
+              if (anim === 'thinking' || anim === 'listening') mixer.timeScale = 0.6;
+              else if (anim === 'celebrate') mixer.timeScale = 1.4;
+              else mixer.timeScale = 1.0;
+            }
+          }
+        });
+      } else {
+        // poll electronAPI for activePet at start if channels not ready yet
+      }
+      if (api.onPetAppear) {
+        api.onPetAppear(() => {
+          triggerPetAppear();
+        });
+      }
+      // legacy fallback: anim-state channel already handled in main script
+    })();
+
+    // Initial activePet resolution
+    (async function initActivePet() {
+      let active = 'default-nyc-orb';
+      const api = window.electronAPI || {};
+      try {
+        if (api.getActivePet) {
+          const res = await api.getActivePet();
+          if (res && res.activePet && PET_CATALOG[res.activePet]) active = res.activePet;
+        } else if (api.getSettings) {
+          const s = await api.getSettings();
+          if (s && s.activePet && PET_CATALOG[s.activePet]) active = s.activePet;
+        }
+      } catch (e) { console.warn('[pet-three] getActivePet failed', e); }
+      console.log('[pet-three] initial activePet', active);
+      // progressive: if active is canvas, showOrb; if three eager, load fast; if lazy, load lazy
+      if (PET_CATALOG[active]?.engine === 'canvas') {
+        showOrbFallback();
+        triggerPetAppear();
+      } else {
+        // show orb briefly until Three ready for progressive feel
+        // for eager pets, load immediately; for penguin, lazy-load (show orb + loading)
+        if (PET_CATALOG[active]?.lazy) {
+          showOrbFallback();
+          showLoading('Loading Penguin…');
+          await loadPetModel(active, { immediate: false });
+        } else {
+          await loadPetModel(active);
+        }
+      }
+      // after initial, eager preload the other two
+      setTimeout(preloadEager, 1200);
+    })();
+
+    console.log('[pet-three] module loaded — G2 progressive Three.js ready');
+  </script>
+
 </body>
 </html>

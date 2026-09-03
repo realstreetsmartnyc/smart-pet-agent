@@ -4,7 +4,7 @@ import {
 	CanvasTexture,
 	NearestFilter,
 	SRGBColorSpace
-} from 'three';
+} from '../../three.module.js';
 
 import lottie from 'https://cdn.jsdelivr.net/npm/lottie-web@5.13.0/+esm';
 

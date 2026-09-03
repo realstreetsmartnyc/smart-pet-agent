@@ -7,7 +7,7 @@ import {
 	LinearFilter,
 	LinearSRGBColorSpace,
 	Loader
-} from 'three';
+} from '../../three.module.js';
 import { HDRLoader } from '../loaders/HDRLoader.js';
 
 /**

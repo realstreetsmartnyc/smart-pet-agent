@@ -6,7 +6,7 @@ import {
 	Object3D,
 	Points,
 	PointsMaterial
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * Visualizes the motion path of an animated object based on position keyframes

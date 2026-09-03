@@ -2,7 +2,7 @@ import {
 	Controls,
 	Quaternion,
 	Vector3
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * Fires when the camera has been transformed by the controls.

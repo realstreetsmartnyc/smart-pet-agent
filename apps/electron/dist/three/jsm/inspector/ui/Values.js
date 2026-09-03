@@ -1,4 +1,4 @@
-import { EventDispatcher } from 'three';
+import { EventDispatcher } from '../../../three.module.js';
 
 class Value extends EventDispatcher {
 

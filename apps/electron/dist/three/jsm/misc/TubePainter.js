@@ -7,7 +7,7 @@ import {
 	Mesh,
 	MeshStandardMaterial,
 	Vector3
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * @classdesc This module can be used to paint tube-like meshes

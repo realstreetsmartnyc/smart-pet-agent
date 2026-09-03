@@ -6,7 +6,7 @@ import {
 	LineBasicMaterial,
 	Mesh,
 	MeshBasicMaterial
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * Creates a visual aid for rect area lights.

@@ -1,4 +1,4 @@
-import { MathUtils, SRGBColorSpace } from 'three';
+import { MathUtils, SRGBColorSpace } from '../../three.module.js';
 
 /**
  * @module ColorUtils

@@ -1,4 +1,4 @@
-import { ImageBitmapLoader, Texture } from 'three';
+import { ImageBitmapLoader, Texture } from '../../../three.module.js';
 import { Fn, int, ivec2, textureLoad, screenUV, screenSize, mod, floor, float, vec3 } from 'three/tsl';
 
 /**

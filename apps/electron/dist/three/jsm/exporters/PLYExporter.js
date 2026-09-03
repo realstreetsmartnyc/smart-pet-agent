@@ -4,7 +4,7 @@ import {
 	Color,
 	ColorManagement,
 	SRGBColorSpace
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * An exporter for PLY.

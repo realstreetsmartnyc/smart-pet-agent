@@ -2,7 +2,7 @@ import {
 	UniformsLib,
 	UniformsUtils,
 	Matrix4
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * @module VelocityShader

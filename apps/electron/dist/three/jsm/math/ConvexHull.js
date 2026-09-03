@@ -3,7 +3,7 @@ import {
 	Plane,
 	Triangle,
 	Vector3
-} from 'three';
+} from '../../three.module.js';
 
 const Visible = 0;
 const Deleted = 1;

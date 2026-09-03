@@ -3,7 +3,7 @@ import {
 	BufferGeometry,
 	Mesh,
 	Vector3
-} from 'three';
+} from '../../three.module.js';
 
 import { MeshStandardNodeMaterial } from 'three/webgpu';
 import { color, float, mx_fractal_noise_float, positionLocal, vec3 } from 'three/tsl';

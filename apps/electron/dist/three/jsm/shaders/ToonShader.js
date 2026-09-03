@@ -1,7 +1,7 @@
 import {
 	Color,
 	Vector3
-} from 'three';
+} from '../../three.module.js';
 
 /**
  * Collection of toon shaders.
