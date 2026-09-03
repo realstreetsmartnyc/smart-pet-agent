@@ -126,6 +126,14 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: npm install -g eas-cli
+      - name: Check EAS token
+        run: |
+          if [ -z "$EAS_TOKEN" ]; then
+            echo "::error::EAS_TOKEN secret is not set. Add it in repo Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+        env:
+          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
       - run: eas login
         env:
           EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}
@@ -163,6 +171,14 @@ jobs:
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile --config.confirmModulesPurge=false
       - run: npm install -g eas-cli
+      - name: Check EAS token
+        run: |
+          if [ -z "$EAS_TOKEN" ]; then
+            echo "::error::EAS_TOKEN secret is not set. Add it in repo Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+        env:
+          EAS_TOKEN: ${{ secrets.EAS_TOKEN }}
       - run: eas login
         env:
           EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}
