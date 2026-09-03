@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+if [ "$(uname)" != "Darwin" ]; then echo "WARN: no dmg on Linux"; exit 0; fi
 
 BUILD_DIR="${1:-apps/electron/build}"
 DMG="$(find "$BUILD_DIR" -maxdepth 1 -type f -name '*.dmg' | sort | tail -n 1)"
