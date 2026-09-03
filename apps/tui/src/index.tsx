@@ -31,8 +31,30 @@ const App = () => {
   }, []);
 
   useInput(async (char, key) => {
+    const isEnter = Boolean(key.return || key.name === 'enter' || (char && (char.includes('\r') || char.includes('\n'))));
     if (key.ctrl && char === 'c') { exit(); return; }
-    if (key.return) {
+    // Burst/paste: handle multi-char input as single chunk
+    if (char && char.length > 1) {
+      const hasEnter = char.includes('\r') || char.includes('\n');
+      const burst = char.split(/\r|\n/).filter(s => s.length > 0).join('');
+      if (hasEnter) {
+        const text = (input + burst).trim();
+        if (!text) return;
+        setLines(l => [...l, `You > ${text}`]);
+        setInput('');
+        if (text === 'exit' || text === 'quit') { exit(); return; }
+        if (text === 'help') { setLines(l => [...l, 'Commands: help, state, exit, <message>']); return; }
+        if (text === 'state' && agent) { setLines(l => [...l, JSON.stringify(agent.getState(), null, 2)]); return; }
+        if (!agent || !ready) { setLines(l => [...l, '… agent not ready']); return; }
+        try {
+          const resp = await agent.processInput({ type: 'text', content: text });
+          setLines(l => [...l, `Smart: ${resp.text} [${resp.mood}/${resp.animation}]`]);
+        } catch (e: any) { setLines(l => [...l, `Error: ${e.message}`]); }
+        return;
+      }
+      if (burst) { setInput(s => s + burst); return; }
+    }
+    if (isEnter) {
       const text = input.trim();
       if (!text) return;
       setLines(l => [...l, `You > ${text}`]);

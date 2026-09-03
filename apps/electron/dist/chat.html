@@ -740,6 +740,8 @@
     // Pets pickable — click a pet panel to activate
     function bindPetsPickable() {
       document.querySelectorAll('#page-pets .panel').forEach(el => {
+        if (el.dataset.pickableBound) return;
+        el.dataset.pickableBound = '1';
         const name = el.querySelector('h3')?.textContent?.trim();
         if (!name || name === 'Custom Pack') return;
         el.style.cursor = 'pointer';
