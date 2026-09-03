@@ -141,6 +141,19 @@ Every agent action has a **reasoning explanation** — Smart doesn't move random
 
 Current status: **v1.0.0 public**. Core is shippable: Linux desktop (AppImage 112 MB + deb 75 MB, installed and e2e GREEN), CLI (`smart-pet` CJS 97 KB), TUI (`smart-pet-tui` ESM 2.1 MB), and Custom Pet Creator MVP are verified. Windows NSIS and macOS DMG are source + CI ready (`windows-latest`/`macos-latest` runners, pending `WIN_CSC_LINK`/`CSC_LINK` signing secrets). Android debug APK is built and `apksigner` PASS (EAS/Play pending). iOS deferred. See [`docs/PUBLIC_RELEASE_CHECKLIST_2026-09-02.md`](docs/PUBLIC_RELEASE_CHECKLIST_2026-09-02.md) for the full gate table and [`docs/PUBLISH_RUNBOOK_v1.0.0.md`](docs/PUBLISH_RUNBOOK_v1.0.0.md) for artifact reproduction.
 
+
+## Support the project
+
+Smart Pet Agent is MIT-licensed and free to use. If it makes your day better:
+
+- ⭐ Star this repo
+- 🐛 File issues and PRs
+- 💸 [Sponsor on GitHub](https://github.com/sponsors/realstreetsmartnyc)
+- ☕ [Buy us a coffee on Ko-fi](https://ko-fi.com/smartpetagent)
+- 🎁 [Donate via Open Collective](https://opencollective.com/smart-pet-agent)
+
+Funding is optional and purely additive — no feature is paywalled. See [`docs/Monetization.md`](docs/Monetization.md) for the full model.
+
 ## License
 
 MIT — see [LICENSE](LICENSE)
