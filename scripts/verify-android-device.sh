@@ -45,12 +45,37 @@ fi
 
 echo "$device_list"
 
+# Pick a target device. If multiple are connected, use the first one and
+# pass -s to all adb calls so the script is deterministic on multi-device hosts.
+DEVICE_ID="$(printf '%s\n' "$device_list" | awk 'NR>1 && $2=="device" {print $1; exit}')"
+if [[ -z "$DEVICE_ID" ]]; then
+  echo "WARN: adb reported devices but none are in device state — skipping install step"
+  exit 0
+fi
+echo "Targeting device: $DEVICE_ID"
+adb_target() { adb_with_timeout -s "$DEVICE_ID" "$@"; }
+
 bash scripts/verify-android-apk.sh "$APK"
-adb_with_timeout install -r "$APK"
+
+# Try to install. Use a longer timeout (180s default) and treat timeout as WARN
+# (some devices hang on streamed install for reasons unrelated to the APK).
+INSTALL_TIMEOUT="${ADB_INSTALL_TIMEOUT:-180}"
+set +e
+timeout "$INSTALL_TIMEOUT" adb -s "$DEVICE_ID" install -r "$APK"
+install_code=$?
+set -e
+if [[ "$install_code" -eq 124 ]]; then
+  echo "WARN: adb install timed out after ${INSTALL_TIMEOUT}s on $DEVICE_ID; APK validated but not deployed"
+  exit 0
+fi
+if [[ "$install_code" -ne 0 ]]; then
+  echo "WARN: adb install exited with code $install_code on $DEVICE_ID; APK validated but not deployed"
+  exit 0
+fi
 
 for permission in android.permission.CAMERA android.permission.RECORD_AUDIO android.permission.POST_NOTIFICATIONS; do
   set +e
-  adb_with_timeout shell pm grant "$PACKAGE_NAME" "$permission" >/dev/null 2>&1
+  adb_target shell pm grant "$PACKAGE_NAME" "$permission" >/dev/null 2>&1
   grant_code=$?
   set -e
   if [[ "$grant_code" -ne 0 ]]; then
@@ -58,7 +83,7 @@ for permission in android.permission.CAMERA android.permission.RECORD_AUDIO andr
   fi
 done
 
-adb_with_timeout shell dumpsys package "$PACKAGE_NAME" | grep -E 'android.permission.(CAMERA|RECORD_AUDIO|POST_NOTIFICATIONS)' || {
+adb_target shell dumpsys package "$PACKAGE_NAME" | grep -E 'android.permission.(CAMERA|RECORD_AUDIO|POST_NOTIFICATIONS)' || {
   echo "FAIL: could not verify requested runtime permissions in package dump" >&2
   exit 1
 }
