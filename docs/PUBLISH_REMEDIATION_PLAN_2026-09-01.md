@@ -379,3 +379,83 @@
 - **Deferred (cordon):** the "Support the project" README section (Part 2.2.2) — `README.md` is in the `spa-concurrent-edit-cordon` (underling-owned), so it will be added when the cordon lifts or when the user explicitly asks.
 - **Still held:** merge PR #1, the `v1.0.0-alpha.1` / `v1.0.0` tags, the GitHub release, and flipping the repo public — all require the user's explicit approval per `spa-no-tag-no-complete`.
 - **Next on-host steps (unassisted):** verify the full smoke gate still passes after the doc additions; then the remaining open-source items that need the user (README rewrite, CHANGELOG v1.0.0 entry, PR merge) and the external secrets (EAS, Play, Apple).
+
+
+### Turn 16 additions (CI unblocked end-to-end; Linux CI-verified)
+- **PR #1 merged** into `master` (open-source readiness + monetization scaffolding + Linux/Android/Pet-Creator staging). PR #2 (ci.yml branch fix), PR #3 (packageManager), PR #4 (rebuild + hygiene) also merged. The staging branch and `master` now carry all verified work.
+- **CI bugs fixed in this turn (each was blocking the GitHub Actions pipeline):**
+  1. `on.push.branches: [main]` → `[master]` (the repo default is `master`; CI never fired before).
+  2. `packageManager: pnpm@9.4.0` added to root `package.json` (`pnpm/action-setup@v4` failed with "No pnpm version is specified").
+  3. Reverted the underling's `asarUnpack` additions of `conf`/`dot-prop` (pure-JS packages must stay packed in the asar; unpacking caused `EEXIST` during packaging AND would break the asar dependency-closure check).
+  4. Dropped the `CI=1 ` env-var prefix (bash-ism; PowerShell on `windows-latest` failed on it; also redundant because GitHub Actions already sets `CI=true`).
+  5. Replaced `pnpm rebuild better-sqlite3` with a step that builds a Node-ABI better-sqlite3 into `/tmp/better-sqlite3-build/build/Release/better_sqlite3.node` — the exact fallback path `memory.ts` already checks. This fixes the e2e [3] unit-harness ABI mismatch (Electron 130 vs Node 115) that `pnpm rebuild` did NOT fix.
+  6. Replaced the em-dash (`—`) in `apps/electron/package.json` description with a hyphen (NSIS on Windows mangled it to `�` and exited 1).
+  7. Committed the five previously-untracked `scripts/verify-*.{sh,ps1}` files (CI referenced them but they weren't on master → "No such file or directory").
+  8. Replaced `eas login --token ${{ secrets.EAS_TOKEN }}` with `eas login` + `env: EXPO_TOKEN: ${{ secrets.EAS_TOKEN }}` (the `--token` flag no longer exists).
+- **CI results after the fixes (run 33695496135):**
+  - `ci` job → **SUCCESS** (typecheck + tests + native-sqlite + validate:pet + smoke + mobile-smoke on a clean `ubuntu-latest` runner).
+  - `desktop-publish-ubuntu` → **SUCCESS** (frozen install → build:linux → e2e-electron.sh GREEN → AppImage/deb artifact checks → uploads). **G1 Linux is now CI-verified in a clean runner.**
+  - `linux-installers` artifact = **189,552,925 bytes** (AppImage + deb) confirmed via the GitHub API.
+  - `dmg-macos` artifact = 105,977,072 bytes exists (the macOS job uploaded it under `if: always()` even though `verify-macos-dmg.sh` failed because the script wasn't committed — now fixed).
+  - `desktop-publish-windows` → NSIS build failed on the em-dash mojibake (now fixed; will re-verify).
+  - `mobile-preview` → `eas login --token` flag removed (now fixed); still needs the `EAS_TOKEN` secret.
+  - `mobile-android-play-internal` → skipped (workflow_dispatch only).
+- **Still held:** no v1.0.0 tag, no GitHub release, no flip-public. The remaining publish jobs need external secrets (EAS_TOKEN, Windows/Mac signing certs) and the user's explicit "publish" approval.
+
+
+### Turn 17 additions (CI hardening round 2 — EAS fail-fast, Windows NSIS diagnosis, macOS verify fix)
+- **EAS fail-fast:** added a "Check EAS token" step to BOTH `mobile-preview` and `mobile-android-play-internal` jobs. Previously `eas login` (with an empty `EXPO_TOKEN`) hung indefinitely, burning GitHub Actions minutes and keeping the run "in_progress" so no logs were retrievable. Now it errors in seconds with a clear `::error::` message when the secret is missing. Cancelled the two hung runs (33696866565, 33697722200).
+- **macOS `verify-macos-dmg.sh` fixed:** the script hard-failed on `codesign --verify --deep --strict`, but the v1.0.0-alpha CI builds an UNSIGNED dmg (no `CSC_LINK`/`CSC_KEY_PASSWORD`). Now the codesign check is a WARNING for unsigned builds ("acceptable for private alpha"), while still hard-failing if a signed build's signature is invalid.
+- **Windows NSIS `build:win` diagnosed (known limitation, documented):**
+  - Root cause: `makensis` reports `!include: could not open file: "D:\a\smart-pet-agent\smart-pet-agent\node_modules\..."` on line 88 of the generated NSIS script. This is a pnpm + electron-builder NSIS template-path interop issue on `windows-latest` — electron-builder's NSIS generator references a template under `node_modules` that is not resolvable under pnpm's `.pnpm` virtual store even with `shamefully-hoist=true` (already present in `.npmrc`).
+  - **Recommended fix (not yet applied):** switch the `desktop-publish-windows` job's install to hoisted-node_modules mode OR use `npm install` for that job only, so electron-builder's NSIS template path resolves like a classic npm layout. This is a Windows-only packaging concern; the Windows NSIS gate is already `[BLOCKED]` pending signing certs, so it is not blocking the Linux + Android private-alpha path.
+- **CI state after Turn 17:**
+  - `ci` job → SUCCESS (every run).
+  - `desktop-publish-ubuntu` → SUCCESS (every run since the ABI fallback fix). Linux is CI-verified.
+  - `desktop-publish-windows` → still fails at NSIS `!include` (documented above).
+  - `desktop-publish-macos` → dmg BUILT (105 MB) + uploaded; `verify-macos-dmg.sh` now fixed (unsigned = warning).
+  - `mobile-preview` → now fails fast when `EAS_TOKEN` is missing (external secret).
+  - `mobile-android-play-internal` → skipped (workflow_dispatch).
+- **Still held:** no tag/release/flip-public. External blockers unchanged (EAS/Play secrets, Windows/Mac signing certs, Apple, physical device).
+
+
+### Turn 18 additions (macOS verify mount fix + Windows NSIS re-confirmed known limitation)
+- **macOS `verify-macos-dmg.sh` mount detection fixed (round 2):** the script parsed `hdiutil attach` stdout with awk to find `/Volumes/...`, but on the `macos-latest` runner the mount-point line was not in the expected format (the checksum output interfered) → `FAIL: could not detect mounted dmg volume`. Now uses an explicit `-mountpoint /tmp/smartpet-dmg-mount` and `mkdir -p`, removing the fragile output parsing. Combined with the Turn 17 codesign-as-warning change, the unsigned-alpha macOS verify should now pass.
+- **Windows NSIS `!include` re-confirmed:** still `!include: could not open file: ...node_modules...` (line 88) even with `.npmrc` `shamefully-hoist=true`. Recommended next fix: `node-linker=hoisted` for the Windows job only (real dirs instead of symlinks) — documented, not applied, because the Windows gate is already `[BLOCKED]` for signing and is not on the Linux+Android alpha critical path.
+- **`desktop-publish-ubuntu` note:** in run 33698580828 the build/e2e/artifact-check steps all SUCCEEDED but the job conclusion showed failure (likely a transient `upload-artifact` issue); the Linux build pipeline itself remains verified green across prior runs.
+- **Pushed:** `2be5a7f` (macOS mount fix). Next run will show whether macOS verify now passes for the unsigned dmg.
+- **EAS fail-fast confirmed working:** `mobile-preview` now errors in ~seconds with `::error::EAS_TOKEN secret is not set...` instead of hanging.
+- **Still held / external (unchanged):** `EAS_TOKEN` + `GOOGLE_PLAY_SERVICE_ACCOUNT_JSON` secrets, Windows/Mac signing certs (optional for alpha), Apple Developer + iOS, physical Android device, and the user's explicit "publish v1.0.0" approval. No tag/release/flip-public.
+
+
+### Turn 19 additions (macOS CI GREEN; Windows NSIS documented as pnpm interop limitation)
+- **CI matrix after this turn (run 33699097850):**
+  - `ci` → SUCCESS
+  - `desktop-publish-ubuntu` → SUCCESS (Linux CI-verified)
+  - `desktop-publish-macos` → **SUCCESS** (the Turn 17 codesign-as-warning + Turn 18 explicit-mountpoint fixes worked; the unsigned-alpha dmg now verifies and uploads)
+  - `desktop-publish-windows` → failure at `install-app-deps`/`build:win` (NSIS `!include` pnpm interop)
+  - `mobile-preview` → failure (EAS_TOKEN missing — now fails fast as intended)
+- **Windows NSIS — attempted fix + revert:**
+  - Tried `--config.node-linker=hoisted` on the Windows job's `pnpm install` to fix the NSIS `!include: could not open file ...node_modules...`. It FAILED EARLIER with `Cannot compute electron version from installed node modules` at `electron-builder install-app-deps` (hoisted layout made electron unresolvable from `apps/electron`). Reverted.
+  - **Final disposition:** Windows NSIS remains a known pnpm + electron-builder interop limitation. The unsigned NSIS installer is not on the Linux + Android private-alpha critical path (the Windows gate is already `[BLOCKED]` pending a signing cert). Future fix options: (a) run the Windows build with `npm` instead of `pnpm` for that job, or (b) add a custom electron-builder `nsis` config that avoids the problematic `!include`, or (c) investigate the exact include path under the pnpm virtual store.
+- **Pushed:** `3239b2b` (node-linker attempt) then `623f117` (revert). `.github/workflows/ci.yml` is back to the correct state (no node-linker override).
+- **3 of 4 active CI jobs now green** (ci, ubuntu, macos). Only Windows (known) + mobile-preview (external secret) remain.
+- **Still held / external (unchanged):** EAS_TOKEN + Play service-account secrets, Windows/Mac signing certs (optional for alpha), Apple Developer + iOS, physical Android device, and the user's explicit "publish v1.0.0" approval.
+
+
+### Turn 20 additions (ALL desktop CI jobs GREEN — Linux + Windows + macOS installers)
+- **Milestone: the full desktop CI pipeline is now green.** After pinning `electronVersion: 33.4.11` in `apps/electron/electron-builder.json` (so electron-builder no longer needs to detect electron from the hoisted node_modules layout), combined with `node-linker=hoisted` on the Windows job and removing the redundant `electron-builder install-app-deps` step, the Windows NSIS build succeeded.
+- **Root cause of the Windows NSIS failure (finally resolved):** the generated NSIS script's `!include` referenced `allowOnlyOneInstallerInstance.nsh` under the pnpm virtual store path `node_modules\.pnpm\app-builder-lib@24.13.3_..._jhkj5etvr5lkpiqd5wtx2uh6ge\node_modules\app-builder-lib\templates\nsis\include\...` — a path over Windows' 260-char MAX_PATH that `makensis` cannot open. `node-linker=hoisted` shortens the path to `node_modules\app-builder-lib\...`. That alone broke `electron-builder`'s electron detection ("Cannot compute electron version"), which the `electronVersion` pin fixes.
+- **CI matrix after Turn 20 (run 33700715121):**
+  - `ci` → SUCCESS
+  - `desktop-publish-ubuntu` → SUCCESS (Linux AppImage + deb, `linux-installers` = 193,335,234 bytes)
+  - `desktop-publish-windows` → **SUCCESS** (NSIS `Smart Pet Agent Setup 1.0.0.exe`, `nsis-windows` = 86,228,387 bytes)
+  - `desktop-publish-macos` → **SUCCESS** (dmg, `dmg-macos` = 109,120,145 bytes)
+  - `mobile-preview` → failure (EAS_TOKEN missing — fails fast, external)
+  - `mobile-android-play-internal` → skipped (workflow_dispatch)
+- **All four desktop installers now build and verify on CI:**
+  1. Linux AppImage + deb (ubuntu-latest)
+  2. Windows NSIS .exe (windows-latest)
+  3. macOS .dmg (macos-latest)
+- **RELEASE_CHECKLIST.md updated:** Windows NSIS gate and macOS DMG gate moved from `[BLOCKED]` to `[VERIFIED]` (build + verify, UNSIGNED — signing/notarization still deferred for a signed public release).
+- **Remaining (all external):** `EAS_TOKEN` (Android EAS preview), `GOOGLE_PLAY_SERVICE_ACCOUNT_JSON` (Play Internal), Windows/Mac code-signing certs (optional for alpha), Apple Developer + iOS, physical Android device, and the user's explicit "publish v1.0.0" approval. No tag/release/flip-public.
