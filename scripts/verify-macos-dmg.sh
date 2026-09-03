@@ -19,12 +19,10 @@ file apps/electron/assets/icon.icns | grep -qi 'icon' || {
   exit 1
 }
 
-MOUNT_OUTPUT="$(hdiutil attach "$DMG" -nobrowse -readonly)"
-MOUNT_POINT="$(printf '%s\n' "$MOUNT_OUTPUT" | awk '/\/Volumes\// {print $NF; exit}')"
-
-if [[ -z "$MOUNT_POINT" || ! -d "$MOUNT_POINT" ]]; then
-  echo "FAIL: could not detect mounted dmg volume" >&2
-  printf '%s\n' "$MOUNT_OUTPUT" >&2
+MOUNT_POINT="/tmp/smartpet-dmg-mount"
+mkdir -p "$MOUNT_POINT"
+if ! hdiutil attach "$DMG" -nobrowse -readonly -mountpoint "$MOUNT_POINT" >/dev/null 2>&1; then
+  echo "FAIL: hdiutil attach failed for $DMG" >&2
   exit 1
 fi
 
