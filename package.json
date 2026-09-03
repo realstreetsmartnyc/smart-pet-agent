@@ -5,6 +5,7 @@
   "type": "module",
   "private": true,
   "license": "MIT",
+  "author": "Smart Pet Agent <dev@streetsmartnyc.cloud>",
   "workspaces": [
     "apps/*",
     "packages/*"
