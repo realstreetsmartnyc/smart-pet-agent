@@ -3,6 +3,13 @@ set -euo pipefail
 
 APP_JSON="${1:-apps/mobile/app.json}"
 
+# EAS identity is only meaningful in CI or interactive flows where EAS auth is configured.
+# If EAS_TOKEN isn't set, treat as a soft-WARN so local verification doesn't fail.
+if [[ -z "${EAS_TOKEN:-}" ]]; then
+  echo "WARN: EAS_TOKEN not set, skipping identity check"
+  exit 0
+fi
+
 if ! command -v eas >/dev/null 2>&1; then
   echo "FAIL: eas-cli is not installed or not on PATH" >&2
   exit 1
