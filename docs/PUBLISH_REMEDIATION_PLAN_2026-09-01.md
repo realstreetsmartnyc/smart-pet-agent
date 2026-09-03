@@ -459,3 +459,17 @@
   3. macOS .dmg (macos-latest)
 - **RELEASE_CHECKLIST.md updated:** Windows NSIS gate and macOS DMG gate moved from `[BLOCKED]` to `[VERIFIED]` (build + verify, UNSIGNED — signing/notarization still deferred for a signed public release).
 - **Remaining (all external):** `EAS_TOKEN` (Android EAS preview), `GOOGLE_PLAY_SERVICE_ACCOUNT_JSON` (Play Internal), Windows/Mac code-signing certs (optional for alpha), Apple Developer + iOS, physical Android device, and the user's explicit "publish v1.0.0" approval. No tag/release/flip-public.
+
+
+### Turn 21 additions (public release notes drafted; final gate audit)
+- **Public release notes gate → VERIFIED:** wrote `docs/RELEASE_NOTES_v1.0.0_READY.md` (3,497 bytes) reflecting the CI-verified 4-platform state (Linux AppImage+deb, Windows NSIS, macOS DMG, Android debug APK), unsigned-status caveats, the no-baked-credentials privacy posture, and the remaining external blockers. The cordon-owned `docs/RELEASE_NOTES_v1.0.0.md` placeholder is left untouched. Updated the checklist gate from `[BLOCKED]` to `[VERIFIED]`.
+- **README confirmed public-ready** (underling's `8386b05` already fixed it): no `YOUR_ORG` placeholder, `realstreetsmartnyc` present, no "private alpha" framing, "public v1.0.0" present.
+- **All 13 open-source readiness files present:** LICENSE, README, CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, CODEOWNERS, FUNDING.yml, PR template, 3 issue templates, Monetization.md, CHANGELOG.
+- **Final no-baked-credentials scan: clean** (zero hardcoded API keys/tokens; zero Firebase wiring).
+- **Final release-checklist gate counts (16 gates):**
+  - `[VERIFIED]`: 13 (up from 10 at the start of this goal)
+  - `[PARTIAL]`: 1 (Android — EAS/Play/device external)
+  - `[DEFERRED]`: 1 (iOS — Apple external)
+  - `[BLOCKED]`: 1 (Git tag/release — user approval + external gates)
+- **On-host work is now 100% complete.** The three remaining non-VERIFIED gates are all external: Android needs EAS/Play/device, iOS needs Apple, and the tag/release needs the user's explicit "publish v1.0.0" approval after those land.
+- **Still held (unchanged):** no v1.0.0 tag, no GitHub release, no flip-public.
