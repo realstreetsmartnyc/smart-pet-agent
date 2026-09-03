@@ -43,5 +43,6 @@
   "nsis": {
     "oneClick": false,
     "allowToChangeInstallationDirectory": true
-  }
+  },
+  "electronVersion": "33.4.11"
 }
