@@ -1,4 +1,5 @@
 {
+  "_comment": "EAS submit secrets (service-account-key.json, asc-api-key.p8) MUST be provided locally; never commit. See apps/mobile/SECRETS.md and ../.gitignore.",
   "cli": {
     "version": ">= 3.0.0"
   },

@@ -43,3 +43,11 @@ app.json
 
 
 site/
+
+# --- secrets & signing material (P1-7) — never commit ---
+service-account-key.json
+*.p8
+*.p12
+*.jks
+*.keystore
+asc-api-key.p8
