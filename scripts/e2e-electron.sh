@@ -40,8 +40,8 @@ if command -v xvfb-run >/dev/null 2>&1; then
     echo "FAIL: packaged agent.ready was not recorded" >&2
     exit 1
   fi
-  if grep -Eq "Cannot find module|spawn ENOTDIR|ERR_DLOPEN_FAILED|Could not locate bindings|compiled against a different Node.js version" "$LOGFILE" "$RUNTIME_LOG" 2>/dev/null; then
-    echo "FAIL: packaged launch emitted a dependency or native binding error" >&2
+  if grep -Eq "Cannot find module|spawn ENOTDIR|ERR_DLOPEN_FAILED|Could not locate bindings|compiled against a different Node.js version|Uncaught SyntaxError|Uncaught ReferenceError|Identifier 'electronAPI' has already been declared" "$LOGFILE" "$RUNTIME_LOG" 2>/dev/null; then
+    echo "FAIL: packaged launch emitted a dependency, native binding, or renderer error" >&2
     exit 1
   fi
   echo "packaged agent.ready observed"

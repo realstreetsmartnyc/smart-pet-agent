@@ -2,9 +2,9 @@
 // apps/mobile/src/permission-mobile.ts
 // Maps core PeripheralManager devices to Expo permission APIs with audit parity.
 
-import type { PermissionRecord } from '../../../packages/core/src/runtime-events';
+import type { PermissionRecord } from '@smart-pet/core/runtime-events';
 import { MOBILE_PERMISSION_MAP, type MobileDevice } from './permissions';
-import * as Camera from 'expo-camera';
+import { Camera } from 'expo-camera';
 import { Audio } from 'expo-av';
 import * as Notifications from 'expo-notifications';
 import * as LocalAuthentication from 'expo-local-authentication';

@@ -1,0 +1,113 @@
+{
+  "states": {
+    "idle": {
+      "loop": true,
+      "intent": "idle",
+      "animation": "penguin_idle",
+      "halo": "asphalt-400",
+      "description": "Waddling in place, parka zipped"
+    },
+    "listening": {
+      "loop": true,
+      "intent": "listening",
+      "animation": "penguin_tilt",
+      "halo": "civic-500",
+      "waitOnExit": true,
+      "description": "Head cocked, listening on the platform"
+    },
+    "thinking": {
+      "loop": true,
+      "intent": "thinking",
+      "animation": "penguin_shuffle",
+      "halo": "taxi-500",
+      "description": "Shuffling side to side, thinking"
+    },
+    "acting": {
+      "loop": false,
+      "intent": "acting",
+      "animation": "penguin_waddle",
+      "halo": "signal-amber",
+      "description": "Waddles toward task"
+    },
+    "waiting": {
+      "loop": true,
+      "intent": "waiting",
+      "animation": "penguin_wait",
+      "halo": "steel-400",
+      "description": "Waiting for the train"
+    },
+    "asking": {
+      "loop": false,
+      "intent": "asking",
+      "animation": "penguin_peek",
+      "halo": "civic-500",
+      "description": "Peeks toward user"
+    },
+    "asking_permission": {
+      "loop": false,
+      "intent": "asking_permission",
+      "animation": "penguin_peek",
+      "halo": "civic-500",
+      "description": "Seeking permission \u2014 parka hood up"
+    },
+    "celebrating": {
+      "loop": false,
+      "intent": "celebrating",
+      "animation": "penguin_slide",
+      "halo": "taxi-500",
+      "description": "Belly slide celebration"
+    },
+    "warning": {
+      "loop": true,
+      "intent": "warning",
+      "animation": "penguin_alert",
+      "halo": "warning-red",
+      "description": "Flippers out, alert"
+    },
+    "sleeping": {
+      "loop": true,
+      "intent": "sleeping",
+      "animation": "penguin_sleep",
+      "halo": "asphalt-800",
+      "description": "Curled on bench, snoozing"
+    },
+    "resuming": {
+      "loop": false,
+      "intent": "resuming",
+      "animation": "penguin_wake",
+      "halo": "asphalt-400",
+      "description": "Shakes off snow"
+    },
+    "planning": {
+      "loop": true,
+      "intent": "planning",
+      "animation": "penguin_scan",
+      "halo": "taxi-500",
+      "description": "Scanning metro map"
+    }
+  },
+  "render": {
+    "engine": "three",
+    "model": "assets/model.glb",
+    "scale": 0.65,
+    "position": [
+      0,
+      -0.4,
+      0
+    ],
+    "environment": "nyc-subway-platform",
+    "lighting": {
+      "ambient": "#1e293b",
+      "directional": "#f59e0b",
+      "rim": "#0ea5e9"
+    }
+  },
+  "nycAdaptation": {
+    "palette": {
+      "parka": "charcoal + safety orange",
+      "eyes": "amber",
+      "halos": "MTA transit"
+    },
+    "vibe": "Subway commuter \u2014 bundled, brisk, unmistakably NYC."
+  }
+}

@@ -3,7 +3,7 @@
 // Mirrors packages/core/src/memory.ts interface using expo-sqlite instead of better-sqlite3
 
 import * as SQLite from 'expo-sqlite';
-import type { PermissionRecord } from '../../../packages/core/src/runtime-events';
+import type { PermissionRecord } from '@smart-pet/core/runtime-events';
 import type { SQLiteDatabase } from 'expo-sqlite';
 
 const DB_NAME = 'smart-pet-agent.db';

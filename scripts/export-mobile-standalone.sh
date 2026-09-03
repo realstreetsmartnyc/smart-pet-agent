@@ -25,6 +25,13 @@ if [ -d "$MOBILE_DIR/plugins" ]; then
   cp -r "$MOBILE_DIR/plugins" "$STANDALONE_DIR/plugins"
 fi
 
+# Standalone exports cannot depend on repo-relative ../../../packages paths.
+# Mobile only needs the RuntimeEvent contract, so provide a tiny local package
+# instead of pulling desktop-only better-sqlite3 into React Native installs.
+mkdir -p "$STANDALONE_DIR/packages/core/src"
+cp "$REPO_ROOT/packages/core/src/runtime-events.ts" "$STANDALONE_DIR/packages/core/src/runtime-events.ts"
+perl -pi -e "s#'../../../packages/core/src/runtime-events'#'@smart-pet/core/runtime-events'#g" "$STANDALONE_DIR"/src/*.ts
+
 # Create package.json for standalone (no workspace:*)
 cat > "$STANDALONE_DIR/package.json" << 'PKG'
 {
@@ -42,7 +49,7 @@ cat > "$STANDALONE_DIR/package.json" << 'PKG'
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@smart-pet/core": "file:../../packages/core",
+    "@smart-pet/core": "file:./packages/core",
     "expo": "~51.0.39",
     "expo-av": "~14.0.7",
     "expo-sqlite": "~14.0.6",
@@ -66,6 +73,18 @@ cat > "$STANDALONE_DIR/package.json" << 'PKG'
   }
 }
 PKG
+
+cat > "$STANDALONE_DIR/packages/core/package.json" << 'COREPKG'
+{
+  "name": "@smart-pet/core",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./src/runtime-events.ts",
+  "exports": {
+    "./runtime-events": "./src/runtime-events.ts"
+  }
+}
+COREPKG
 
 # Create tsconfig.json for React Native / Metro
 cat > "$STANDALONE_DIR/tsconfig.json" << 'TSC'

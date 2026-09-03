@@ -33,3 +33,11 @@ apps/mobile/android/app/build/
 apps/mobile/android/build/
 .kilo/
 coverage/
+# --- publish hygiene (G5) — stray agent / preview artifacts, not source ---
+IDEA.md
+Zoo-Code/
+PUBLISH_READINESS_AUDIT_2026-09-01.md
+pets/*.smartpet
+app.json
+=1.111
+

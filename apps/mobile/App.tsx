@@ -15,7 +15,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Haptics from 'expo-haptics';
 import * as Notifications from 'expo-notifications';
 import * as LocalAuthentication from 'expo-local-authentication';
-import * as Camera from 'expo-camera';
+import { Camera } from 'expo-camera';
 import { Audio } from 'expo-av';
 import { mobileSmoke, MOBILE_CAPABILITIES } from './src/index';
 import { MobileMemoryStore } from './src/memory-mobile';

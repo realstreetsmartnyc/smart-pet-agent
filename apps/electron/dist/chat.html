@@ -432,12 +432,14 @@
       <section class="page" id="page-devices"><h3>Devices</h3><div id="devicesList" class="empty">Loading device adapters…</div><pre id="devicesInfo" class="utility-meta" style="margin-top:10px;white-space:pre-wrap"></pre></section>
       <section class="page" id="page-permissions"><h3>Permissions — Full</h3><div id="permissionsFull" class="permission-list"></div><div class="utility-meta" style="margin-top:10px">Scopes respect Street Smart NYC trust model: ask / allow / deny per device.</div></section>
       <section class="page" id="page-pets"><h3>Pets</h3><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="panel" style="margin:0"><h3 style="margin:0 0 6px">NYC Orb — Default</h3><div class="utility-meta">Smoked-glass orb, canvas engine, 927B. 11 states, taxi/civic halos — the reliable fallback.</div><div style="margin-top:8px;display:flex;gap:6px"><span class="tool-pill" style="color:var(--taxi-500)">idle</span><span class="tool-pill" style="color:var(--civic-500)">listening</span><span class="tool-pill" style="color:var(--signal-500)">thinking</span></div></div><div class="panel" style="margin:0"><h3 style="margin:0 0 6px">NYC Dragon — Street Guardian</h3><div class="utility-meta">Premium 3D dragon 1.4MB GLB + PBR. Smoked-steel, amber eyes, 12 states. From avatar-os/dragonos.</div><div style="margin-top:8px;display:flex;gap:6px"><span class="tool-pill" style="color:var(--taxi-500)">perched</span><span class="tool-pill" style="color:var(--civic-500)">hover</span><span class="tool-pill">Three.js</span></div></div><div class="panel" style="margin:0"><h3 style="margin:0 0 6px">Neon Kitty — Alley Glow</h3><div class="utility-meta">Cyber neon alley cat 3.9MB GLB, 12 states, 1MB hero render. UGC-factory. Pounce &amp; patrol.</div><div style="margin-top:8px;display:flex;gap:6px"><span class="tool-pill" style="color:#ec4899">neon</span><span class="tool-pill" style="color:var(--civic-500)">pounce</span><span class="tool-pill">Three.js</span></div></div><div class="panel" style="margin:0"><h3 style="margin:0 0 6px">Subway Penguin — Commuter</h3><div class="utility-meta">NYC subway penguin 19MB GLB, parka, waddle/slide, 12 states. Premium DLC — large pack.</div><div style="margin-top:8px;display:flex;gap:6px"><span class="tool-pill">premium</span><span class="tool-pill">19MB</span><span class="tool-pill">Three.js</span></div></div></div><div class="panel" style="margin:12px 0 0"><h3 style="margin:0 0 6px">Custom Pack</h3><div class="utility-meta">Add via <code style="color:var(--tile-100)">pets/</code> or <code>~/.smart-pet-agent/pets/</code> — see CUSTOM_PET_SPEC.md. Validator checks manifest + assets + hitbox. Export <code>.smartpet</code> via <code>zip</code>.</div></div></section>
-      <section class="page" id="page-settings"><h3>Settings & Providers</h3><div id="settingsPanel" class="empty">Provider configs stored in SQLite <code>provider_configs</code>. Use Save to persist.</div><div style="margin-top:12px;display:grid;gap:8px"><input id="providerKey" placeholder="provider key (e.g. ollama)" style="padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--tile-100)"/><textarea id="providerJson" placeholder='{"baseURL":"http://localhost:11434","model":"qwen2.5:7b"}' style="min-height:70px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--tile-100)"></textarea><button id="saveProviderBtn" class="permission-toggle" style="justify-self:start">Save Provider</button><pre id="providersList" class="utility-meta"></pre></div></section>
+      <section class="page" id="page-settings"><h3>Settings & Providers</h3><div id="settingsPanel" class="empty">Pick a provider, tweak endpoint/model, save. Stored in SQLite <code>provider_configs</code>.</div><div style="margin-top:12px;display:grid;gap:10px"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select id="providerPreset" style="padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--tile-100)"><option value="">— Pick provider —</option><option value="ollama">Ollama (local) — http://localhost:11434</option><option value="lmstudio">LM Studio (local) — http://localhost:1234</option><option value="litellm">LiteLLM (gateway) — http://localhost:4000</option><option value="openai">OpenAI — https://api.openai.com/v1</option><option value="anthropic">Anthropic — https://api.anthropic.com</option><option value="google">Google — https://generativelanguage.googleapis.com</option><option value="archon">Archon — http://localhost:8052</option><option value="custom">Custom — enter baseURL</option></select><input id="providerKey" placeholder="provider key (e.g. ollama or my-custom)" style="padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--tile-100)"/></div><input id="providerBaseURL" placeholder='baseURL (e.g. http://localhost:11434)' style="padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--tile-100)"/><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><input id="providerModel" placeholder='model (e.g. qwen2.5:7b, gpt-4o)' style="padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--tile-100)"/><input id="providerApiKey" placeholder='apiKey (optional, for cloud)' type="password" style="padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--tile-100)"/></div><textarea id="providerJson" placeholder='Extra JSON (optional): {"maxTokens":2048}' style="min-height:44px;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--tile-100);font-size:12px"></textarea><div style="display:flex;gap:8px"><button id="saveProviderBtn" class="permission-toggle" style="justify-self:start">Save Provider</button><button id="testProviderBtn" class="permission-toggle" style="justify-self:start">Test</button><button id="activateProviderBtn" class="permission-toggle" style="justify-self:start">Activate</button></div><pre id="providersList" class="utility-meta"></pre><div id="providerStatus" class="utility-meta"></div></div></section>
 
       <div class="toolbar" id="toolbar">
         <div class="tool-pill" id="providerPill">provider: pending</div>
         <div class="tool-pill" id="statePill">state: starting</div>
         <div class="tool-pill">mode: local-first</div>
+        <button class="tool-pill" id="petToggleBtn" title="Hide/show pet overlay" style="cursor:pointer;border:1px solid var(--border);background:rgba(255,255,255,0.06)">🐾 Pet</button>
+        <button class="tool-pill" id="petHideBtn" title="Hide pet (unblock screen)" style="cursor:pointer;border:1px solid var(--border);background:rgba(255,255,255,0.06)">◐ Hide</button>
       </div>
 
       <div class="input-area" id="inputArea">
@@ -673,23 +675,127 @@
       const perms = await electronAPI.getPermissions();
       c.innerHTML = perms.map(p=> `<div class="permission-row"><div class="permission-name">${p.device}</div><div class="permission-mode">${p.mode}</div><span class="tool-pill">${p.enabled?'Enabled':'Ask'}</span></div>`).join('');
     }
+    const PRESETS = {
+      ollama: { baseURL: 'http://localhost:11434', model: 'qwen2.5:7b' },
+      lmstudio: { baseURL: 'http://localhost:1234', model: 'local' },
+      litellm: { baseURL: 'http://localhost:4000', model: 'gpt-3.5-turbo' },
+      openai: { baseURL: 'https://api.openai.com/v1', model: 'gpt-4o' },
+      anthropic: { baseURL: 'https://api.anthropic.com', model: 'claude-3-5-sonnet-20241022' },
+      google: { baseURL: 'https://generativelanguage.googleapis.com', model: 'gemini-1.5-flash' },
+      archon: { baseURL: 'http://localhost:8052', model: 'archon' },
+      custom: { baseURL: '', model: '' }
+    };
+    document.getElementById('providerPreset')?.addEventListener('change', (e) => {
+      const p = PRESETS[e.target.value];
+      if (!p) return;
+      document.getElementById('providerKey').value = e.target.value === 'custom' ? '' : e.target.value;
+      document.getElementById('providerBaseURL').value = p.baseURL;
+      document.getElementById('providerModel').value = p.model;
+    });
     async function loadProviders() {
       const box = document.getElementById('providersList');
+      const status = document.getElementById('providerStatus');
       if (!electronAPI.providersList) { box.textContent='Providers API pending'; return; }
       const providers = await electronAPI.providersList();
-      box.textContent = providers.length ? JSON.stringify(providers,null,2) : 'No saved providers — add one above. Default: ollama/litellm/openai/anthropic/google/archon.';
+      box.textContent = providers.length ? JSON.stringify(providers,null,2) : 'No saved providers — pick a preset above, fill baseURL/model/key, Save. Defaults: ollama, lmstudio, litellm.';
+      if (status) status.textContent = providers.length ? providers.length + ' provider(s) saved.' : '';
+    }
+    async function collectProviderData() {
+      const key = document.getElementById('providerKey').value.trim();
+      const baseURL = document.getElementById('providerBaseURL').value.trim();
+      const model = document.getElementById('providerModel').value.trim();
+      const apiKey = document.getElementById('providerApiKey').value.trim();
+      const extraRaw = document.getElementById('providerJson').value.trim();
+      let extra = {};
+      if (extraRaw) try { extra = JSON.parse(extraRaw); } catch(e){ alert('Extra JSON invalid: '+e.message); return null; }
+      if (!key) { alert('Enter provider key'); return null; }
+      if (!baseURL) { alert('Enter baseURL'); return null; }
+      return { key, data: { baseURL, model: model||'default', apiKey: apiKey||undefined, ...extra } };
     }
     document.getElementById('saveProviderBtn')?.addEventListener('click', async () => {
-      const key = document.getElementById('providerKey').value.trim();
-      const json = document.getElementById('providerJson').value.trim();
-      if (!key || !json) return;
-      try { const data = JSON.parse(json); await electronAPI.providersSave(key, data); loadProviders(); } catch(e){ alert('Invalid JSON: '+e.message); }
+      const collected = await collectProviderData();
+      if (!collected) return;
+      await electronAPI.providersSave(collected.key, collected.data);
+      loadProviders();
+      document.getElementById('providerStatus').textContent = 'Saved ' + collected.key;
     });
+    document.getElementById('testProviderBtn')?.addEventListener('click', async () => {
+      const collected = await collectProviderData();
+      if (!collected) return;
+      const status = document.getElementById('providerStatus');
+      status.textContent = 'Testing ' + collected.key + '...';
+      try {
+        const health = await electronAPI.providersTest?.(collected.key, collected.data) || await electronAPI.getGatewayHealth();
+        status.textContent = 'Test: ' + JSON.stringify(health).slice(0,300);
+      } catch(e){ status.textContent = 'Test failed: '+e.message; }
+    });
+    document.getElementById('activateProviderBtn')?.addEventListener('click', async () => {
+      const key = document.getElementById('providerKey').value.trim();
+      if (!key) { alert('Enter provider key to activate'); return; }
+      await electronAPI.providersActivate?.(key) || await electronAPI.saveSettings({ provider: key });
+      document.getElementById('providerStatus').textContent = 'Activated ' + key;
+      loadProviders();
+    });
+
+    // Pets pickable — click a pet panel to activate
+    function bindPetsPickable() {
+      document.querySelectorAll('#page-pets .panel').forEach(el => {
+        const name = el.querySelector('h3')?.textContent?.trim();
+        if (!name || name === 'Custom Pack') return;
+        el.style.cursor = 'pointer';
+        el.style.transition = 'transform 0.12s, box-shadow 0.12s';
+        el.addEventListener('click', async () => {
+          const packId = ({ 'NYC Orb — Default': 'default-nyc-orb', 'NYC Dragon — Street Guardian': 'dragon-nyc', 'Neon Kitty — Alley Glow': 'neon-kitty-nyc', 'Subway Penguin — Commuter': 'penguin-nyc' })[name];
+          if (!packId) return;
+          el.style.transform = 'scale(0.98)';
+          el.style.boxShadow = '0 0 0 2px var(--taxi-500)';
+          try {
+            if (electronAPI.setActivePet) await electronAPI.setActivePet(packId);
+            else if (electronAPI.saveSettings) await electronAPI.saveSettings({ activePet: packId });
+            // Visual feedback
+            document.querySelectorAll('#page-pets .panel').forEach(p=>p.style.boxShadow='');
+            el.style.boxShadow='0 0 0 2px var(--civic-500)';
+            setTimeout(()=>{ el.style.transform=''; }, 180);
+            // Notify pet window
+            if (electronAPI.notifyPetSwitch) electronAPI.notifyPetSwitch(packId);
+          } catch(e) { alert('Pet switch failed: '+e.message); }
+        });
+      });
+    }
+    bindPetsPickable();
+      document.getElementById('petToggleBtn')?.addEventListener('click', async ()=> {
+        const b = document.getElementById('petToggleBtn');
+        const hidden = b.textContent.includes('Show');
+        if (electronAPI.setPetVisibility) await electronAPI.setPetVisibility(!hidden);
+        b.textContent = hidden ? '🐾 Pet' : '🐾 Show';
+      });
+      document.getElementById('petHideBtn')?.addEventListener('click', async ()=> {
+        if (electronAPI.setPetVisibility) await electronAPI.setPetVisibility(false);
+        const b=document.getElementById('petToggleBtn'); if(b) b.textContent='🐾 Show';
+      });
+
+    // Settings nav polish — ensure menu shows
+    function ensureSettingsNav() {
+      const nav = document.querySelector('[data-page="settings"]');
+      if (nav) nav.style.opacity = '1';
+    }
+    ensureSettingsNav();
 
     (async function bootstrap() {
       const health = await electronAPI.getGatewayHealth();
       setStatus(health?.state || 'starting', health?.summary || 'Runtime is starting');
       await renderPermissions();
+      bindPetsPickable();
+      document.getElementById('petToggleBtn')?.addEventListener('click', async ()=> {
+        const b = document.getElementById('petToggleBtn');
+        const hidden = b.textContent.includes('Show');
+        if (electronAPI.setPetVisibility) await electronAPI.setPetVisibility(!hidden);
+        b.textContent = hidden ? '🐾 Pet' : '🐾 Show';
+      });
+      document.getElementById('petHideBtn')?.addEventListener('click', async ()=> {
+        if (electronAPI.setPetVisibility) await electronAPI.setPetVisibility(false);
+        const b=document.getElementById('petToggleBtn'); if(b) b.textContent='🐾 Show';
+      });
       showPage('chat');
     })();
   </script>

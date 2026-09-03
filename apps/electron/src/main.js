@@ -45,10 +45,11 @@ function startAgent() {
       : path.join(__dirname, '../../../packages/core/src/index.ts');
     const rootDir = path.join(__dirname, '../../..');
     const args = packaged ? [agentEntry] : ['--import', 'tsx', agentEntry];
-    agentProcess = spawn(process.execPath, args, {
+    const runtimeCmd = packaged ? process.execPath : 'node';
+    agentProcess = spawn(runtimeCmd, args, {
       cwd: packaged ? path.dirname(agentEntry) : rootDir,
       stdio: ['pipe', 'pipe', 'pipe'],
-      env: { ...process.env, NODE_ENV: packaged ? 'production' : 'development', ...(packaged ? { ELECTRON_RUN_AS_NODE: '1' } : {}) },
+      env: { ...process.env, NODE_ENV: packaged ? 'production' : 'development', ELECTRON_RUN_AS_NODE: '1' },
     });
 
     agentProcess.stdout.on('data', (data) => {
@@ -254,7 +255,9 @@ function createPetWindow() {
   petWindow.setAlwaysOnTop(true, 'screen-saver');
   petWindow.loadFile(path.join(__dirname, '../dist/index.html'));
 
-  // Click-through when not hovering pet (62% center hitbox handled in renderer)
+  // Click-through when not hovering the pet body. Keep this in sync with the
+  // renderer's B=0.62 body hitbox so the transparent overlay does not steal
+  // clicks while users work, play, or watch behind the pet.
   let isMouseOver = false;
   petWindow.on('show', () => {
     petWindow.webContents.send('pet-appear');
@@ -265,8 +268,13 @@ function createPetWindow() {
     if (!petWindow || petWindow.isDestroyed()) return;
     const cursor = screen.getCursorScreenPoint();
     const bounds = petWindow.getBounds();
-    const inX = cursor.x >= bounds.x && cursor.x <= bounds.x + bounds.width;
-    const inY = cursor.y >= bounds.y && cursor.y <= bounds.y + bounds.height;
+    const B = 0.62;
+    const hitWidth = bounds.width * B;
+    const hitHeight = bounds.height * B;
+    const hitX = bounds.x + (bounds.width - hitWidth) / 2;
+    const hitY = bounds.y + (bounds.height - hitHeight) / 2;
+    const inX = cursor.x >= hitX && cursor.x <= hitX + hitWidth;
+    const inY = cursor.y >= hitY && cursor.y <= hitY + hitHeight;
     const nowIn = inX && inY;
     if (nowIn !== isMouseOver) {
       isMouseOver = nowIn;
@@ -480,6 +488,34 @@ function setupIPC() {
     return { ok: true };
   });
 
+  ipcMain.handle('providers:test', async (event, key, data) => {
+    if (!key || !data?.baseURL) return { ok: false, key, error: 'Provider key and baseURL are required' };
+    try {
+      const url = new URL(data.baseURL);
+      return {
+        ok: true,
+        key,
+        reachable: false,
+        mode: url.protocol.startsWith('http') ? 'configured' : 'unsupported-protocol',
+        message: 'Provider configuration is syntactically valid. Live model ping is deferred to the agent runtime.',
+      };
+    } catch (err) {
+      return { ok: false, key, error: err.message };
+    }
+  });
+
+  ipcMain.handle('providers:activate', async (event, key) => {
+    if (!key) return { ok: false, error: 'Provider key is required' };
+    store.set('settings', { ...store.get('settings', {}), provider: key });
+    broadcastRuntimeEvent({
+      version: 1,
+      event: 'provider.saved',
+      timestamp: Date.now(),
+      payload: { key, active: true },
+    });
+    return { ok: true, key };
+  });
+
   ipcMain.handle('voice:transcribe', async (event, arrayBuffer) => {
     // Sprint 3 stub: echo back empty transcript with voice.state, real Whisper deferred to Sprint 4+ if it lands cleanly
     appendLog('info', 'voice:transcribe stub', { bytes: arrayBuffer?.byteLength ?? 0 });
@@ -521,6 +557,72 @@ function setupIPC() {
   ipcMain.handle('pet:install', async (event, jobId) => {
     const res = await invokeGenericRpc({ type: 'pet:install', jobId }, 'pet.installed');
     return res;
+  });
+
+  ipcMain.handle('pet:get-active', async () => {
+    return { activePet: store.get('activePet', 'default-nyc-orb') };
+  });
+
+  ipcMain.handle('pet:resolve', async (event, packId) => {
+    if (!packId || typeof packId !== 'string') packId = store.get('activePet', 'default-nyc-orb');
+    const fs = require('fs');
+    const candidates = [
+      path.join(__dirname, '../../..', 'pets', packId),
+      path.join(__dirname, '../dist/pets', packId),
+      path.join(process.resourcesPath || '', 'app.asar.unpacked', 'dist', 'pets', packId),
+      path.join(process.resourcesPath || '', 'pets', packId),
+      path.join(require('os').homedir(), '.smart-pet-agent', 'pets', packId),
+    ];
+    let dir = null;
+    for (const c of candidates) {
+      try { if (fs.existsSync(path.join(c, 'manifest.json'))) { dir = c; break; } } catch {}
+    }
+    if (!dir) return { ok: false, packId, error: 'pet pack not found: ' + packId };
+    let manifest=null, config=null;
+    try { manifest = JSON.parse(fs.readFileSync(path.join(dir,'manifest.json'),'utf8')); } catch {}
+    try { config = JSON.parse(fs.readFileSync(path.join(dir,'pet.config.json'),'utf8')); } catch {}
+    const modelRel = manifest?.model || config?.render?.model || null;
+    const modelAbs = modelRel ? path.join(dir, modelRel) : null;
+    const modelUrl = modelAbs ? ('file://' + modelAbs) : null;
+    return { ok: true, packId, dir, manifest, config, modelRel, modelAbs, modelUrl };
+  });
+
+  ipcMain.handle('pet:set-active', async (event, packId) => {
+    if (!packId || typeof packId !== 'string') return { ok: false, error: 'Pet pack id is required' };
+    store.set('activePet', packId);
+    if (petWindow && !petWindow.isDestroyed()) {
+      petWindow.webContents.send('pet-switch', packId);
+      petWindow.webContents.send('anim-state', 'celebrate');
+      petWindow.webContents.send('pet-appear');
+    }
+    broadcastRuntimeEvent({
+      version: 1,
+      event: 'pet.intent',
+      timestamp: Date.now(),
+      payload: { animation: 'celebrate', mood: 'happy', activePet: packId },
+    });
+    return { ok: true, activePet: packId };
+  });
+
+  ipcMain.on('pet:switch-notify', (event, packId) => {
+    if (!packId || typeof packId !== 'string') return;
+    store.set('activePet', packId);
+    if (petWindow && !petWindow.isDestroyed()) {
+      petWindow.webContents.send('pet-switch', packId);
+      petWindow.webContents.send('anim-state', 'celebrate');
+      petWindow.webContents.send('pet-appear');
+    }
+    if (bubbleWindow && !bubbleWindow.isDestroyed()) {
+      bubbleWindow.webContents.send('ai-final', { content: `Switched to ${packId}` });
+      bubbleWindow.showInactive();
+      positionBubble();
+    }
+    broadcastRuntimeEvent({
+      version: 1,
+      event: 'pet.intent',
+      timestamp: Date.now(),
+      payload: { animation: 'celebrate', mood: 'happy', activePet: packId },
+    });
   });
 
   // Pet lifecycle

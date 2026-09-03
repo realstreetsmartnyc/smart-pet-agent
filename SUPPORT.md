@@ -1,16 +1,16 @@
 # Support — Smart Pet Agent
 
-Smart Pet Agent is currently in private alpha / technical preview. Public installer support begins only after the desktop release gates pass.
+Smart Pet Agent is **v1.0.0 public** — Linux AppImage/deb, CLI, TUI, and Android APK are verified. Windows and macOS installers are source + CI ready (pending signing secrets). See `docs/PUBLIC_RELEASE_CHECKLIST_2026-09-02.md` for gate status and `docs/PUBLISH_RUNBOOK_v1.0.0.md` for artifact reproduction.
 
 ## Getting Help
 
-- GitHub Issues: https://github.com/smart-pet-agent/smart-pet-agent/issues
+- GitHub Issues: https://github.com/realstreetsmartnyc/smart-pet-agent/issues
 - Email: support@streetsmartnyc.cloud
 - Docs: see `docs/` for onboarding, trust, publish status, and release planning
 
 ## Before You Report
 
-1. Confirm whether you are using a development build, private alpha build, or packaged test artifact.
+1. Confirm whether you are using a source build, a packaged `v1.0.0` release artifact, or a development build.
 2. Restart the app and capture the exact failure point.
 3. Check `KNOWN_ISSUES.md` for the current blocker list.
 4. Collect relevant logs without including secrets, API keys, private files, images, or recordings.
@@ -29,8 +29,8 @@ Smart Pet Agent is currently in private alpha / technical preview. Public instal
 
 ## Roadmap Status
 
-- Current: private alpha / technical preview with desktop-first hardening.
-- Next: public truth cleanup, waitlist/marketing foundation, TUI/demo polish, custom pet MVP, and desktop release-candidate gates.
-- Later: Android/iOS beta, real voice integration, advanced pet formats, marketplace, 3D companion spaces, and broader agent federation.
+- Current: **v1.0.0 public** — Linux desktop (AppImage + deb, e2e GREEN), CLI/TUI, Custom Pet Creator MVP, and Android debug APK verified. See `docs/PUBLIC_RELEASE_CHECKLIST_2026-09-02.md` for the full gate table.
+- Next: signed Windows NSIS + macOS DMG (pending `WIN_CSC_LINK` / `CSC_LINK` secrets), EAS/Play Internal for Android, and marketplace/pet-store hardening.
+- Later: iOS (needs Apple Developer account), real voice integration, advanced 3D pet formats, and broader agent federation.
 
-For the current execution map, see `docs/MASTER_PHASE_SPRINT_EXECUTION_PLAN_2026-09-01.md`.
+For the current execution map, see `docs/PUBLIC_RELEASE_CHECKLIST_2026-09-02.md`.

@@ -1,0 +1,113 @@
+{
+  "states": {
+    "idle": {
+      "loop": true,
+      "intent": "idle",
+      "animation": "kitty_idle",
+      "halo": "asphalt-400",
+      "description": "Loafing, tail curled, neon glow dim"
+    },
+    "listening": {
+      "loop": true,
+      "intent": "listening",
+      "animation": "kitty_ears",
+      "halo": "civic-500",
+      "waitOnExit": true,
+      "description": "Ears pricked, civic blue"
+    },
+    "thinking": {
+      "loop": true,
+      "intent": "thinking",
+      "animation": "kitty_groom",
+      "halo": "taxi-500",
+      "description": "Grooming pause, thinking"
+    },
+    "acting": {
+      "loop": false,
+      "intent": "acting",
+      "animation": "kitty_pounce",
+      "halo": "signal-amber",
+      "description": "Pounces toward task"
+    },
+    "waiting": {
+      "loop": true,
+      "intent": "waiting",
+      "animation": "kitty_watch",
+      "halo": "neon-500",
+      "description": "Perched on fire escape, watching"
+    },
+    "asking": {
+      "loop": false,
+      "intent": "asking",
+      "animation": "kitty_headbutt",
+      "halo": "civic-500",
+      "description": "Headbutt toward user"
+    },
+    "asking_permission": {
+      "loop": false,
+      "intent": "asking_permission",
+      "animation": "kitty_headbutt",
+      "halo": "civic-500",
+      "description": "Nudges for permission"
+    },
+    "celebrating": {
+      "loop": false,
+      "intent": "celebrating",
+      "animation": "kitty_zoomies",
+      "halo": "neon-500",
+      "description": "Zoomies, tail puff"
+    },
+    "warning": {
+      "loop": true,
+      "intent": "warning",
+      "animation": "kitty_hiss",
+      "halo": "warning-red",
+      "description": "Arched, hissing"
+    },
+    "sleeping": {
+      "loop": true,
+      "intent": "sleeping",
+      "animation": "kitty_sleep",
+      "halo": "asphalt-800",
+      "description": "Curled on radiator"
+    },
+    "resuming": {
+      "loop": false,
+      "intent": "resuming",
+      "animation": "kitty_stretch",
+      "halo": "asphalt-400",
+      "description": "Long stretch, yawn"
+    },
+    "planning": {
+      "loop": true,
+      "intent": "planning",
+      "animation": "kitty_patrol",
+      "halo": "neon-500",
+      "description": "Prowling the alley, planning"
+    }
+  },
+  "render": {
+    "engine": "three",
+    "model": "assets/model.glb",
+    "scale": 0.75,
+    "position": [
+      0,
+      -0.3,
+      0
+    ],
+    "environment": "nyc-alley-neon",
+    "lighting": {
+      "ambient": "#0f0f1e",
+      "directional": "#ec4899",
+      "rim": "#06b6d4"
+    }
+  },
+  "nycAdaptation": {
+    "palette": {
+      "fur": "neon pink/cyan on charcoal",
+      "eyes": "electric amber",
+      "halos": "bodega neon"
+    },
+    "vibe": "Alley cat \u2014 sleek, unbothered, late-night glow. The bodega cat that runs the block."
+  }
+}

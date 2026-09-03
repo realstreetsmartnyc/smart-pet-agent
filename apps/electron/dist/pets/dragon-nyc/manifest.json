@@ -1,0 +1,30 @@
+{
+  "id": "dragon-nyc",
+  "name": "NYC Dragon \u2014 Street Guardian",
+  "version": "1.0.0",
+  "author": "Street Smart NYC \u00d7 DragonOS",
+  "description": "Premium 3D dragon companion forged from DragonOS \u2014 smoked-steel scales, taxi-gold eyes, civic-blue underglow. Thought-driven: perches, surveys, dives, and rests with NYC street-smart composure. From avatar-os/dragonos.",
+  "license": "MIT",
+  "engine": "three",
+  "preview": "assets/preview.svg",
+  "model": "assets/dragon.glb",
+  "textures": {
+    "baseColor": "assets/dragon_basecolor.webp",
+    "normal": "assets/dragon_normal.png",
+    "metallic": "assets/dragon_metallic.webp",
+    "roughness": "assets/dragon_roughness.webp"
+  },
+  "tags": [
+    "nyc",
+    "dragon",
+    "premium",
+    "3d",
+    "guardian",
+    "street-smart"
+  ],
+  "defaultState": "idle",
+  "source": "avatar-os/dragonos/assets/dragon/optimized",
+  "adaptedFrom": "DragonOS \u2014 avatar-os/dragonos",
+  "fallback": "canvas",
+  "fallbackPreview": "assets/preview.svg"
+}

@@ -166,10 +166,22 @@ contextBridge.exposeInMainWorld('electronAPI', {
   auditList: (limit) => ipcRenderer.invoke('audit:list', limit),
   providersList: () => ipcRenderer.invoke('providers:list'),
   providersSave: (key, data) => ipcRenderer.invoke('providers:save', key, data),
+  providersTest: (key, data) => ipcRenderer.invoke('providers:test', key, data),
+  providersActivate: (key) => ipcRenderer.invoke('providers:activate', key),
   getLogPath: () => ipcRenderer.invoke('get-log-path'),
   petCreate: (payload) => ipcRenderer.invoke('pet:create', payload),
   petList: () => ipcRenderer.invoke('pet:list'),
   petInstall: (jobId) => ipcRenderer.invoke('pet:install', jobId),
+  setActivePet: (packId) => ipcRenderer.invoke('pet:set-active', packId),
+  notifyPetSwitch: (packId) => ipcRenderer.send('pet:switch-notify', packId),
+  getActivePet: () => ipcRenderer.invoke('pet:get-active'),
+  resolvePet: (packId) => ipcRenderer.invoke('pet:resolve', packId),
+  onPetSwitch: (callback) => {
+    onChannel('pet-switch', (_event, packId) => callback(packId));
+  },
+  onPetAppear: (callback) => {
+    onChannel('pet-appear', (_event) => callback());
+  },
 
   // ---- Channels ----
   channelsList: () => ipcRenderer.invoke('channels:list'),

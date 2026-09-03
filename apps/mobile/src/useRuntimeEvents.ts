@@ -3,7 +3,7 @@
 // Mirrors Electron's onAIChunk/onAIDone/onGatewayStatus pattern using React state.
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import type { RuntimeEvent, RuntimeEventName, PermissionRecord } from '../../../packages/core/src/runtime-events';
+import type { RuntimeEvent, RuntimeEventName, PermissionRecord } from '@smart-pet/core/runtime-events';
 
 export interface RuntimeState {
   status: { state: string; summary: string };

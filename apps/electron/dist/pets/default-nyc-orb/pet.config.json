@@ -1,0 +1,90 @@
+{
+  "states": {
+    "idle": {
+      "loop": true,
+      "intent": "idle"
+    },
+    "listening": {
+      "loop": true,
+      "intent": "listening",
+      "halo": "civic-500",
+      "waitOnExit": true
+    },
+    "thinking": {
+      "loop": true,
+      "intent": "thinking",
+      "halo": "taxi-500"
+    },
+    "acting": {
+      "loop": true,
+      "intent": "acting",
+      "halo": "signal-500",
+      "waitOnExit": true
+    },
+    "waiting": {
+      "loop": true,
+      "intent": "waiting"
+    },
+    "asking": {
+      "loop": false,
+      "intent": "asking_permission",
+      "halo": "signal-500",
+      "next": "idle"
+    },
+    "celebrating": {
+      "loop": false,
+      "intent": "celebrating",
+      "halo": "success-500",
+      "next": "idle"
+    },
+    "warning": {
+      "loop": false,
+      "intent": "warning",
+      "halo": "alert-500",
+      "next": "idle"
+    },
+    "sleeping": {
+      "loop": true,
+      "intent": "sleeping"
+    },
+    "resuming": {
+      "loop": false,
+      "intent": "resuming",
+      "next": "idle"
+    },
+    "planning": {
+      "loop": true,
+      "intent": "planning",
+      "halo": "taxi-500"
+    }
+  },
+  "intents": [
+    "idle",
+    "listening",
+    "thinking",
+    "planning",
+    "acting",
+    "waiting",
+    "asking_permission",
+    "celebrating",
+    "warning",
+    "sleeping",
+    "resuming"
+  ],
+  "hitbox": 0.62,
+  "ignoreMouseWhen": "notHover",
+  "draggable": true,
+  "patrol": {
+    "enabled": false
+  },
+  "sleep": {
+    "timeoutMs": 300000,
+    "enabled": true
+  },
+  "cursorPollMs": 80,
+  "rapidClick": {
+    "count": 3,
+    "windowMs": 500,
+    "action": "toggleChat"
+  }
+}

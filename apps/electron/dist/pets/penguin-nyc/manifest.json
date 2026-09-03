@@ -1,0 +1,23 @@
+{
+  "id": "penguin-nyc",
+  "name": "Subway Penguin \u2014 NYC Commuter",
+  "version": "1.0.0",
+  "author": "Street Smart NYC \u00d7 Desktop/assets",
+  "description": "NYC subway penguin commuter \u2014 bundled parka, metro-card shuffle, 19MB premium 3D. Waddles, waits, and celebrates like a true New Yorker. Source: Desktop/assets/penguin.glb",
+  "license": "MIT",
+  "engine": "three",
+  "preview": "assets/preview.png",
+  "model": "assets/model.glb",
+  "tags": [
+    "nyc",
+    "penguin",
+    "premium",
+    "3d",
+    "subway",
+    "commuter"
+  ],
+  "defaultState": "idle",
+  "source": "Desktop/assets/penguin.glb (19MB, premium dlc)",
+  "size": "19MB GLB \u2014 premium pack, sideload or store",
+  "fallback": "canvas"
+}
