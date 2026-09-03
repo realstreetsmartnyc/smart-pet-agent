@@ -21,7 +21,9 @@ cp "$MOBILE_DIR/app.json" "$STANDALONE_DIR/app.json"
 cp "$MOBILE_DIR/eas.json" "$STANDALONE_DIR/eas.json"
 cp "$MOBILE_DIR/babel.config.js" "$STANDALONE_DIR/babel.config.js"
 cp -r "$MOBILE_DIR/assets" "$STANDALONE_DIR/assets"
-cp -r "$MOBILE_DIR/plugins" "$STANDALONE_DIR/plugins"
+if [ -d "$MOBILE_DIR/plugins" ]; then
+  cp -r "$MOBILE_DIR/plugins" "$STANDALONE_DIR/plugins"
+fi
 
 # Create package.json for standalone (no workspace:*)
 cat > "$STANDALONE_DIR/package.json" << 'PKG'
