@@ -5,7 +5,7 @@
   "type": "module",
   "private": true,
   "license": "MIT",
-  "author": "Smart Pet Agent <dev@streetsmartnyc.cloud>",
+  "author": "Roberto C. Agosto <roberto2c2agosto2@gmail.com>",
   "workspaces": [
     "apps/*",
     "packages/*"
