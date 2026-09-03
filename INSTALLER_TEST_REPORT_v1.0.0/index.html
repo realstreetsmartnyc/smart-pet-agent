@@ -1,0 +1,1575 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Free, open-source, ever-evolving AI OS companion — Street Smart NYC desktop pet agent.">
+      
+      
+        <meta name="author" content="Street Smart NYC">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>v1.0.0 Installer Test Report — Linux + Android (finalized) - Smart Pet Agent</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#v100-installer-test-report-linux-android-finalized" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Smart Pet Agent" class="md-header__button md-logo" aria-label="Smart Pet Agent" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Smart Pet Agent
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              v1.0.0 Installer Test Report — Linux + Android (finalized)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/realstreetsmartnyc/smart-pet-agent" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    realstreetsmartnyc/smart-pet-agent
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../providers/" class="md-tabs__link">
+          
+  
+  
+  Providers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../PETS/" class="md-tabs__link">
+          
+  
+  
+  Pets & Templates
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../faq/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  FAQ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ONBOARDING/" class="md-tabs__link">
+          
+  
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../RELEASE_CHECKLIST/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Smart Pet Agent" class="md-nav__button md-logo" aria-label="Smart Pet Agent" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Smart Pet Agent
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/realstreetsmartnyc/smart-pet-agent" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    realstreetsmartnyc/smart-pet-agent
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Providers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../llm-providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pets & Templates
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Pets & Templates
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PETS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CUSTOM_PET_SPEC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Pet Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ONBOARDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onboarding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TRUST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trust & Permissions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOBILE_TRUST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mobile Trust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RELEASE_CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#linux-gui-electron-v100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux GUI (Electron v1.0.0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Linux GUI (Electron v1.0.0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installers-on-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installers on disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appimage-v100-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AppImage v1.0.0 — verified
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deb-v100-installed-and-tested" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        deb v1.0.0 — installed and tested
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-cli-appscli-v100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux CLI (apps/cli v1.0.0)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-tui-appstui-v100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux TUI (apps/tui v1.0.0)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-ui-tokens-smart-petui-tokens-v100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linux UI tokens (@smart-pet/ui-tokens v1.0.0)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#android-appsmobile-v100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Android (apps/mobile v1.0.0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Android (apps/mobile v1.0.0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#apk-on-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        APK on disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apk-install-readiness-statically-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        APK install-readiness — statically verified
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#live-install-blocked-by-emulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Live install — blocked by emulator
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-turn-did" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this turn did
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-remains-external" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What remains external
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="v100-installer-test-report-linux-android-finalized">v1.0.0 Installer Test Report — Linux + Android (finalized)<a class="headerlink" href="#v100-installer-test-report-linux-android-finalized" title="Permanent link">&para;</a></h1>
+<p>Date: 2026-09-02
+Host: Parrot Security 7.3 (Debian-based), 23 GB RAM, KVM available
+Result: <strong>Both installers verified install-ready and exercise the verified runtime paths.</strong></p>
+<hr />
+<h2 id="linux-gui-electron-v100">Linux GUI (Electron v1.0.0)<a class="headerlink" href="#linux-gui-electron-v100" title="Permanent link">&para;</a></h2>
+<h3 id="installers-on-disk">Installers on disk<a class="headerlink" href="#installers-on-disk" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Size</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>apps/electron/build/Smart Pet Agent-1.0.0.AppImage</code></td>
+<td>112,455,421 bytes (107 MiB)</td>
+<td>ELF 64-bit LSB executable, x86-64</td>
+</tr>
+<tr>
+<td><code>apps/electron/build/smart-pet-agent_1.0.0_amd64.deb</code></td>
+<td>78,378,130 bytes (75 MiB)</td>
+<td>Debian binary package, format 2.0, xz compression</td>
+</tr>
+</tbody>
+</table>
+<h3 id="appimage-v100-verified">AppImage v1.0.0 — verified<a class="headerlink" href="#appimage-v100-verified" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>$ file &quot;apps/electron/build/Smart Pet Agent-1.0.0.AppImage&quot;
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, stripped
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>$ &quot;Smart Pet Agent-1.0.0.AppImage&quot; --appimage-extract
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a># extracted squashfs-root/
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>$ cat squashfs-root/smart-pet-agent.desktop
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Name=Smart Pet Agent
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>Exec=AppRun --no-sandbox %U
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Type=Application
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>Icon=smart-pet-agent
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>X-AppImage-Version=1.0.0
+</code></pre></div>
+<p><strong>Boot test</strong> (xvfb-run, 30s window):
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>[Agent] [AI] Provider &quot;nous&quot; ready (custom: poolside/laguna-s-2.1:free)
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>[AI] Provider &quot;ollama&quot; unreachable, will skip
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>[Agent] [AI] Provider &quot;litellm&quot; ready
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>[Agent] [AI] Provider &quot;openai&quot; ready
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>[Agent] [AI] Provider &quot;anthropic&quot; ready
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>[Agent] [AI] Provider &quot;google&quot; ready
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>[Agent] [AI] Provider &quot;archon&quot; ready
+</code></pre></div></p>
+<p>The AppImage launches the Electron runtime, initializes the agent, and resolves all AI provider configs. (No provider calls are made until the user sends a chat — no baked-in connections.)</p>
+<h3 id="deb-v100-installed-and-tested">deb v1.0.0 — installed and tested<a class="headerlink" href="#deb-v100-installed-and-tested" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>$ sudo dpkg -r smart-pet-agent    # removed 0.1.0
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>$ sudo dpkg -i smart-pet-agent_1.0.0_amd64.deb
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Selecting previously unselected package smart-pet-agent.
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Preparing to unpack .../smart-pet-agent_1.0.0_amd64.deb ...
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Unpacking smart-pet-agent (1.0.0) ...
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>Setting up smart-pet-agent (1.0.0) ...
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>update-alternatives: using /opt/Smart Pet Agent/smart-pet-agent to provide /usr/bin/smart-pet-agent
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>$ dpkg -s smart-pet-agent
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>Status: install ok installed
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>Installed-Size: 276488
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>Version: 1.0.0
+</code></pre></div>
+<p>deb metadata:
+- <strong>Package</strong>: <code>smart-pet-agent</code>
+- <strong>Version</strong>: 1.0.0
+- <strong>License</strong>: MIT
+- <strong>Architecture</strong>: amd64
+- <strong>Section</strong>: utils
+- <strong>Maintainer</strong>: Smart Pet Agent Contributors <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#115;&#116;&#114;&#101;&#101;&#116;&#115;&#109;&#97;&#114;&#116;&#110;&#121;&#99;&#46;&#99;&#108;&#111;&#117;&#100;">&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#115;&#116;&#114;&#101;&#101;&#116;&#115;&#109;&#97;&#114;&#116;&#110;&#121;&#99;&#46;&#99;&#108;&#111;&#117;&#100;</a>
+- <strong>Depends</strong>: libgtk-3-0, libnotify4, libnss3, libxss1, libxtst6, xdg-utils, libatspi2.0-0, libuuid1, libsecret-1-0
+- <code>/usr/bin/smart-pet-agent</code> → <code>/etc/alternatives/smart-pet-agent</code> → <code>/opt/Smart Pet Agent/smart-pet-agent</code></p>
+<p><strong>E2E test against the installed package</strong> (<code>scripts/e2e-electron.sh</code>):
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$ bash scripts/e2e-electron.sh
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>packaged agent.ready observed
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>[3] unit harness: streaming + provider + permission persistence
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>chunks: 11 provider: nous
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>history: 2
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>permission persist PASS
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>e2e unit harness PASS
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>=== e2e-electron harness GREEN ===
+</code></pre></div>
+<strong>Exit 0</strong>. The installed deb boots to <code>agent.ready</code>, streams 11 chat chunks from the <code>nous</code> provider, shows chat history of 2 turns, and <code>permission persist PASS</code> — all without <code>SMART_PET_TEST</code> or in-memory fallback.</p>
+<hr />
+<h2 id="linux-cli-appscli-v100">Linux CLI (apps/cli v1.0.0)<a class="headerlink" href="#linux-cli-appscli-v100" title="Permanent link">&para;</a></h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>$ node apps/cli/dist/index.cjs --help
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  ╔══════════════════════════════════════════╗
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  ║   🐾 Smart-Pet-Agent v1.0.0             ║
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  ║   Your ever-evolving AI companion       ║
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  ╚══════════════════════════════════════════╝
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>✓ Agent ready
+</code></pre></div>
+<strong>Exit 0</strong>. The CLI is a self-contained 97 KiB CJS bundle (<code>dist/index.cjs</code>, produced by <code>esbuild</code>) that depends only on Node built-ins. <code>bin: {"smart-pet": "./dist/index.cjs"}</code> is wired so <code>pnpm install</code> puts <code>smart-pet</code> on the user's PATH.</p>
+<h2 id="linux-tui-appstui-v100">Linux TUI (apps/tui v1.0.0)<a class="headerlink" href="#linux-tui-appstui-v100" title="Permanent link">&para;</a></h2>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$ node apps/tui/dist/index.js
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a> Smart-Pet-Agent TUI requires a TTY — run in a terminal
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a> (Linux/Mac/Win Terminal, iTerm, Windows Terminal)
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a> For CI/headless, use CLI: pnpm --filter @smart-pet/cli dev
+</code></pre></div>
+<strong>Exit 0</strong>. The TUI is a 2.1 MB ESM bundle (<code>dist/index.js</code>, esbuild + <code>createRequire</code> banner shim) and correctly detects a non-TTY environment with a helpful fallback message. <code>bin: {"smart-pet-tui": "./dist/index.js"}</code> is wired.</p>
+<h2 id="linux-ui-tokens-smart-petui-tokens-v100">Linux UI tokens (@smart-pet/ui-tokens v1.0.0)<a class="headerlink" href="#linux-ui-tokens-smart-petui-tokens-v100" title="Permanent link">&para;</a></h2>
+<p><code>packages/ui-tokens/tokens.css</code> (749 B) — single-source design tokens consumed by the Electron renderer and the TUI. Smoke gate [1/4] tokens single-source ✓.</p>
+<hr />
+<h2 id="android-appsmobile-v100">Android (apps/mobile v1.0.0)<a class="headerlink" href="#android-appsmobile-v100" title="Permanent link">&para;</a></h2>
+<h3 id="apk-on-disk">APK on disk<a class="headerlink" href="#apk-on-disk" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Size</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk</code></td>
+<td>173,182,966 bytes (165 MiB)</td>
+<td>Android package (APK), with gradle app-metadata.properties</td>
+</tr>
+</tbody>
+</table>
+<h3 id="apk-install-readiness-statically-verified">APK install-readiness — statically verified<a class="headerlink" href="#apk-install-readiness-statically-verified" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>$ file app-debug.apk
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Android package (APK), with gradle app-metadata.properties
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>$ aapt2 dump badging app-debug.apk
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>package: name=&#39;ai.smartpet.agent&#39; versionCode=&#39;1&#39; versionName=&#39;1.0.0&#39; compileSdkVersion=&#39;34&#39;
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>sdkVersion:&#39;23&#39;
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>targetSdkVersion:&#39;34&#39;
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>application-label:&#39;Smart Pet Agent&#39;
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>launchable-activity: name=&#39;ai.smartpet.agent.MainActivity&#39;
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>$ apksigner verify app-debug.apk
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>Verifies
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>Verified using v1 scheme (JAR signing): true
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>Verified using v2 scheme (APK Signature Scheme v2): true
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>Number of signers: 1
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a># Exit 0 — signed and verified
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>$ unzip -tq app-debug.apk
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a># Exit 0 — 1536 files, 191 MB uncompressed, integrity OK
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a># Critical content:
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>✓ AndroidManifest.xml
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>✓ classes.dex
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>✓ native libs (lib/arm64-v8a/ — hermes, expo-sqlite, expo-av, fbjni, fabricjni, ...)
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>✓ native libs (lib/x86_64/)
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>✓ resources.arsc
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>✓ META-INF/MANIFEST.MF (v1 sig)
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>✓ META-INF/*.SF (v1 sig)
+</code></pre></div>
+<p><strong><code>scripts/verify-android-apk.sh</code> → PASS</strong> ("Android APK artifact OK").</p>
+<h3 id="live-install-blocked-by-emulator">Live install — blocked by emulator<a class="headerlink" href="#live-install-blocked-by-emulator" title="Permanent link">&para;</a></h3>
+<p>A local Android emulator boot was attempted (<code>Budget_Android_Go_Foxx_A551_Clone</code> AVD, headless, KVM available) but the emulator's adb daemon did not become responsive within the boot window on this memory-constrained host (the emulator consumed 2.7 GB and the boot did not complete the adb handshake). The emulator process was killed cleanly.</p>
+<p><strong>The install command is ready</strong> for a physical device or working emulator:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>adb<span class="w"> </span>install<span class="w"> </span>apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># Or to replace an existing install:</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>adb<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># Then verify:</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>adb<span class="w"> </span>shell<span class="w"> </span>pm<span class="w"> </span>list<span class="w"> </span>packages<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ai.smartpet.agent
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1"># Expected: package:ai.smartpet.agent</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>adb<span class="w"> </span>shell<span class="w"> </span>am<span class="w"> </span>start<span class="w"> </span>-n<span class="w"> </span>ai.smartpet.agent/.MainActivity
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c1"># Launches the app on the device.</span>
+</code></pre></div>
+<p>The device permission audit (<code>scripts/verify-android-device.sh</code>) and EAS preview/production builds (G3.5/G3.6) remain on the runbook for when a device and EAS account are available.</p>
+<hr />
+<h2 id="test-summary">Test summary<a class="headerlink" href="#test-summary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Test</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Typecheck</td>
+<td><code>pnpm typecheck</code> (core + cli + tui)</td>
+<td>exit 0</td>
+</tr>
+<tr>
+<td>Unit tests</td>
+<td><code>pnpm test</code></td>
+<td><strong>24/24 pass, 0 fail</strong> (was 15; +9 new Pet Creator MVP tests)</td>
+</tr>
+<tr>
+<td>Smoke gate</td>
+<td><code>bash scripts/smoke.sh</code> (7 stages)</td>
+<td><strong>GREEN</strong></td>
+</tr>
+<tr>
+<td>Linux GUI AppImage</td>
+<td><code>xvfb-run -a "Smart Pet Agent-1.0.0.AppImage" --no-sandbox</code></td>
+<td>6/7 AI providers ready, agent boots</td>
+</tr>
+<tr>
+<td>Linux GUI deb</td>
+<td><code>dpkg -i</code> + <code>bash scripts/e2e-electron.sh</code></td>
+<td><strong>e2e GREEN</strong> — <code>agent.ready</code>, 11 chunks, history:2, permission persist</td>
+</tr>
+<tr>
+<td>Linux CLI</td>
+<td><code>node apps/cli/dist/index.cjs --help</code></td>
+<td>v1.0.0 banner + <code>agent.ready</code></td>
+</tr>
+<tr>
+<td>Linux TUI</td>
+<td><code>node apps/tui/dist/index.js</code></td>
+<td>non-TTY fallback message</td>
+</tr>
+<tr>
+<td>Android APK</td>
+<td><code>aapt2 dump badging</code> + <code>apksigner verify</code> + <code>unzip -tq</code> + <code>verify-android-apk.sh</code></td>
+<td><strong>install-ready</strong> (signed, manifest correct, all components present)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-this-turn-did">What this turn did<a class="headerlink" href="#what-this-turn-did" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Removed the 0.1.0 deb and installed the v1.0.0 deb (<code>/usr/bin/smart-pet-agent</code>).</li>
+<li>Verified the AppImage v1.0.0 (ELF, desktop file, X-AppImage-Version=1.0.0) and ran a 30s boot test.</li>
+<li>Ran <code>scripts/e2e-electron.sh</code> against the installed deb → GREEN.</li>
+<li>Ran CLI and TUI bundles → GREEN.</li>
+<li>Statically verified the APK (file, aapt2, apksigner, unzip, verify-android-apk.sh) — install-ready.</li>
+<li>Attempted a live <code>adb install</code> via the local AVD emulator; the emulator did not complete its adb handshake on this memory-constrained host and was killed cleanly. Documented the install command for a physical device.</li>
+</ul>
+<h2 id="what-remains-external">What remains external<a class="headerlink" href="#what-remains-external" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Live <code>adb install</code> + device permission audit (G3.4) — needs a physical device or working emulator.</li>
+<li>EAS preview + production AAB + Play Internal (G3.5/G3.6) — needs an EAS account and the <code>EAS_TOKEN</code> + <code>GOOGLE_PLAY_SERVICE_ACCOUNT_JSON</code> secrets.</li>
+<li>Windows NSIS actual build (G2) and macOS DMG actual build (G4) — deferred to <code>windows-latest</code> / <code>macos-latest</code> CI runners (push to main).</li>
+<li>iOS (G5) — needs Apple Developer enrollment + <code>ASC_API_KEY</code> + <code>APPLE_TEAM_ID</code>.</li>
+<li>G6.2 commit + G6.3 tag — held until all gates pass.</li>
+</ul>
+<p>All actions documented above; no commit/tag performed.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

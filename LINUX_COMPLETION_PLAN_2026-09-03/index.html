@@ -1,0 +1,1647 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Free, open-source, ever-evolving AI OS companion — Street Smart NYC desktop pet agent.">
+      
+      
+        <meta name="author" content="Street Smart NYC">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Linux (Debian/Ubuntu) Completion Plan — Smart Pet Agent - Smart Pet Agent</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#linux-debianubuntu-completion-plan-smart-pet-agent" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Smart Pet Agent" class="md-header__button md-logo" aria-label="Smart Pet Agent" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Smart Pet Agent
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Linux (Debian/Ubuntu) Completion Plan — Smart Pet Agent
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/realstreetsmartnyc/smart-pet-agent" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    realstreetsmartnyc/smart-pet-agent
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../providers/" class="md-tabs__link">
+          
+  
+  
+  Providers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../PETS/" class="md-tabs__link">
+          
+  
+  
+  Pets & Templates
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../faq/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  FAQ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ONBOARDING/" class="md-tabs__link">
+          
+  
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../RELEASE_CHECKLIST/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Smart Pet Agent" class="md-nav__button md-logo" aria-label="Smart Pet Agent" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Smart Pet Agent
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/realstreetsmartnyc/smart-pet-agent" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    realstreetsmartnyc/smart-pet-agent
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Providers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../llm-providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pets & Templates
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Pets & Templates
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PETS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CUSTOM_PET_SPEC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Pet Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ONBOARDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onboarding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TRUST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trust & Permissions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOBILE_TRUST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mobile Trust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RELEASE_CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#audit-summary-collated-from-4-workers-2026-09-02" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audit Summary (collated from 4 workers, 2026-09-02)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audit Summary (collated from 4 workers, 2026-09-02)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cli-audit-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CLI (audit-cli)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tui-audit-tui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TUI (audit-tui)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#guiui-audit-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GUI/UI (audit-gui)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#electron-audit-electron" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Electron (audit-electron)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prioritized-completion-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prioritized Completion Plan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prioritized Completion Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#p0-critical-block-release-break-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P0 — Critical (block release, break core)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p1-high-break-ux-block-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P1 — High (break UX, block publish)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p2-medium-polish-publish-block-if-not-fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P2 — Medium (polish, publish block if not fixed)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p3-low-nice-to-have" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P3 — Low (nice to have)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verification-matrix-how-to-prove-linux-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Matrix (how to prove Linux completion)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execution Order
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="linux-debianubuntu-completion-plan-smart-pet-agent">Linux (Debian/Ubuntu) Completion Plan — Smart Pet Agent<a class="headerlink" href="#linux-debianubuntu-completion-plan-smart-pet-agent" title="Permanent link">&para;</a></h1>
+<p><strong>Date:</strong> 2026-09-03 | <strong>Host:</strong> Parrot 7.3 (Debian 13.5, Linux 7.0.13) | <strong>Node:</strong> v24.17.0 (nvmrc wants 20) | <strong>Electron:</strong> 33.4.11 (ABI 130) | <strong>Node ABI:</strong> 137 (24) | <strong>Branch:</strong> master + 4 audit workers</p>
+<p><strong>North Star:</strong> All 4 forms — CLI, TUI, GUI/UI (Chat), Electron — fully working on Debian/Ubuntu, with no critical broken, and verified via evidence (exit codes, artifacts, screenshots, xwininfo).</p>
+<hr />
+<h2 id="audit-summary-collated-from-4-workers-2026-09-02">Audit Summary (collated from 4 workers, 2026-09-02)<a class="headerlink" href="#audit-summary-collated-from-4-workers-2026-09-02" title="Permanent link">&para;</a></h2>
+<h3 id="cli-audit-cli">CLI (audit-cli)<a class="headerlink" href="#cli-audit-cli" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>System:</strong> Parrot 7.3 Debian, Node 24.17 (drift: .nvmrc 20), pnpm 9.4.0 — ✅</li>
+<li><strong>Install:</strong> <code>pnpm install --frozen-lockfile</code> ✅ Done 3.8s, <code>better-sqlite3</code> 2.0M ELF, fallback <code>/tmp/better-sqlite3-build</code> 2.1M</li>
+<li><strong>Build:</strong> <code>esbuild --bundle --platform=node --target=node20 --format=cjs --outfile=dist/index.cjs</code> ✅ (esbuild cjs)</li>
+<li><strong>Run:</strong> <code>node dist/index.cjs --help</code> → no usage (only banner), <code>--version</code> shows v1.0.0 banner, <code>SMART_PET_ALLOW_IN_MEMORY_FALLBACK=1 node dist/index.cjs hello</code> → <code>All AI providers failed</code> (expected without local Ollama), interactive <code>echo "help"| node</code> → <code>help</code> + <code>state</code> + <code>memory</code> commands work, but <code>readline</code> closed error on <code>printf "help\nstate\n"</code> burst; <code>tsc --noEmit</code> ✅</li>
+<li><strong>Broken:</strong> <code>.nvmrc</code> drift, <code>help</code> parser gap, native SQLite fallback wiring, provider wiring needs live Ollama/LiteLLM</li>
+</ul>
+<h3 id="tui-audit-tui">TUI (audit-tui)<a class="headerlink" href="#tui-audit-tui" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>System:</strong> Debian 13.5, Node 24.17, pnpm 9.4.0, <code>DISPLAY=:0</code>, <code>TERM=xterm-256color</code>, <code>tty</code> not a tty in harness, <code>script -q</code> gives <code>true true</code> ✅</li>
+<li><strong>Install/Build:</strong> <code>pnpm --filter @smart-pet/tui</code> ✅ (2.2M dist, ESM banner, <code>node --check</code> pass)</li>
+<li><strong>Run:</strong> headless → fallback "TUI requires a TTY — use CLI" ✅, TTY via <code>script</code> → Ink UI renders <code>✓ Agent ready</code> ✅, <code>DISPLAY</code> irrelevant ✅</li>
+<li><strong>Typecheck:</strong> <code>tsc --noEmit</code> ✅, no TUI tests ❌</li>
+<li><strong>Broken (6):</strong></li>
+<li>Peer <code>react 18.2.0</code> vs <code>react-reconciler@0.29.2 wants ^18.3.1</code> — WARN every install</li>
+<li>No TUI tests</li>
+<li>Burst/paste <code>help\r</code> as single chunk → <code>key.return</code> false, command never executes (char-by-char works, burst fails)</li>
+<li><code>\n</code> vs <code>\r</code> — TUI checks <code>key.return</code> (\r) but <code>\n</code> maps to <code>enter</code>, <code>echo</code> piped <code>\n</code> won't trigger</li>
+<li>Node drift <code>.nvmrc</code> 20 vs 24</li>
+<li><code>Ctrl+C</code> exit not verified in pty</li>
+</ul>
+<h3 id="guiui-audit-gui">GUI/UI (audit-gui)<a class="headerlink" href="#guiui-audit-gui" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>System:</strong> Wayland primary + XWayland <code>:0</code>, <code>kwin_wayland</code> 6.3.6, <code>xdpyinfo</code> 1920×1080, Electron will run via XWayland ✅</li>
+<li><strong>Build:</strong> <code>dist/chat.html</code> 35K (803l), <code>index.html</code> 28K, <code>three/</code> 9.8M, <code>pets/</code> 34M, AppImage 147M/108M, deb 151M ✅</li>
+<li><strong>Features:</strong> provider dropdown 8 presets (ollama 11434, lmstudio 1234, litellm 4000, openai, anthropic, google, archon 8052, custom) ✅, Pets 4 panels (grid 1fr 1fr, 5 .panel) + <code>bindPetsPickable()</code> ✅ but double-binding bug, toolbar hide/show ✅ but duplicated, hitbox <code>B=0.62</code> triple-synced ✅</li>
+<li><strong>Run:</strong> file:// and http outside Electron correctly fail (empty <code>electronAPI</code>, <code>getGatewayHealth is not a function</code>) — not a bug; inside Electron wiring exists (<code>providersList/save</code>, <code>permissions</code>, <code>telemetry</code>, <code>settings</code>) but live test not executed</li>
+<li><strong>Test:</strong> headless Puppeteer 420×700 exact as spec, <code>var electronAPI</code> fallback correct (single <code>var</code>), importmap correct</li>
+<li><strong>Broken (8):</strong></li>
+<li><strong>CRITICAL</strong> Three.js <code>three.core.js</code> missing — <code>dist/three/three.module.js</code> imports <code>./three.core.js</code> 404 → GLB pets fail</li>
+<li><strong>HIGH</strong> Duplicate event listeners in chat.html — <code>petToggleBtn</code>/<code>petHideBtn</code> + <code>bindPetsPickable()</code> added TWICE (orphaned outside bootstrap + inside), tail duplicated</li>
+<li><strong>HIGH</strong> Bootstrap <code>getGatewayHealth</code> unguarded — throws when preload absent → aborts <code>renderPermissions()</code> + pickable binding</li>
+<li><strong>MEDIUM</strong> Provider test stub — only HEAD ping, defers live model ping</li>
+<li><strong>MEDIUM</strong> Penguin 26M huge — bloats AppImage</li>
+<li>LOW No CSP meta</li>
+<li>LOW linux icon folder vs file</li>
+<li>LOW Debian version drift note</li>
+</ul>
+<h3 id="electron-audit-electron">Electron (audit-electron)<a class="headerlink" href="#electron-audit-electron" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>System:</strong> Parrot 7.3, Node ABI 137 vs Electron ABI 130 dual-ABI confirmed, <code>ELECTRON_RUN_AS_NODE=1 electron -e require('better-sqlite3')</code> → OK (2.0M ELF), <code>node -e require</code> → ERR_DLOPEN_FAILED 130 vs 137 — fallback at <code>/tmp</code> 2.1M needed</li>
+<li><strong>Install:</strong> <code>electron-builder install-app-deps</code> ✅ 2.0M BuildID a360bf, unpacked copy same 2.0M at <code>build/linux-unpacked/resources/app.asar.unpacked/...</code></li>
+<li><strong>Build:</strong> <code>build-agent-runtime.mjs</code> 94K 41ms ✅, <code>electron-builder --linux</code> 255s → linux-unpacked 337M, AppImage 147M, deb 220M, asar 64M ✅</li>
+<li><strong>Run:</strong> <code>DISPLAY=:0 timeout 10 electron . --no-sandbox --disable-gpu --enable-logging</code> → PIDs 1859063, warnings <code>appmenu-gtk-module</code> (non-fatal), 3x CSP unsafe-eval, providers ready (nous etc), no ERR_DLOPEN, clean SIGTERM; <code>xvfb-run -a</code> → xwininfo 420x700+430+162 (chat), 120x110+580+457 (bubble), 230x225+1030+779 (pet overlay), screenshot 13K → verified</li>
+<li><strong>Test:</strong> <code>scripts/e2e-electron.sh</code> GREEN EXIT 0 (unit harness 11 chunks, permission persist PASS) but hidden <code>Uncaught SyntaxError: Identifier 'electronAPI' has already been declared</code> 3x per run (chat:476, index:152, bubble:58) — e2e grep timing race lets it pass; <code>verify-macos-dmg.sh</code> FAIL (not WARN) on Linux — should exit 0; <code>check-native-sqlite.mjs</code> Node 137 ok via fallback, Electron 130 ok</li>
+<li><strong>Broken (8):</strong></li>
+<li>CRITICAL Dual-ABI hard-link — pnpm hard-link breaks Node test (inode 34935792 shared)</li>
+<li>Packaged <code>electronAPI</code> redeclaration 3x SyntaxError</li>
+<li>verify-macos-dmg.sh should WARN on Linux not FAIL</li>
+<li>appmenu-gtk-module warning — export GTK_MODULES=""</li>
+<li>tsx isolation — apps/electron/node_modules/.bin/tsx missing, dev relies on root</li>
+<li>GPU FATAL on shutdown — trap SIGTERM in main.js</li>
+<li>Insecure CSP (unsafe-eval)</li>
+<li>Build 255s slow — use deb-only for CI</li>
+</ul>
+<hr />
+<h2 id="prioritized-completion-plan">Prioritized Completion Plan<a class="headerlink" href="#prioritized-completion-plan" title="Permanent link">&para;</a></h2>
+<h3 id="p0-critical-block-release-break-core">P0 — Critical (block release, break core)<a class="headerlink" href="#p0-critical-block-release-break-core" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Form</th>
+<th>Issue</th>
+<th>Fix Owner</th>
+<th>Steps</th>
+<th>Acceptance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P0-1</td>
+<td>GUI/Electron</td>
+<td><code>three.core.js</code> 404 → GLB pets fail</td>
+<td>GUI</td>
+<td>Copy <code>node_modules/three/build/three.core.js</code> + <code>three.core.min.js</code> to <code>dist/three/</code>; add importmap fallback; verify <code>import * as THREE from './three/three.module.js'</code> loads without 404 (headless + Electron file://)</td>
+<td><code>dist/three/three.core.js</code> exists (600K+), headless index.html no 404, Electron overlay shows Three canvas</td>
+</tr>
+<tr>
+<td>P0-2</td>
+<td>Electron/GUI</td>
+<td><code>electronAPI</code> redeclaration 3x SyntaxError</td>
+<td>Electron/GUI</td>
+<td>Change <code>const/let electronAPI</code> → <code>var electronAPI = window.electronAPI || {}</code> in all 3 dist HTMLs (index, chat, bubble); add <code>var</code> guard; <code>node --check</code> pass, e2e grep no longer finds <code>already been declared</code></td>
+<td><code>node --check dist/*.html</code> (via <code>npx html-validate</code> or <code>node --check</code> on extracted script), e2e log no SyntaxError</td>
+</tr>
+<tr>
+<td>P0-3</td>
+<td>Electron/CLI</td>
+<td>Dual-ABI hard-link breaks Node</td>
+<td>Electron/CLI</td>
+<td>Dual-ABI strategy: <code>electron-builder install-app-deps</code> for Electron (130) + separate <code>node-gyp rebuild</code> for Node (137) with <code>/tmp</code> fallback; document <code>scripts/ensure-native.sh</code> idempotent; <code>check-native-sqlite.mjs</code> ok for both</td>
+<td><code>node -e require('better-sqlite3')</code> ok (137) + <code>ELECTRON_RUN_AS_NODE=1 electron -e require('better-sqlite3')</code> ok (130); <code>ls -li</code> inodes differ or fallback works</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p1-high-break-ux-block-publish">P1 — High (break UX, block publish)<a class="headerlink" href="#p1-high-break-ux-block-publish" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Form</th>
+<th>Issue</th>
+<th>Fix Owner</th>
+<th>Steps</th>
+<th>Acceptance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1-1</td>
+<td>GUI</td>
+<td>Duplicate listeners in chat.html</td>
+<td>GUI</td>
+<td>Remove orphaned <code>petToggleBtn</code>/<code>petHideBtn</code> + <code>bindPetsPickable()</code> outside bootstrap; keep only inside <code>bootstrap()</code> with <code>{once:true}</code> or dedup <code>removeEventListener</code></td>
+<td>Click pet panel once → one <code>setActivePet</code> call (not double), toolbar buttons fire once</td>
+</tr>
+<tr>
+<td>P1-2</td>
+<td>GUI</td>
+<td>Bootstrap <code>getGatewayHealth</code> unguarded</td>
+<td>GUI</td>
+<td>Wrap <code>await electronAPI.getGatewayHealth()</code> in <code>try/catch</code> → fallback "offline / pending", still calls <code>renderPermissions()</code> + <code>bindPetsPickable()</code></td>
+<td>file:// preview shows permissions/telemetry placeholders, no PageError</td>
+</tr>
+<tr>
+<td>P1-3</td>
+<td>TUI</td>
+<td>Burst/paste <code>help\r</code> as single chunk fails</td>
+<td>TUI</td>
+<td>Fix <code>useInput</code> handler: if <code>input.length&gt;1</code>, iterate chars or split <code>\r</code>/<code>\n</code>, handle <code>input.includes('\r')</code>; add guard for paste</td>
+<td><code>script -q -c "printf 'help\r' | pty"</code> → <code>Commands:</code> appears, <code>help\n</code> also works</td>
+</tr>
+<tr>
+<td>P1-4</td>
+<td>Electron</td>
+<td><code>verify-macos-dmg.sh</code> FAIL on Linux</td>
+<td>Electron</td>
+<td>Early exit: <code>if [ "$(uname)" != "Darwin" ]; then echo "WARN: no dmg on Linux"; exit 0; fi</code> before <code>hdiutil</code></td>
+<td><code>bash scripts/verify-macos-dmg.sh</code> on Linux → exit 0, CI green</td>
+</tr>
+<tr>
+<td>P1-5</td>
+<td>TUI</td>
+<td>Peer <code>react 18.2.0</code> vs <code>reconciler wants 18.3.1</code></td>
+<td>TUI</td>
+<td>Pin <code>react</code> to <code>^18.3.1</code> in <code>apps/tui/package.json</code> (and root if hoisted), <code>pnpm install --frozen-lockfile</code> regen, verify Ink 5.2.1 still compatible</td>
+<td><code>pnpm install</code> shows no peer warn; <code>pnpm --filter tui dev</code> still renders</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p2-medium-polish-publish-block-if-not-fixed">P2 — Medium (polish, publish block if not fixed)<a class="headerlink" href="#p2-medium-polish-publish-block-if-not-fixed" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Form</th>
+<th>Issue</th>
+<th>Fix Owner</th>
+<th>Steps</th>
+<th>Acceptance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P2-1</td>
+<td>TUI</td>
+<td>No TUI tests, <code>\n</code> vs <code>\r</code>, Node drift</td>
+<td>TUI</td>
+<td>Add <code>ink-testing-library</code> or <code>node-pty</code> + <code>script</code> tests for non-TTY fallback, TTY render, <code>help</code>/<code>state</code>, backspace, <code>exit</code>; normalize Enter to accept both <code>return</code>/<code>enter</code>; update <code>.nvmrc</code> to 24 or enforce CI to use 20 consistently</td>
+<td>New tests exist, <code>\n</code> triggers as <code>\r</code>, <code>.nvmrc</code> matches active Node</td>
+</tr>
+<tr>
+<td>P2-2</td>
+<td>GUI/Electron</td>
+<td>Provider test stub (HEAD ping only)</td>
+<td>GUI</td>
+<td>Wire <code>providers:test</code> to <code>AgentManager.ping</code> (ollama <code>/api/tags</code>, openai <code>/v1/models</code>)</td>
+<td><code>Test</code> button shows live model ping result</td>
+</tr>
+<tr>
+<td>P2-3</td>
+<td>CLI/TUI</td>
+<td><code>.nvmrc</code> drift 20 vs 24</td>
+<td>CLI/TUI</td>
+<td>Update <code>.nvmrc</code> to <code>24</code> and <code>engines.node</code> to <code>&gt;=20</code> or <code>&gt;=24</code> consistently, or set CI matrix to use 20; document target node20 in esbuild is ok</td>
+<td><code>cat .nvmrc</code> matches <code>node --version</code> major, CI matrix aligns</td>
+</tr>
+<tr>
+<td>P2-4</td>
+<td>Electron</td>
+<td><code>appmenu-gtk-module</code> warning</td>
+<td>Electron</td>
+<td><code>export GTK_MODULES=""</code> in <code>scripts/e2e-electron.sh</code> and <code>main.js</code> launch wrapper, or install <code>appmenu-gtk-module-common</code> doc note</td>
+<td>No <code>Failed to load module appmenu-gtk-module</code> in logs</td>
+</tr>
+<tr>
+<td>P2-5</td>
+<td>Electron</td>
+<td>Build 255s slow</td>
+<td>Electron</td>
+<td>Use <code>electron-builder --linux --config.directories.output=build --linux.target=deb</code> for CI (skip AppImage) or cache <code>~/.cache/electron</code></td>
+<td>CI <code>build:linux</code> &lt; 90s</td>
+</tr>
+</tbody>
+</table>
+<h3 id="p3-low-nice-to-have">P3 — Low (nice to have)<a class="headerlink" href="#p3-low-nice-to-have" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Form</th>
+<th>Issue</th>
+<th>Steps</th>
+<th>Acceptance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P3-1</td>
+<td>GUI</td>
+<td>No CSP meta</td>
+<td>Add <code>&lt;meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"&gt;</code> to chat/index/bubble.html</td>
+<td>Headers present, no unsafe-inline blocking</td>
+</tr>
+<tr>
+<td>P3-2</td>
+<td>GUI</td>
+<td><code>linux.icon: assets/icons</code> folder vs file</td>
+<td>Change to <code>assets/icon.png</code> in <code>electron-builder.json</code> or document folder allowed</td>
+<td>Canonical path or doc note</td>
+</tr>
+<tr>
+<td>P3-3</td>
+<td>CLI</td>
+<td><code>help</code> parser gap, <code>memory</code>/<code>permissions</code> wiring</td>
+<td>Add <code>usage</code>/<code>help</code>/<code>version</code> flags to CLI parser, wire <code>SMART_PET_ALLOW_IN_MEMORY_FALLBACK</code> correctly</td>
+<td><code>node dist/index.cjs --help</code> shows usage</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="verification-matrix-how-to-prove-linux-completion">Verification Matrix (how to prove Linux completion)<a class="headerlink" href="#verification-matrix-how-to-prove-linux-completion" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Command</th>
+<th>Expected</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLI</td>
+<td><code>pnpm --filter @smart-pet/cli build &amp;&amp; node dist/index.cjs --help</code></td>
+<td>usage shown</td>
+<td>stdout contains <code>Usage:</code></td>
+</tr>
+<tr>
+<td>CLI</td>
+<td><code>SMART_PET_ALLOW_IN_MEMORY_FALLBACK=1 node dist/index.cjs hello</code></td>
+<td><code>Agent ready</code>, no providers failed crash</td>
+<td>exit 0, log has <code>Agent ready</code></td>
+</tr>
+<tr>
+<td>TUI</td>
+<td><code>script -q -c "pnpm --filter tui dev" /dev/null</code></td>
+<td>Ink UI <code>Agent ready</code>, <code>You &gt; █</code></td>
+<td>screenshot/ log</td>
+</tr>
+<tr>
+<td>TUI</td>
+<td><code>printf 'help\r' \| pty</code></td>
+<td><code>Commands:</code></td>
+<td>log has <code>Commands:</code></td>
+</tr>
+<tr>
+<td>GUI</td>
+<td><code>file:// dist/chat.html</code> + <code>importmap three.core.js</code></td>
+<td>no 404, Three loads</td>
+<td>console no <code>three.core.js</code> 404</td>
+</tr>
+<tr>
+<td>GUI</td>
+<td><code>pet-panel click</code></td>
+<td>one <code>setActivePet</code></td>
+<td>log has single call</td>
+</tr>
+<tr>
+<td>Electron</td>
+<td><code>pnpm --dir apps/electron exec electron-builder install-app-deps &amp;&amp; ELECTRON_RUN_AS_NODE=1 electron -e "require('better-sqlite3')"</code></td>
+<td>ok 130</td>
+<td>exit 0</td>
+</tr>
+<tr>
+<td>Electron</td>
+<td><code>xvfb-run -a electron . --no-sandbox --disable-gpu</code> → xwininfo</td>
+<td>420x700 chat, 230x225 pet</td>
+<td><code>xwininfo</code> + screenshot 13K</td>
+</tr>
+<tr>
+<td>Electron</td>
+<td><code>bash scripts/e2e-electron.sh</code></td>
+<td>GREEN, no SyntaxError</td>
+<td>log has <code>GREEN</code>, no <code>already been declared</code></td>
+</tr>
+<tr>
+<td>CI</td>
+<td><code>gh run list</code></td>
+<td>all green</td>
+<td>status success</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="execution-order">Execution Order<a class="headerlink" href="#execution-order" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>P0-1 + P0-2 + P0-3</strong> in parallel (blocks everything) — estimated 30 min</li>
+<li><strong>P1-1 + P1-2 + P1-4 + P1-5</strong> in parallel — estimated 20 min</li>
+<li><strong>P2</strong> polish + <strong>P3</strong> low — estimated 30 min</li>
+<li><strong>Final verification matrix</strong> — run all commands, collect evidence — estimated 15 min</li>
+<li><strong>Push → CI green → tag → release</strong> — estimated 10 min</li>
+</ol>
+<p>Total: ~105 min to full Linux completion.</p>
+<p><em>This plan is the single source of truth for Linux. Every audit finding has a P0-P3 owner, steps, and acceptance. Re-run audits after fixes to confirm green.</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

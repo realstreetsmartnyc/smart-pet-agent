@@ -1,0 +1,1754 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Free, open-source, ever-evolving AI OS companion — Street Smart NYC desktop pet agent.">
+      
+      
+        <meta name="author" content="Street Smart NYC">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Smart Pet Agent — Goals Audit & UI Realignment (2026-08-31) - Smart Pet Agent</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#smart-pet-agent-goals-audit-ui-realignment-2026-08-31" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Smart Pet Agent" class="md-header__button md-logo" aria-label="Smart Pet Agent" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Smart Pet Agent
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Smart Pet Agent — Goals Audit &amp; UI Realignment (2026-08-31)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/realstreetsmartnyc/smart-pet-agent" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    realstreetsmartnyc/smart-pet-agent
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../quickstart/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Quickstart
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../providers/" class="md-tabs__link">
+          
+  
+  
+  Providers
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../PETS/" class="md-tabs__link">
+          
+  
+  
+  Pets & Templates
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../faq/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  FAQ
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ONBOARDING/" class="md-tabs__link">
+          
+  
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../RELEASE_CHECKLIST/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Smart Pet Agent" class="md-nav__button md-logo" aria-label="Smart Pet Agent" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Smart Pet Agent
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/realstreetsmartnyc/smart-pet-agent" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    realstreetsmartnyc/smart-pet-agent
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Providers
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Providers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../llm-providers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM Providers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pets & Templates
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Pets & Templates
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PETS/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CUSTOM_PET_SPEC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Pet Spec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ONBOARDING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Onboarding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TRUST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trust & Permissions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MOBILE_TRUST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mobile Trust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RELEASE_CHECKLIST/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-product-naming-single-source-brand-brief-product-naming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Product Naming — Single Source (Brand Brief §Product Naming)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-complete-goals-inventory-12-groups-52-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Complete Goals Inventory (12 groups, 52 goals)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Complete Goals Inventory (12 groups, 52 goals)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-identity-brand-competitive-complete-product-goals-brief-full-product-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. Identity &amp; Brand (Competitive §Complete Product Goals + Brief §Full Product Goals)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-nyc-aesthetic-system-brief-nyc-visual-direction-colors-surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. NYC Aesthetic System (Brief §NYC Visual Direction + Colors + Surfaces)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-user-experience-competitive-user-experience-goals-execution-ux-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C. User Experience (Competitive §User experience goals + Execution UX goals)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#d-agent-capability-competitive-agent-capability-goals-execution-product-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        D. Agent Capability (Competitive §Agent capability goals + Execution Product goals)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#e-embodiment-competitive-embodiment-goals-brief-pet-expression-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        E. Embodiment (Competitive §Embodiment goals + Brief §Pet Expression System)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#f-platform-competitive-platform-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        F. Platform (Competitive §Platform goals)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#g-trust-safety-competitive-trust-and-safety-goals-execution-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        G. Trust &amp; Safety (Competitive §Trust and safety goals + Execution Safety)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h-ecosystem-competitive-ecosystem-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        H. Ecosystem (Competitive §Ecosystem goals)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-engineering-publish-ready-gates-execution-publish-ready-definition-10-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I. Engineering Publish-Ready Gates (Execution §Publish-Ready Definition: 10 criteria)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#j-screen-specific-goals-brief-screen-goals-5-screens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        J. Screen-Specific Goals (Brief §Screen Goals: 5 screens)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#k-business-launch-execution-business-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        K. Business / Launch (Execution §Business goals)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-nyc-ui-realignment-what-changed-2026-08-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. NYC UI Realignment — What Changed 2026-08-31
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. NYC UI Realignment — What Changed 2026-08-31">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chathtml-dashboard-already-compliant-sprint-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        chat.html (dashboard) — Already compliant (Sprint 1)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indexhtml-overlay-pet-fixed-2026-08-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        index.html (overlay pet) — FIXED 2026-08-31
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pet-bubblehtml-fixed-2026-08-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pet-bubble.html — FIXED 2026-08-31
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#appsdesktopindexhtml-tauri-replaced-2026-08-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        apps/desktop/index.html (Tauri) — REPLACED 2026-08-31
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shared-design-tokens-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shared Design Tokens Created
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-drag-audit-app-shell-tab52-self-drop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Drag Audit — app-shell-tab:52 Self-Drop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-plan-realignment-post-sprint-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Plan Realignment — Post-Sprint 1
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Plan Realignment — Post-Sprint 1">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-sprint-1-actually-delivered-verified-in-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Sprint 1 actually delivered (verified in code)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-was-not-yet-nyc-branded-gap-closed-now" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What was NOT yet NYC-branded (gap closed now)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updated-execution-plan-status-sprint-1-complete-sprint-2-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updated Execution Plan status — Sprint 1 complete, Sprint 2 ready
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#immediate-next-sprint-sprint-2-trust-live-acceptance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Immediate next sprint — Sprint 2: Trust + Live Acceptance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-how-to-use-this-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. How to Use This Audit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-publish-confidence-audit-2026-08-31-updated-sprint-1-sprint-2-gate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Publish-Confidence Audit — 2026-08-31 (updated: Sprint 1 → Sprint 2 gate)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Publish-Confidence Audit — 2026-08-31 (updated: Sprint 1 → Sprint 2 gate)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verified-green-sprint-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verified green — Sprint 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partial-next-sprint-not-publish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partial / next sprint, not publish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blocked-requires-clean-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Blocked / requires clean environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revised-order-to-publish-sprint-2-onward" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Revised order to publish — Sprint 2 onward
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sprint-3-audit-2026-08-31-sprint-3-green-sprint-4-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprint 3 Audit — 2026-08-31 (Sprint 3 GREEN → Sprint 4 Ready)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="smart-pet-agent-goals-audit-ui-realignment-2026-08-31">Smart Pet Agent — Goals Audit &amp; UI Realignment (2026-08-31)<a class="headerlink" href="#smart-pet-agent-goals-audit-ui-realignment-2026-08-31" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>Current-truth notice, 2026-09-01: this audit remains useful for product goals and UI identity, but its <code>GREEN</code> labels are historical development evidence. Use <code>docs/MASTER_PHASE_SPRINT_EXECUTION_PLAN_2026-09-01.md</code> and <code>docs/PUBLISH_STATUS_CURRENT.md</code> for current execution and release status.</p>
+<p>Audit of every goal, NYC aesthetic compliance, drag audit, and plan realignment after Sprint 1.</p>
+</blockquote>
+<p>This replaces scattered goal fragments across README/brief/competitive/execution plan with one canonical inventory, then shows what is now NYC-compliant and what moved to next sprint.</p>
+<hr />
+<h2 id="1-product-naming-single-source-brand-brief-product-naming">1. Product Naming — Single Source (Brand Brief §Product Naming)<a class="headerlink" href="#1-product-naming-single-source-brand-brief-product-naming" title="Permanent link">&para;</a></h2>
+<p><strong>Canonical:</strong> <code>Smart Pet Agent</code> everywhere visible. <code>Smart</code> only as pet nickname inside conversation.
+- App title, tray, onboarding, settings, docs, installer, splash: <code>Smart Pet Agent</code>
+- Chat header, brand rail, bubble title: <code>Smart Pet Agent</code>
+- Agent self-reference in dialogue: <code>Smart</code></p>
+<p><strong>Verified 2026-08-31:</strong> <code>apps/electron/dist/chat.html</code> title + brand rail already correct. Fixed <code>apps/electron/dist/index.html</code> title (was <code>Smart-Pet-Agent</code> hyphen). Fixed overlay <code>title</code> attribute. Remaining: <code>apps/desktop/index.html</code> Tauri shell still generic — now replaced with NYC tokens (see §4).</p>
+<hr />
+<h2 id="2-complete-goals-inventory-12-groups-52-goals">2. Complete Goals Inventory (12 groups, 52 goals)<a class="headerlink" href="#2-complete-goals-inventory-12-groups-52-goals" title="Permanent link">&para;</a></h2>
+<h3 id="a-identity-brand-competitive-complete-product-goals-brief-full-product-goals">A. Identity &amp; Brand (Competitive §Complete Product Goals + Brief §Full Product Goals)<a class="headerlink" href="#a-identity-brand-competitive-complete-product-goals-brief-full-product-goals" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Establish <code>Smart Pet Agent</code> as standalone app, not plugin (over OpenClaw/PetClaw derivative)</li>
+<li>Align naming, copy, motion, visual design with Street Smart NYC system</li>
+<li>Make pet unique to Street Smart NYC ecosystem (not PetClaw/OpenClaw skin)</li>
+<li>Build recognizable identity across overlay, dashboard, bubble, CLI, TUI, docs, installer</li>
+</ol>
+<h3 id="b-nyc-aesthetic-system-brief-nyc-visual-direction-colors-surfaces">B. NYC Aesthetic System (Brief §NYC Visual Direction + Colors + Surfaces)<a class="headerlink" href="#b-nyc-aesthetic-system-brief-nyc-visual-direction-colors-surfaces" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Palette: ink-950 #0b0d10, asphalt-900 #14181d, steel-700 #41505f, tile-100 #f2efe8, taxi-500 #f4b400, signal-500 #ff8a1f, civic-500 #2f80ed, alert-500 #d64545, success-500 #2da56a</li>
+<li>Materials: smoked glass, brushed steel, dim billboard glow, map-line dividers</li>
+<li>Typography: transit grotesk / editorial sans + compact mono for telemetry/logs/permissions</li>
+<li>Motion: short slide-ins, route-trace, pulse on thought, snap-to-state on approve/fail, soft breathe when calm (no floaty spring/particles/random)</li>
+<li>Copy tone: direct, human, competent, lightly companionable (<code>Ready on your desktop</code>, <code>Need your permission to use the camera</code>) — no baby talk / corporate filler</li>
+<li>Overlay surface: alive in corner, readable over games/video, click-through when not hovered, 1-glance emotion</li>
+<li>Bubble surface: compact ticker, smoked-glass card, route-line/signal stripe, chips for Listening/Thinking/Using Browser/Needs Permission/Done</li>
+<li>Chat surface: command center + companion console (left rail 240px, main conversation, right utility drawer for tools/permissions/tasks)</li>
+<li>Settings surface: model providers, devices/peripherals, computer use, privacy/memory, pet appearance/voice, delegation targets</li>
+</ol>
+<h3 id="c-user-experience-competitive-user-experience-goals-execution-ux-goals">C. User Experience (Competitive §User experience goals + Execution UX goals)<a class="headerlink" href="#c-user-experience-competitive-user-experience-goals-execution-ux-goals" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Always-on ambient presence without distraction (games/video/work coexist via click-through B=0.62 + patrol disabled, thought-driven)</li>
+<li>Interaction by typing, clicking, voice, future multimodal (same personality/language/state across GUI/CLI/TUI)</li>
+<li>Warm, capable, trustworthy companion feel</li>
+<li>Continuity across overlay, dashboard, CLI, TUI (one runtime)</li>
+<li>Ensure pet remains ambient not distracting; device access understandable at a glance; onboarding simple for non-experts</li>
+</ol>
+<h3 id="d-agent-capability-competitive-agent-capability-goals-execution-product-goals">D. Agent Capability (Competitive §Agent capability goals + Execution Product goals)<a class="headerlink" href="#d-agent-capability-competitive-agent-capability-goals-execution-product-goals" title="Permanent link">&para;</a></h3>
+<ol>
+<li>General assistant work + research + automation + computer use</li>
+<li>Delegated specialist work across Hermes/Codex/Qwen/OpenCode/Cline/Gemini/Aider without losing one identity (federation, not dependence)</li>
+<li>Long-running tasks, proactive HEARTBEAT checks, background work</li>
+<li>Pet explains what/why it is doing (reasoning + provenance in bubble/chat)</li>
+<li>Multi-provider AI without vendor lock (Ollama, LM Studio, LiteLLM, OpenAI, Anthropic, Google, custom — per-task select + fallback chain)</li>
+<li>One clear v1 promise (see Execution §Recommended v1 scope)</li>
+</ol>
+<h3 id="e-embodiment-competitive-embodiment-goals-brief-pet-expression-system">E. Embodiment (Competitive §Embodiment goals + Brief §Pet Expression System)<a class="headerlink" href="#e-embodiment-competitive-embodiment-goals-brief-pet-expression-system" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Motion/expression/gaze/talk/sleep/celebrate tied to reasoning (not random timers)</li>
+<li>Richer facial/body expression over time; react to success/failure/wait/listen/approval/environment</li>
+<li>Support video pets first, richer rigged (Spine/Lottie/Three) later</li>
+<li>10 differentiated states minimum: idle, listening, thinking, planning, acting, waiting, asking permission, celebrating, warning, sleeping, resuming (halo/gaze/blink speed/mouth/ear-wing-tail color/travel lean)</li>
+<li>Fallback renderer that already feels Street Smart NYC, not placeholder orb</li>
+</ol>
+<h3 id="f-platform-competitive-platform-goals">F. Platform (Competitive §Platform goals)<a class="headerlink" href="#f-platform-competitive-platform-goals" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Ship reliable Windows desktop first (benchmark starts from Windows PetClaw installer)</li>
+<li>Keep architecture cross-platform (macOS/Linux expansion via platform adapters, not Linux-only shells)</li>
+<li>One core runtime for GUI/CLI/TUI</li>
+<li>Local-first with optional networked providers</li>
+</ol>
+<h3 id="g-trust-safety-competitive-trust-and-safety-goals-execution-safety">G. Trust &amp; Safety (Competitive §Trust and safety goals + Execution Safety)<a class="headerlink" href="#g-trust-safety-competitive-trust-and-safety-goals-execution-safety" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Permissions granular, durable, revocable, inspectable (ask / allow-while-active / always-allow / always-deny + scopes)</li>
+<li>Show active device/computer access clearly (listening/recording/screen/control halos + telemetry)</li>
+<li>Logs/audit traces for actions taken on behalf of user</li>
+<li>Prevent hidden/accidental destructive behavior; sensitive actions gated + confirmation rules</li>
+</ol>
+<h3 id="h-ecosystem-competitive-ecosystem-goals">H. Ecosystem (Competitive §Ecosystem goals)<a class="headerlink" href="#h-ecosystem-competitive-ecosystem-goals" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Stable pet manifest (<code>manifest.json</code> + <code>pet.config.json</code> + assets + rig) with validator/packer/preview</li>
+<li>Extension/plugin hooks without app dependence</li>
+<li>Optional bridges into OpenClaw/Hermes/Codex/etc.</li>
+<li>Marketplace/creator path prepared but deferred post-v1</li>
+</ol>
+<h3 id="i-engineering-publish-ready-gates-execution-publish-ready-definition-10-criteria">I. Engineering Publish-Ready Gates (Execution §Publish-Ready Definition: 10 criteria)<a class="headerlink" href="#i-engineering-publish-ready-gates-execution-publish-ready-definition-10-criteria" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Coherent Street Smart NYC identity across overlay/dashboard/installer/docs</li>
+<li>Stable local runtime across supported desktop envs (health checks, recovery, structured logs/error events)</li>
+<li>Explicit/durable/revocable permissions (PermissionService + SQLite)</li>
+<li>Thought-driven pet states (semantic intent <code>pet.intent</code> → pack mapping)</li>
+<li>≥1 polished default pet pack with baseline expressions/actions</li>
+<li>Core assistant flows end-to-end (chat → reason → act → stream → done)</li>
+<li>Failures visible &amp; recoverable (chat.error, agent.status error, telemetry)</li>
+<li>Clean packaging/installation on initial OS (Windows NSIS)</li>
+<li>Release notes/onboarding/trust docs exist</li>
+<li>Clear supportable v1 scope (defer 3D rooms/marketplace commerce/multi-user/broad plugins/mobile parity)</li>
+</ol>
+<h3 id="j-screen-specific-goals-brief-screen-goals-5-screens">J. Screen-Specific Goals (Brief §Screen Goals: 5 screens)<a class="headerlink" href="#j-screen-specific-goals-brief-screen-goals-5-screens" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Ambient overlay / Fast chat / Trust dashboard / Pet customization / Ongoing work (background tasks visible, scheduled/proactive inspectable)</li>
+</ol>
+<h3 id="k-business-launch-execution-business-goals">K. Business / Launch (Execution §Business goals)<a class="headerlink" href="#k-business-launch-execution-business-goals" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Publish safely distributable version; define free/optional/roadmap; avoid trust-risky or support-heavy bloat</li>
+</ol>
+<hr />
+<h2 id="3-nyc-ui-realignment-what-changed-2026-08-31">3. NYC UI Realignment — What Changed 2026-08-31<a class="headerlink" href="#3-nyc-ui-realignment-what-changed-2026-08-31" title="Permanent link">&para;</a></h2>
+<h3 id="chathtml-dashboard-already-compliant-sprint-1">chat.html (dashboard) — Already compliant (Sprint 1)<a class="headerlink" href="#chathtml-dashboard-already-compliant-sprint-1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Tokens: ink/asphalt/steel/tile/taxi/signal/civic/alert/success + mono/sans + glass/border correctly implemented</li>
+<li>Layout: 240px rail + 1fr chat + 280px utility drawer matches brief §Chat window</li>
+<li>Brand: <code>Smart Pet Agent</code> title, <code>Street Smart NYC</code> kicker, taxi→signal send button, civic/signal/success chips</li>
+<li>No change needed except draggable hardening (see §5).</li>
+</ul>
+<h3 id="indexhtml-overlay-pet-fixed-2026-08-31">index.html (overlay pet) — FIXED 2026-08-31<a class="headerlink" href="#indexhtml-overlay-pet-fixed-2026-08-31" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Before: generic blue glass ball <code>radial-gradient(… #6496ff)</code>, white/black eyes, #e9ecef chat, system fonts</li>
+<li>After: NYC tokens on :root, pet-mood uses asphalt/steel/tile radial with inset steel highlight + taxi/signal halo (1px border + outer glow per mood), eyes tile-100 on ink-950, mouth tile-100, thinking pill upgraded to smoked-glass asphalt-900 + signal dot + taxi/signal shimmer + mono uppercase, status halo element for listening/thinking/acting, <code>pending</code> self-drop prevented by <code>draggable</code> guard (see §5), B=0.62 hitbox preserved</li>
+<li>Function preserved: breathe, blink, drag via Electron IPC, rapid triple-click, waveform show/hide, animState mapping to <code>pet.intent</code> now also listens to <code>runtime-event: pet.intent</code></li>
+</ul>
+<h3 id="pet-bubblehtml-fixed-2026-08-31">pet-bubble.html — FIXED 2026-08-31<a class="headerlink" href="#pet-bubblehtml-fixed-2026-08-31" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Before: <code>rgba(14,14,16,0.95)</code> generic dark, no stripe, sans only</li>
+<li>After: NYC tokens, smoked-glass <code>linear-gradient(asphalt-900→ink-950)</code> + blur 16, top 3px taxi→signal stripe, tile-100 text, mono uppercase chips: running=civic-500, listening=signal-500, done=success-500, tail asphalt clip, listens to both <code>ai-*</code> and <code>runtime-event: chat.chunk/pet.intent</code></li>
+</ul>
+<h3 id="appsdesktopindexhtml-tauri-replaced-2026-08-31">apps/desktop/index.html (Tauri) — REPLACED 2026-08-31<a class="headerlink" href="#appsdesktopindexhtml-tauri-replaced-2026-08-31" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Before: identical generic blue orb + light chat box + system fonts (diverged from Electron)</li>
+<li>After: rebuilt from Electron overlay NYC template + Tauri <code>__TAURI__</code> invoke bridge (async <code>agent_speak</code> etc.), shared tokens, same halo/mouth/eye system, chat panel now uses asphalt/tile/civic styling with Smart Pet Agent header</li>
+</ul>
+<h3 id="shared-design-tokens-created">Shared Design Tokens Created<a class="headerlink" href="#shared-design-tokens-created" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Created <code>apps/electron/dist/tokens.css</code> (canonical) + inlined :root into overlay/bubble/Tauri for standalone window loads. Single source for future <code>packages/ui-tokens</code> extraction.</li>
+</ul>
+<hr />
+<h2 id="4-drag-audit-app-shell-tab52-self-drop">4. Drag Audit — <code>app-shell-tab:52</code> Self-Drop<a class="headerlink" href="#4-drag-audit-app-shell-tab52-self-drop" title="Permanent link">&para;</a></h2>
+<p><strong>Log:</strong> <code>Draggable item app-shell-tab:52 was dropped over droppable area app-shell-tab:52</code></p>
+<p><strong>Root cause:</strong> Test harness treats <code>div.nav-item[data-page]</code> as draggable <code>app-shell-tab</code> items. In Sprint 1 dashboard they had no explicit <code>draggable</code> attribute, so HTML5 default allowed the harness to synthesize a drag where drag-item and drop-target resolved to same element ID 52 (same nav row). No actual user-visible reordering intended — nav is fixed order Chat/Tasks/Devices/Permissions/Pets/Settings.</p>
+<p><strong>Fix applied 2026-08-31:</strong>
+- Added <code>draggable="false"</code> to every <code>.nav-item</code> in <code>apps/electron/dist/chat.html</code>
+- Added <code>role="button" tabindex="0" aria-current</code> for a11y, <code>dragstart: preventDefault()</code> handler
+- No DnD library imported — native self-drop now impossible; if future tab reordering is desired, it must be added behind <code>data-reorderable</code> flag with <code>if (dragId===dropId) return</code> guard.</p>
+<p><strong>Verification:</strong> Re-ran <code>grep -r draggable</code> — only TypeScript lib definitions and prevention handlers remain. No <code>app-shell-tab</code> droppable remains self-targetable. Pet-window drag (Electron <code>startDrag/dragMove/stopDrag</code> at 62% hitbox) unaffected — isolated to transparent overlay BrowserWindow.</p>
+<hr />
+<h2 id="5-plan-realignment-post-sprint-1">5. Plan Realignment — Post-Sprint 1<a class="headerlink" href="#5-plan-realignment-post-sprint-1" title="Permanent link">&para;</a></h2>
+<h3 id="what-sprint-1-actually-delivered-verified-in-code">What Sprint 1 actually delivered (verified in code)<a class="headerlink" href="#what-sprint-1-actually-delivered-verified-in-code" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>packages/core/src/runtime-events.ts</code> versioned <code>RuntimeEvent</code> (agent.ready/status, chat.chunk/done/error, permission.updated, pet.intent, voice.state)</li>
+<li><code>packages/core/src/permission-service.ts</code> durable SQLite-backed permissions</li>
+<li><code>packages/core/src/memory.ts</code> permission table migration</li>
+<li><code>packages/core/src/peripheral-manager.ts</code> → platform-adapter skeleton (Windows/Linux/macOS branches, no longer Linux-only xdotool)</li>
+<li><code>apps/electron/src/main.js</code> structured stdout NDJSON → <code>routeRuntimeEvent</code> → broadcast to all windows + permission cache + send-buffer flush</li>
+<li><code>apps/electron/src/preload.js</code> <code>getPermissions/setPermission</code> + <code>onRuntimeEvent</code></li>
+<li><code>apps/electron/dist/chat.html</code> first NYC-branded dashboard (rail + header + messages + toolbar + input + utility permission panel)</li>
+</ul>
+<h3 id="what-was-not-yet-nyc-branded-gap-closed-now">What was NOT yet NYC-branded (gap closed now)<a class="headerlink" href="#what-was-not-yet-nyc-branded-gap-closed-now" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Overlay pet and bubble were still generic — now NYC-branded (see §3). Milestone B (Brand green) no longer blocked by overlay/bubble.</li>
+</ul>
+<h3 id="updated-execution-plan-status-sprint-1-complete-sprint-2-ready">Updated Execution Plan status — Sprint 1 complete, Sprint 2 ready<a class="headerlink" href="#updated-execution-plan-status-sprint-1-complete-sprint-2-ready" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Phase 1 (Runtime Foundation): <strong>GREEN</strong> — <code>RuntimeEvent</code> v1, SQLite (permissions/provider_configs/tasks/audit_logs/memories), durable permissions, per-action <code>validateComputerAction</code> + <code>CONFIRMATION_REQUIRED</code> + <code>logAudit</code>, <code>spawn</code> safe adapters (Linux/macOS/Windows), <code>agent.status/ready</code> + health <code>15s</code> + <code>runtime.log</code> rotation, <code>task.started/completed/failed</code> + <code>provider.*</code> + <code>chat.history</code>, <code>agent.ready</code> NDJSON framing + startup buffer + <code>2500ms</code> RPC timeout, <code>pnpm typecheck</code> + 11 tests <strong>GREEN</strong>.</li>
+<li>Phase 2 (NYC-Branded UI Shell): <strong>GREEN</strong> — <code>chat.html</code>/<code>index.html</code>/<code>pet-bubble.html</code>/<code>apps/desktop/index.html</code> single-source <code>tokens.css</code> (<code>0× :root</code>), NYC palette on all windows, 6 pages (<code>chat/tasks/devices/permissions/pets/settings</code>) with <code>showPage</code> + provider chip + history hydration + audit/task/provider loaders; legible over mixed backgrounds via <code>glass</code> + <code>border</code> + <code>blur</code>.</li>
+<li>Phase 3 (Pet Engine and Embodiment): <strong>~65%</strong> — <code>pet.intent</code> (11 intents incl. <code>planning</code>) + <code>validatePetPack {ok:true}</code> + canvas fallback orb with halo; video pack remains deferred until real <code>.webm</code> assets, validator now <code>checkAssets</code> for video.</li>
+<li>Phases 4-6: trust scaffolding in place (per-action deny-by-default, audit), voice stub <code>emit('voice:generate')→""</code>, onboarding <code>docs/ONBOARDING.md</code>; packager <code>linux-unpacked</code> (178 MB) with <code>conf</code> fix, Windows <code>nsis</code> config ready.</li>
+</ul>
+<h3 id="immediate-next-sprint-sprint-2-trust-live-acceptance">Immediate next sprint — Sprint 2: Trust + Live Acceptance<a class="headerlink" href="#immediate-next-sprint-sprint-2-trust-live-acceptance" title="Permanent link">&para;</a></h3>
+<p>Sprint 1 exit criteria met: <strong>app starts/recovers (health+reconnect), UI receives structured events (chat.chunk streaming + provider), permissions survive restart, errors appear in UI+logs.</strong> Sprint 2 focuses on: live Electron acceptance (clean profile startup, streaming chat, permission toggle + restart persistence, overlay drag/click-through over video, error recovery), Windows device real-hardware QA (screen/camera/mic success checks), voice/STT provider wiring, and Windows NSIS artifact on clean Windows.</p>
+<hr />
+<h2 id="6-how-to-use-this-audit">6. How to Use This Audit<a class="headerlink" href="#6-how-to-use-this-audit" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>For design review:</strong> Brief §Color System + §Surface Design vs. §3 changes is the checklist. Every window should now pass "could this be mistaken for generic PetClaw?" — answer must be no.</li>
+<li><strong>For planning:</strong> Execution Plan Phase 1-2 exit criteria remain authoritative; this doc only updates % complete and next 5 items.</li>
+<li><strong>For brand QA:</strong> Grep for <code>Smart-Pet</code> hyphen or <code>petclaw</code> lowercase outside <code>REVERSE_ENGINEERING</code> — zero hits expected after §1 fixes.</li>
+</ul>
+<h2 id="7-publish-confidence-audit-2026-08-31-updated-sprint-1-sprint-2-gate">7. Publish-Confidence Audit — 2026-08-31 (updated: Sprint 1 → Sprint 2 gate)<a class="headerlink" href="#7-publish-confidence-audit-2026-08-31-updated-sprint-1-sprint-2-gate" title="Permanent link">&para;</a></h2>
+<p>This follow-up audit checked the implementation and the release claims after Sprint 1 and the UI realignment. Sprint 1 is now <strong>complete for development</strong> — Sprint 2 is live acceptance.</p>
+<h3 id="verified-green-sprint-1">Verified green — Sprint 1<a class="headerlink" href="#verified-green-sprint-1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>bash scripts/smoke.sh</code> exits 0 for tokens (<code>0× :root</code> / 4× <code>tokens.css</code>), pet validation <code>{ok:true}</code>, headless initialization, permission persistence (deny-by-default + grant), voice fallback (<code>generateVoice ""</code>), delegation <code>spawn</code> single-arg, and authoritative <code>pnpm typecheck</code> <strong>EXIT:0</strong>.</li>
+<li><code>pnpm validate:pet</code> exits 0 for <code>pets/default-nyc-orb</code> (11 intents, canvas fallback orb).</li>
+<li><code>node --import tsx --test packages/core/src/*.test.ts</code> 11 pass 0 fail (<code>RuntimeEvent</code> framing/buffer/timeout + permission per-action).</li>
+<li><code>pnpm typecheck</code> passes via root <code>tsconfig.json</code> (<code>NodeNext/allowSyntheticDefaultImports</code>); <code>node --check</code> main/preload clean.</li>
+<li><code>getChatHistory</code> now returns persisted <code>memories</code> via <code>agent.getChatHistory</code> + <code>chat.history</code> event; <code>chat.chunk</code> now streams word-chunks with <code>provider</code> (dashboard chip <code>provider: ${provider}</code>); <code>chat.error</code> + <code>agent.status: error</code> + <code>runtime.log</code> rotation.</li>
+<li><code>executeComputerAction</code> now per-action <code>validateComputerAction</code> (<code>apps</code>/<code>mouse</code>/<code>keyboard</code>) + <code>spawn</code> safe adapters (Linux <code>xdg-open</code>/<code>xdotool</code>, macOS <code>open</code>/<code>osascript</code>, Windows <code>powershell</code>/<code>ffmpeg</code> with <code>stat.size</code> check, <code>recordAudio</code> real <code>ffmpeg dshow</code> or explicit fail), <code>logAudit</code> on allowed/denied.</li>
+<li>Permissions survive SQLite round-trip; <code>chat.html</code> now hydrates history + <code>Tasks</code>/<code>Devices</code>/<code>Permissions</code>/<code>Pets</code>/<code>Settings</code> loaders on bootstrap.</li>
+</ul>
+<h3 id="partial-next-sprint-not-publish">Partial / next sprint, not publish<a class="headerlink" href="#partial-next-sprint-not-publish" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Windows/macOS camera/screen/mic still scaffold-level (now with success checks, but real hardware not exercised in this env).</li>
+<li>Default pet remains CSS orb fallback (11 intents, halo); video <code>.webm</code> pack deferred until real assets; validator <code>checkAssets</code> now available for <code>video</code> engine.</li>
+<li>Voice <code>generateVoice</code> stub only (<code>emit('voice:generate')→""</code>), STT/voice pipeline not wired.</li>
+</ul>
+<h3 id="blocked-requires-clean-environment">Blocked / requires clean environment<a class="headerlink" href="#blocked-requires-clean-environment" title="Permanent link">&para;</a></h3>
+<ul>
+<li>No verified Windows NSIS install/upgrade/uninstall/signed artifact yet (config <code>nsis</code> ready, <code>conf</code> fix applied, <code>linux-unpacked</code> 178 MB exists, but <code>xvfb-run --no-sandbox</code> still traps in this Parrot container).</li>
+<li>No live Electron session yet proven (clean profile chat streaming, permission toggle + restart persistence, overlay drag/click-through over video) — requires interactive display, queued for Sprint 2.</li>
+</ul>
+<h3 id="revised-order-to-publish-sprint-2-onward">Revised order to publish — Sprint 2 onward<a class="headerlink" href="#revised-order-to-publish-sprint-2-onward" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Live Electron acceptance (clean profile startup, streaming chat, permission toggle + restart, overlay drag/click-through, error recovery).</li>
+<li>Windows device real-hardware QA (screen/camera/mic) + NSIS artifact on clean Windows.</li>
+<li>Voice/STT provider wiring + pet video pack if desired.</li>
+<li>Then release notes/known-issues/support + publish candidate.</li>
+</ol>
+<p>Current recommendation: <strong>Sprint 1 GREEN → ready for Sprint 2 live acceptance.</strong> Keep <code>v0.1.x</code> until Sprint 2 gates pass; do not label alpha/beta yet.</p>
+<p>Sprint 1 exit criteria (from <code>PUBLISH_READY §Phase 1/2</code>): <strong>MET</strong> — app starts/recovers (health + <code>runtime.log</code>), UI receives structured events (streaming <code>chat.chunk</code> + <code>provider</code> + <code>pet.intent</code>), settings/permissions survive restart, errors appear in UI+logs; <code>chat.html</code>/<code>index.html</code>/<code>pet-bubble.html</code>/<code>desktop/index.html</code> single-source, <code>0× :root</code>, <code>6</code> pages navigable. Sprint 2 validates this live.</p>
+<p><em>Audit date: 2026-08-31 · Author: internal audit (code + docs read to end-of-brand) · Sources: <code>SMART_PET_AGENT_UI_BRAND_BRIEF</code>, <code>SMART_PET_AGENT_COMPETITIVE_REBUILD_PLAN</code>, <code>PUBLISH_READY_EXECUTION_PLAN</code>, <code>REVERSE_ENGINEERING_PETCLAW</code>, <code>CUSTOM_PET_SPEC</code>, all <code>apps/*</code> HTML/JS/RS</em></p>
+<h2 id="sprint-3-audit-2026-08-31-sprint-3-green-sprint-4-ready">Sprint 3 Audit — 2026-08-31 (Sprint 3 GREEN → Sprint 4 Ready)<a class="headerlink" href="#sprint-3-audit-2026-08-31-sprint-3-green-sprint-4-ready" title="Permanent link">&para;</a></h2>
+<p>Verified: <code>pnpm typecheck EXIT:0</code>, <code>pnpm test 12 pass</code> (adds voice.test), <code>bash scripts/smoke.sh SMOKE GREEN</code> (now 6/6 with packaged has conf), <code>bash scripts/validate-pet.sh GREEN</code> (canvas checkAssets), <code>bash scripts/e2e-electron.sh GREEN</code> (chunks:11 history:2), <code>apps/electron/build/linux-unpacked has conf: true</code>, onboarding banner <code>onboarding-banner</code> with <code>localStorage onboardingDone</code>, <code>voice:transcribe</code> stub + <code>voice.state→listening</code> halo, installer <code>nsis</code>/<code>deb</code> config ready.</p>
+<p>Next: Sprint 4 Mobile Foundation (<code>apps/mobile</code> scaffold, same core, gated until v1.0.0 desktop).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
