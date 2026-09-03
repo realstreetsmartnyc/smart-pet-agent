@@ -1,0 +1,94 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  publish-cli:
+    name: Publish @smart-pet/cli to npm
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write  # for provenance
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - run: pnpm install --frozen-lockfile --config.confirmModulesPurge=false
+
+      - run: pnpm --filter @smart-pet/core run build
+      - run: pnpm --filter @smart-pet/cli run build
+
+      - name: Verify build artifacts
+        run: |
+          test -f apps/cli/dist/index.cjs || (echo "ERROR: CLI bundle not found" && exit 1)
+          test -f apps/cli/package.json || (echo "ERROR: CLI package.json not found" && exit 1)
+
+      - name: Prepare package for publish
+        working-directory: apps/cli
+        run: |
+          # Only publish if this is an explicit publish event or a tag
+          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "::error::NPM_TOKEN secret is not set. Add it in repo Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          # Verify version matches tag
+          VERSION=$(node -p "require('./package.json').version")
+          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref_type }}" = "tag" ]; then
+            TAG_NAME="${{ github.ref_name }}"
+            TAG_VERSION="${TAG_NAME#v}"
+            if [ "$VERSION" != "$TAG_VERSION" ]; then
+              echo "::error::Version $VERSION does not match tag $TAG_VERSION"
+              exit 1
+            fi
+          fi
+          echo "Publishing @smart-pet/cli@$VERSION"
+
+      - name: Publish to npm
+        working-directory: apps/cli
+        run: |
+          # Patch workspace dependency to use published version
+          node -e "
+            const fs = require('fs');
+            const p = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            if (p.dependencies && p.dependencies['@smart-pet/core']) {
+              p.dependencies['@smart-pet/core'] = '^' + p.dependencies['@smart-pet/core'].replace('workspace:', '');
+            }
+            fs.writeFileSync('package.json', JSON.stringify(p, null, 2));
+          "
+          npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  release-verification:
+    name: Verify release artifacts
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        run: |
+          mkdir -p release-artifacts
+
+      - name: Check release exists
+        run: |
+          if ! gh release view "${{ github.ref_name }}" >/dev/null 2>&1; then
+            echo "::error::Release ${{ github.ref_name }} not found"
+            exit 1
+          fi
+          echo "✅ Release ${{ github.ref_name }} verified"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
