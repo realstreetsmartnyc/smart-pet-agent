@@ -1,8 +1,11 @@
 # Smart Pet Agent
 
+[![CI](https://github.com/realstreetsmartnyc/smart-pet-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/realstreetsmartnyc/smart-pet-agent/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-amber.svg)](LICENSE)
+
 <p align="center"><img src="docs/banner.svg" width="640" alt="Smart Pet Agent banner"/></p>
 
-> **Assets:** App icon at [`apps/electron/assets/icon.png`](apps/electron/assets/icon.png) · Social preview at [`docs/banner.svg`](docs/banner.svg) (1280×640)
+> **Assets:** App icon at [`apps/electron/assets/icon.png`](apps/electron/assets/icon.png) · Social preview at [`docs/banner.png`](docs/banner.png) (1280×640) and [`docs/banner.svg`](docs/banner.svg)
 
 > Free, open-source, ever-evolving AI OS companion.
 > A Street Smart NYC desktop pet agent that thinks, learns, acts, and grows across desktop, CLI, TUI, and future mobile surfaces.
