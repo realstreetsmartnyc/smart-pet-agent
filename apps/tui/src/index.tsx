@@ -31,7 +31,7 @@ const App = () => {
   }, []);
 
   useInput(async (char, key) => {
-    const isEnter = Boolean(key.return || key.name === 'enter' || (char && (char.includes('\r') || char.includes('\n'))));
+    const isEnter = Boolean(key.return || (char && (char.includes('\r') || char.includes('\n'))));
     if (key.ctrl && char === 'c') { exit(); return; }
     // Burst/paste: handle multi-char input as single chunk
     if (char && char.length > 1) {
