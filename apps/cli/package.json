@@ -10,7 +10,12 @@
     "start": "node --import tsx src/index.ts",
     "dev": "node --import tsx src/index.ts",
     "prepublishOnly": "pnpm build",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "build:android": "node dist/index.cjs --build --target=android",
+    "build:android-local": "node dist/index.cjs --build --target=apk --gradle",
+    "build:android-cloud": "node dist/index.cjs --build --target=apk --eas",
+    "build:android-apk": "node dist/index.cjs --build --target=apk",
+    "build:android-aab": "node dist/index.cjs --build --target=aab"
   },
   "engines": {
     "node": ">=20"
